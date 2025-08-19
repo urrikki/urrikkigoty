@@ -1,0 +1,30 @@
+{
+"zelda_totk": {
+"id": "zelda_totk",
+"title": "The Legend of Zelda: Tears of the Kingdom",
+"rank": "S",
+"image": "pictures/zelda_totk.jpg",
+"review": "Un monde riche et une liberté systémique remarquable."
+},
+"halo2": {
+"id": "halo2",
+"title": "Halo 2",
+"rank": "C",
+"image": "pictures/halo2.jpg",
+"review": "Rythme irrégulier pour moi ; impact moins fort que prévu."
+},
+"mario_odyssey": {
+"id": "mario_odyssey",
+"title": "Super Mario Odyssey",
+"rank": "A",
+"image": "pictures/mario_odyssey.jpg",
+"review": "Contrôle précis, inventivité constante, sourire garanti."
+},
+"pas_joue_ex": {
+"id": "pas_joue_ex",
+"title": "Exemple non joué",
+"rank": "Pas joué",
+"image": "pictures/pas_joue_ex.jpg",
+"review": "À découvrir."
+}
+}
