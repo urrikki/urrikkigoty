@@ -79,18 +79,18 @@ header {
     align-items: center;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #fff;
+    color: #8B7500;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.tier-s { background-color: #fdf8ee; } 
-.tier-a { background-color: #fdf8ee; } 
-.tier-b { background-color: #fdf8ee; } 
-.tier-c { background-color: #fdf8ee; } 
-.tier-d { background-color: #fdf8ee; } 
-.tier-e { background-color: #fdf8ee; } 
-.tier-f { background-color: #fdf8ee; } 
-.tier-not-played { background-color: #fdf8ee; } 
+.tier-s { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-a { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-b { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-c { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-d { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-e { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-f { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-not-played { background-color: rgba(255, 255, 255, 0.7); } 
 
 .tier-games {
     display: flex;
