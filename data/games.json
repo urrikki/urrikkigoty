@@ -1,30 +1,60 @@
 {
-"zelda_totk": {
-"id": "zelda_totk",
-"title": "The Legend of Zelda: Tears of the Kingdom",
-"rank": "S",
-"image": "pictures/zelda_totk.jpg",
-"review": "Un monde riche et une liberté systémique remarquable."
-},
-"halo2": {
-"id": "halo2",
-"title": "Halo 2",
-"rank": "C",
-"image": "pictures/halo2.jpg",
-"review": "Rythme irrégulier pour moi ; impact moins fort que prévu."
-},
-"mario_odyssey": {
-"id": "mario_odyssey",
-"title": "Super Mario Odyssey",
-"rank": "A",
-"image": "pictures/mario_odyssey.jpg",
-"review": "Contrôle précis, inventivité constante, sourire garanti."
-},
-"pas_joue_ex": {
-"id": "pas_joue_ex",
-"title": "Exemple non joué",
-"rank": "Pas joué",
-"image": "pictures/pas_joue_ex.jpg",
-"review": "À découvrir."
-}
+  "games": [
+    {
+      "name": "The Witcher 3: Wild Hunt",
+      "year": 2015,
+      "rank": "S",
+      "picture": "freedomfighter.jpg",
+      "review": "A masterpiece of storytelling and world-building, with incredible depth and attention to detail."
+    },
+    {
+      "name": "God of War",
+      "year": 2018,
+      "rank": "S",
+      "picture": "maddennfl.jpg",
+      "review": "A stunning reimagining of the franchise with emotional depth and brutal combat."
+    },
+    {
+      "name": "The Last of Us Part II",
+      "year": 2020,
+      "rank": "A",
+      "picture": "metalgear3.jpg",
+      "review": "A technically brilliant but divisive game with incredible gameplay and narrative ambition."
+    },
+    {
+      "name": "Hollow Knight",
+      "year": 2017,
+      "rank": "A",
+      "picture": "ssx3.jpg",
+      "review": "A beautifully crafted metroidvania with challenging gameplay and a haunting atmosphere."
+    },
+    {
+      "name": "Cyberpunk 2077",
+      "year": 2020,
+      "rank": "B",
+      "picture": "tonyhawkunderground.jpg",
+      "review": "A flawed but ambitious RPG with an incredible world and story, despite technical issues."
+    },
+    {
+      "name": "Animal Crossing: New Horizons",
+      "year": 2020,
+      "rank": "B",
+      "picture": "burnout3.jpg",
+      "review": "A charming and relaxing life simulator that provided comfort during difficult times."
+    },
+    {
+      "name": "Death Stranding",
+      "year": 2019,
+      "rank": "C",
+      "picture": "socom2.jpg",
+      "review": "A uniquely experimental game that divides players with its unconventional gameplay loop."
+    },
+    {
+      "name": "Anthem",
+      "year": 2019,
+      "rank": "F",
+      "picture": "starwarsgalaxies.jpg",
+      "review": "A disappointing live-service game with solid core mechanics but lacking content and vision."
+    }
+  ]
 }
