@@ -1,6 +1,13 @@
 {
   "games": [
     {
+      "name": "Star Wars Galaxies",
+      "year": 2003,
+      "rank": "NP",
+      "picture": "swgalaxy.jpg",
+      "review": "MMORPG ambitieux situé dans l’univers Star Wars, salué à l’époque pour sa liberté et son immersion. Malheureusement, n’ayant pas pu l’essayer, je ne peux que constater qu’il a marqué de nombreux joueurs par son système de professions varié et son approche sandbox, même si beaucoup se souviennent aussi de mises à jour controversées. Son aura reste forte auprès des nostalgiques du MMO d’antan."
+    },
+    {
       "name": "Freedom Fighters",
       "year": 2003,
       "rank": "C",
