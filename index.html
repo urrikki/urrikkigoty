@@ -1,22 +1,47 @@
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GOTY</title>
-<link rel="preload" href="styles.css" as="style">
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOTY</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site-header">
-<h1 class="site-title">GOTY</h1>
-</header>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="trophy">🏆</div>
+        <h1 class="title">GOTY</h1>
+        <p class="subtitle">Game of the Year Award Winners</p>
+        
+        <div class="games-container">
+            <div class="game-card">
+                <div class="game-title">Elden Ring</div>
+                <div class="game-year">2022</div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-title">It Takes Two</div>
+                <div class="game-year">2021</div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-title">The Last of Us II</div>
+                <div class="game-year">2020</div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-title">Sekiro</div>
+                <div class="game-year">2019</div>
+            </div>
+            
+            <div class="game-card">
+                <div class="game-title">God of War</div>
+                <div class="game-year">2018</div>
+            </div>
+        </div>
+    </div>
 
-
-<main class="container">
-<section id="tiers" class="tiers"></section>
-</main>
-
-
-<script src="./scripts/index.js" defer></script>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>

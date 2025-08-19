@@ -1,81 +1,159 @@
 /* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  background: #1c1c1c url('pictures/pillars.jpg') no-repeat center top;
-  background-size: cover;
-  color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f1621 0%, #1c2331 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    color: #fff;
+    padding: 20px;
 }
 
-.site-header {
-  text-align: center;
-  padding: 2rem;
-  color: gold;
-  text-shadow: 2px 2px 5px #000;
+.container {
+    text-align: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 40px 20px;
 }
 
-.tiers {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
+.title {
+    font-size: 8rem;
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffd700, 
+                 0 0 20px #ffd700, 
+                 0 0 30px #ffd700, 
+                 0 0 40px #ff6b00, 
+                 0 0 70px #ff6b00, 
+                 0 0 80px #ff6b00;
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+    transition: all 0.5s ease;
+    animation: pulsate 2s infinite alternate;
+    line-height: 1.1;
 }
 
-.tier {
-  border: 2px solid gold;
-  border-radius: 10px;
-  padding: 1rem;
-  background: rgba(255, 215, 0, 0.1);
+.subtitle {
+    font-size: 2rem;
+    color: #ccc;
+    margin-bottom: 50px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-.tier-head {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+.trophy {
+    font-size: 5rem;
+    margin-bottom: 30px;
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    animation: spin 8s linear infinite;
 }
 
-.tier-badge {
-  font-weight: bold;
-  font-size: 2rem;
-  color: gold;
+.games-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
 }
 
-.tier-title {
-  font-size: 1.5rem;
+.game-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    width: 180px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
-.tier-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  text-align: center;
-  text-decoration: none;
-  color: white;
-  border: 1px solid gold;
-  border-radius: 5px;
-  background: rgba(0,0,0,0.4);
-  transition: transform 0.2s;
+.game-title {
+    font-size: 1.2rem;
+    color: #ffd700;
+    margin: 10px 0;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px gold;
+.game-year {
+    color: #aaa;
+    font-size: 0.9rem;
 }
 
-.card img {
-  width: 100%;
-  border-bottom: 1px solid gold;
-  border-radius: 5px 5px 0 0;
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
 }
 
-.card-title {
-  padding: 0.5rem;
-  font-weight: bold;
+@keyframes pulsate {
+    0% {
+        text-shadow: 0 0 10px #ffd700, 
+                     0 0 20px #ffd700, 
+                     0 0 30px #ffd700, 
+                     0 0 40px #ff6b00, 
+                     0 0 70px #ff6b00, 
+                     0 0 80px #ff6b00;
+    }
+    100% {
+        text-shadow: 0 0 5px #ffd700, 
+                     0 0 10px #ffd700, 
+                     0 0 15px #ffd700, 
+                     0 0 20px #ff6b00, 
+                     0 0 35px #ff6b00, 
+                     0 0 40px #ff6b00;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .trophy {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 3.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .game-card {
+        width: 150px;
+    }
 }
