@@ -1,60 +1,81 @@
 {
   "games": [
     {
-      "name": "The Witcher 3: Wild Hunt",
-      "year": 2015,
-      "rank": "S",
-      "picture": "freedomfighter.jpg",
-      "review": "A masterpiece of storytelling and world-building, with incredible depth and attention to detail."
-    },
-    {
-      "name": "God of War",
-      "year": 2018,
-      "rank": "S",
-      "picture": "maddennfl.jpg",
-      "review": "A stunning reimagining of the franchise with emotional depth and brutal combat."
-    },
-    {
-      "name": "The Last of Us Part II",
-      "year": 2020,
-      "rank": "A",
-      "picture": "metalgear3.jpg",
-      "review": "A technically brilliant but divisive game with incredible gameplay and narrative ambition."
-    },
-    {
-      "name": "Hollow Knight",
-      "year": 2017,
-      "rank": "A",
-      "picture": "ssx3.jpg",
-      "review": "A beautifully crafted metroidvania with challenging gameplay and a haunting atmosphere."
-    },
-    {
-      "name": "Cyberpunk 2077",
-      "year": 2020,
-      "rank": "B",
-      "picture": "tonyhawkunderground.jpg",
-      "review": "A flawed but ambitious RPG with an incredible world and story, despite technical issues."
-    },
-    {
-      "name": "Animal Crossing: New Horizons",
-      "year": 2020,
-      "rank": "B",
-      "picture": "burnout3.jpg",
-      "review": "A charming and relaxing life simulator that provided comfort during difficult times."
-    },
-    {
-      "name": "Death Stranding",
-      "year": 2019,
+      "name": "Freedom Fighters",
+      "year": 2003,
       "rank": "C",
-      "picture": "socom2.jpg",
-      "review": "A uniquely experimental game that divides players with its unconventional gameplay loop."
+      "picture": "freedomfighters.jpg",
+      "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York."
     },
     {
-      "name": "Anthem",
-      "year": 2019,
+      "name": "SOCOM II: U.S. Navy SEALs",
+      "year": 2003,
       "rank": "F",
-      "picture": "starwarsgalaxies.jpg",
-      "review": "A disappointing live-service game with solid core mechanics but lacking content and vision."
+      "picture": "socom2.jpg",
+      "review": "Un titre qui se voulait réaliste et tactique, mais dont la lenteur excessive et les IA défectueuses m’ont rapidement découragé. Voir ses alliés agir de manière incohérente brise toute immersion. Le multijoueur était salué, mais en solo, l’expérience est frustrante."
+    },
+    {
+      "name": "Madden NFL 2004",
+      "year": 2003,
+      "rank": "D",
+      "picture": "madden2004.jpg",
+      "review": "Simulation sportive de référence pour les amateurs de football américain, mais hermétique pour un novice. Mon expérience a été courte, freinée par un manque de compréhension des règles, bien que la technique et la profondeur stratégique soient indéniables."
+    },
+    {
+      "name": "Tony Hawk's Underground",
+      "year": 2003,
+      "rank": "B",
+      "picture": "thug.jpg",
+      "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate."
+    },
+    {
+      "name": "SSX 3",
+      "year": 2003,
+      "rank": "E",
+      "picture": "ssx3.jpg",
+      "review": "Jeu de snowboard arcade au style flashy et à la bande-son dynamique. Pourtant, le fun immédiat attendu n’a pas opéré, me rappelant un Mario Kart en moins engageant. Les critiques l’adoraient, mais pour moi, la descente fut courte."
+    },
+    {
+      "name": "Tom Clancy's Splinter Cell",
+      "year": 2003,
+      "rank": "D",
+      "picture": "splintercell.jpg",
+      "review": "Infiltration réaliste portée par Sam Fisher. Malheureusement, une avalanche de bugs m’a empêché de profiter pleinement de ses mécaniques furtives innovantes. Acclamé à l’époque comme rival de Metal Gear Solid, mais techniquement trahi."
+    },
+    {
+      "name": "Star Wars: Knights of the Old Republic",
+      "year": 2003,
+      "rank": "A",
+      "picture": "kotor.jpg",
+      "review": "Un monument du RPG narratif, offrant des dialogues riches, des choix moraux et un twist final marquant. Malgré quelques bugs et une illusion de liberté parfois frustrante, l’expérience reste magistrale et inoubliable."
+    },
+    {
+      "name": "GTA: Vice City",
+      "year": 2003,
+      "rank": "B",
+      "picture": "vicecity.jpg",
+      "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant."
+    },
+    {
+      "name": "Burnout 3: Takedown",
+      "year": 2004,
+      "rank": "A",
+      "picture": "burnout3.jpg",
+      "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre."
+    },
+    {
+      "name": "Metal Gear Solid 3: Snake Eater",
+      "year": 2004,
+      "rank": "D",
+      "picture": "mgs3.jpg",
+      "review": "Porté par une histoire et des cinématiques remarquables, mais le gameplay s’efface face aux longues cutscenes et contrôles peu fluides. Un scénario d’exception enfermé dans une expérience ludique déséquilibrée."
+    },
+    {
+      "name": "Half-Life 2: Episode One",
+      "year": 2004,
+      "rank": "S",
+      "picture": "hl2ep1.jpg",
+      "review": "Concentré d’action au rythme soutenu, offrant une diversité de missions réjouissante. Deux bugs mineurs seulement, une IA parfois agaçante, mais rien qui ternisse une masterclass de rythme et de maîtrise."
     }
   ]
 }

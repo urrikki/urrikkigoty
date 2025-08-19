@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetch game data
     fetch('data/games.json')
         .then(response => response.json())
         .then(data => {
@@ -9,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error loading game data:', error);
         });
 
-    // Modal functionality
     const modal = document.getElementById('gameModal');
     const closeModal = document.querySelector('.close-modal');
     
@@ -26,9 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeTierList(games) {
     const tierList = document.querySelector('.tier-list');
-    const tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'Not played'];
+    const tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'NP'];
     
-    // Create tier rows
     tiers.forEach(tier => {
         const tierRow = document.createElement('div');
         tierRow.className = `tier-row`;
@@ -46,7 +43,6 @@ function initializeTierList(games) {
         tierList.appendChild(tierRow);
     });
     
-    // Populate games
     games.forEach(game => {
         const gameElement = createGameElement(game);
         const tierContainer = document.getElementById(`tier-${game.rank.toLowerCase().replace(' ', '-')}`);
@@ -87,7 +83,7 @@ function showGameModal(game) {
     modalImage.src = `pictures/${game.picture}`;
     modalImage.alt = game.name;
     modalTitle.textContent = game.name;
-    modalYear.textContent = `Release Year: ${game.year}`;
+    modalYear.textContent = `Année de sortie : ${game.year}`;
     modalReview.textContent = game.review;
     
     modal.style.display = 'block';
