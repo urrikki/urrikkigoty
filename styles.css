@@ -5,101 +5,22 @@
 }
 
 body {
-    font-family: 'Times New Roman', serif;
+    font-family: 'Proxima Nova', serif;
+    background: linear-gradient(to bottom, #fdf8ee, #faeee2);
     color: #8B7500;
     min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(115deg, #fffaef 0%, rgb(0, 0, 0) 30%, #eb6f09 70%, #2905f5 100%);
-    z-index: -3;
-}
-
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
-        radial-gradient(circle at 40% 90%, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-    background-size: 300px 300px;
-    z-index: -2;
-    opacity: 0.4;
-}
-
-.particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.particle {
-    position: absolute;
-    background-color: rgba(212, 175, 55, 0.6);
-    border-radius: 50%;
-    animation: float 15s infinite linear;
-    opacity: 0;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.3;
-    }
-    90% {
-        opacity: 0.3;
-    }
-    100% {
-        transform: translateY(-100vh) translateX(50px) rotate(360deg);
-        opacity: 0;
-    }
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    position: relative;
 }
 
 header {
     text-align: center;
     margin-bottom: 40px;
     position: relative;
-    padding: 20px 0;
-}
-
-.header-decoration {
-    position: absolute;
-    width: 100%;
-    height: 40px;
-    top: 100%;
-    background-image: 
-        linear-gradient(to right, transparent 10%, #D4AF37 10%, #D4AF37 90%, transparent 90%),
-        linear-gradient(to right, transparent 20%, #D4AF37 20%, #D4AF37 80%, transparent 80%),
-        linear-gradient(to right, transparent 30%, #D4AF37 30%, #D4AF37 70%, transparent 70%);
-    background-repeat: no-repeat;
-    background-position: 0 0, 0 10px, 0 20px;
-    background-size: 100% 3px, 100% 2px, 100% 1px;
 }
 
 .main-title {
@@ -110,13 +31,12 @@ header {
     letter-spacing: 8px;
     margin-bottom: 10px;
     position: relative;
-    padding-bottom: 20px;
 }
 
 .main-title::after {
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
@@ -127,8 +47,6 @@ header {
 .crown-decoration {
     font-size: 3rem;
     animation: shine 3s infinite;
-    margin-top: 10px;
-    display: block;
 }
 
 .tier-list {
@@ -141,36 +59,12 @@ header {
 .tier-row {
     display: flex;
     min-height: 120px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.7);
     border: 2px solid #D4AF37;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
-
-.tier-row::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, 
-        transparent 0%, 
-        rgba(255, 215, 0, 0.05) 25%, 
-        transparent 50%,
-        rgba(255, 215, 0, 0.05) 75%,
-        transparent 100%);
-    background-size: 200% 200%;
-    animation: shimmer 8s infinite linear;
-    pointer-events: none;
-}
-
-@keyframes shimmer {
-    0% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
+    transition: transform 0.3s ease;
 }
 
 .tier-row:hover {
@@ -187,18 +81,16 @@ header {
     font-weight: bold;
     color: #fff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 1;
 }
 
-.tier-s { background: linear-gradient(to bottom, #8B0000, #6B0000); }
-.tier-a { background: linear-gradient(to bottom, #FF8C00, #CC7000); }
-.tier-b { background: linear-gradient(to bottom, #228B22, #1A6B1A); }
-.tier-c { background: linear-gradient(to bottom, #1E90FF, #1870CC); }
-.tier-d { background: linear-gradient(to bottom, #9932CC, #7A29A3); }
-.tier-e { background: linear-gradient(to bottom, #696969, #545454); }
-.tier-f { background: linear-gradient(to bottom, #8B4513, #6C370F); }
-.tier-not-played { background: linear-gradient(to bottom, #2F4F4F, #253F3F); }
+.tier-s { background-color: #fdf8ee; } 
+.tier-a { background-color: #fdf8ee; } 
+.tier-b { background-color: #fdf8ee; } 
+.tier-c { background-color: #fdf8ee; } 
+.tier-d { background-color: #fdf8ee; } 
+.tier-e { background-color: #fdf8ee; } 
+.tier-f { background-color: #fdf8ee; } 
+.tier-not-played { background-color: #fdf8ee; } 
 
 .tier-games {
     display: flex;
@@ -206,8 +98,6 @@ header {
     padding: 10px;
     gap: 15px;
     flex: 1;
-    position: relative;
-    z-index: 1;
 }
 
 .game-item {
@@ -219,7 +109,6 @@ header {
     overflow: hidden;
     transition: all 0.3s ease;
     position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .game-item:hover {
@@ -244,8 +133,7 @@ header {
     background: linear-gradient(
         135deg, 
         rgba(255, 255, 255, 0.2) 0%, 
-        rgba(255, 215, 0, 0.1) 50%,
-        rgba(255, 215, 0, 0.2) 100%
+        rgba(255, 215, 0, 0.1) 100%
     );
     pointer-events: none;
 }
@@ -336,20 +224,10 @@ header {
 }
 
 @keyframes shine {
-    0% { 
-        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-        transform: scale(1);
-    }
-    50% { 
-        text-shadow: 0 0 20px rgba(212, 175, 55, 0.9);
-        transform: scale(1.05);
-    }
-    100% { 
-        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-        transform: scale(1);
-    }
+    0% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.9); }
+    100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.5); }
 }
-
 
 @media (max-width: 768px) {
     .main-title {
@@ -375,4 +253,3 @@ header {
         height: 300px;
     }
 }
-
