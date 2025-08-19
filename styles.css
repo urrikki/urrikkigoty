@@ -6,21 +6,51 @@
 
 body {
     font-family: 'Proxima Nova', serif;
-    background: linear-gradient(to bottom, #fdf8ee, #faeee2);
+    background: linear-gradient(135deg, #ffffff, #fdf5e6, #fae8c8);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: #8B7500;
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle, rgba(212,175,55,0.6) 2px, transparent 2px);
+    background-size: 120px 120px;
+    animation: sparkle 12s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+@keyframes sparkle {
+    from { background-position: 0 0; }
+    to { background-position: 120px 120px; }
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 header {
     text-align: center;
     margin-bottom: 40px;
     position: relative;
+    z-index: 1;
 }
 
 .main-title {
@@ -54,6 +84,8 @@ header {
     flex-direction: column;
     gap: 15px;
     margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 .tier-row {
@@ -83,14 +115,16 @@ header {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.tier-s { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-a { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-b { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-c { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-d { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-e { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-f { background-color: rgba(255, 255, 255, 0.7); } 
-.tier-not-played { background-color: rgba(255, 255, 255, 0.7); } 
+.tier-s, 
+.tier-a, 
+.tier-b, 
+.tier-c, 
+.tier-d, 
+.tier-e, 
+.tier-f, 
+.tier-not-played {
+    background-color: rgba(255, 255, 255, 0.7);
+}
 
 .tier-games {
     display: flex;
