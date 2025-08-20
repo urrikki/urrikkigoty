@@ -59,7 +59,7 @@
     {
       "name": "GTA: Vice City",
       "year": 2003,
-      "rank": "B",
+      "rank": "C",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant."
     },
@@ -83,6 +83,13 @@
       "rank": "S",
       "picture": "hl2ep1.jpg",
       "review": "Concentré d’action au rythme soutenu, offrant une diversité de missions réjouissante. Deux bugs mineurs seulement, une IA parfois agaçante, mais rien qui ternisse une masterclass de rythme et de maîtrise."
+    },
+    {
+      "name": "GTA: San Andreas",
+      "year": 2004,
+      "rank": "B",
+      "picture": "sanandreas.jpg",
+      "review": "San Andreas reprend la formule de Vice City et la perfectionne sur de nombreux aspects : un monde plus vaste, une DA marquée, et surtout des personnages secondaires mémorables – avec une mention spéciale pour Woozie, sans doute l’un des plus attachants de la série. Pourtant, derrière cette grandeur, les vieux démons de GTA ressurgissent. L’abondance de contenu cache mal une variété en trompe-l’œil, où beaucoup d’activités paraissent accessoires ou mal rythmées. La conduite, omniprésente, finit par devenir une corvée. Certaines missions, notamment les phases d’infiltration aquatique ou celles de Zero, confinent à la punition. Et lorsque vient la fin, au lieu d’un feu d’artifice narratif, le jeu s’enlise dans une succession de missions répétitives, ternissant un parcours déjà exigeant. San Andreas est une fresque impressionnante, mais dont la longueur et les lourdeurs finissent par user même les joueurs les plus tenaces."
     }
   ]
 }
