@@ -138,7 +138,7 @@
       "year": 2006,
       "rank": "E",
       "picture": "graw.jpg",
-      "review": "Le jeu propose une approche punitive et tactique du FPS, servie par des graphismes remarquables pour son époque. Hélas, l’expérience est minée par l’IA alliée, totalement défaillante. Les soldats ignorent les ordres, empruntent des trajets absurdes, refusent de se mettre à couvert, et s’acharnent à tirer sur des ennemis qu’ils ne peuvent pas atteindre — allant jusqu’à répéter inlassablement leur impuissance. Résultat : j’ai passé l’essentiel de ma campagne à agir seul, multipliant les tirs précis pour économiser mes balles, ce qui annihile totalement l’intérêt tactique du titre."
+      "review": "Le jeu propose une approche punitive et tactique du FPS, servie par des graphismes remarquables pour son époque. Hélas, l’expérience est minée par l’IA alliée, totalement défaillante. Les soldats ignorent les ordres, empruntent des trajets absurdes, refusent de se mettre à couvert, et s’acharnent à tirer sur des ennemis qu’ils ne peuvent pas atteindre allant jusqu’à répéter inlassablement leur impuissance. Résultat : j’ai passé l’essentiel de ma campagne à agir seul, multipliant les tirs précis pour économiser mes balles, ce qui annihile totalement l’intérêt tactique du titre."
     },
     {
       "name": "Guitar Hero 2",
@@ -160,6 +160,13 @@
       "rank": "B",
       "picture": "gearofwar.jpg",
       "review": "Une véritable démonstration technique et cinématographique : chaque mise en scène donnait l’impression de plonger dans un film d’action. Ses mécaniques de TPS, désormais reconnues comme novatrices, et ses graphismes largement en avance sur leur temps en font un jalon incontournable. Pourtant, la campagne m’a paru terriblement courte, probablement la plus brève que j’aie jamais terminée. Le manque de diversité des armes et une galerie de personnages trop stéréotypés, prisonniers de clichés militaires, ternissent un peu l’ensemble."
+    },
+    {
+      "name": "The Elder Scrolls IV: Oblivion",
+      "year": 2006,
+      "rank": "A",
+      "picture": "oblivion.jpg",
+      "review": "Un monde ouvert, colossal, une liberté totale dans la création et l’évolution de son personnage, et surtout cette sensation unique de réellement appartenir à un univers vivant : Oblivion fut une véritable révélation. La bande-son magistrale sublime l’immersion. Mais l’expérience n’est pas exempte de défauts : des graphismes qui vieillissent mal, notamment d'étranges visages rigides, ainsi que des combats et des quêtes trop répétitifs. Savoir d’avance qu’un ennemi enverra toujours son projectile de feu ou un éclair et qu’il reste encore quatorze portes d’Oblivion à fermer finit par lasser. Malgré cela, le titre demeure une référence incontournable du RPG occidental."
     }
   ]
 }
