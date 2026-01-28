@@ -1,20 +1,15 @@
-// État global de l'application
 const AppState = {
     games: [],
     isAdminMode: false,
     currentEditingGame: null
 };
 
-// Configuration
 const CONFIG = {
-    ADMIN_KEY_SEQUENCE: ['a', 'd', 'm', 'i', 'n'], // Séquence pour activer le mode admin
+    ADMIN_KEY_SEQUENCE: ['a', 'd', 'm', 'i', 'n'], 
     keySequence: [],
     STORAGE_KEY: 'gotyGamesData'
 };
 
-// =======================
-// INITIALISATION
-// =======================
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
@@ -23,14 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function initializeApp() {
     try {
-        // Essayer de charger depuis localStorage d'abord
         const savedData = loadFromLocalStorage();
         
         if (savedData && savedData.games && savedData.games.length > 0) {
             AppState.games = savedData.games;
             console.log('Données chargées depuis localStorage');
         } else {
-            // Sinon charger depuis le fichier JSON
             const response = await fetch('data/games.json');
             if (!response.ok) throw new Error('Erreur de chargement du fichier JSON');
             const data = await response.json();
@@ -45,9 +38,6 @@ async function initializeApp() {
     }
 }
 
-// =======================
-// GESTION DU LOCALSTORAGE
-// =======================
 function saveToLocalStorage() {
     try {
         const data = { games: AppState.games };
@@ -71,11 +61,7 @@ function loadFromLocalStorage() {
     }
 }
 
-// =======================
-// GESTION DES EVENT LISTENERS
-// =======================
 function setupEventListeners() {
-    // Modal de détails
     const gameModal = document.getElementById('gameModal');
     const closeModal = gameModal.querySelector('.close-modal');
     
@@ -89,12 +75,10 @@ function setupEventListeners() {
         }
     });
     
-    // Bouton d'édition dans le modal
     document.getElementById('modalEditBtn').addEventListener('click', () => {
         editCurrentGame();
     });
     
-    // Modal d'ajout/édition
     const addGameModal = document.getElementById('addGameModal');
     const closeAddModal = document.getElementById('closeAddModal');
     
@@ -110,7 +94,6 @@ function setupEventListeners() {
         }
     });
     
-    // Formulaire d'ajout
     document.getElementById('addGameForm').addEventListener('submit', handleGameFormSubmit);
     document.getElementById('cancelAddGame').addEventListener('click', () => {
         addGameModal.style.display = 'none';
@@ -119,29 +102,23 @@ function setupEventListeners() {
     
     document.getElementById('deleteGameBtn').addEventListener('click', handleDeleteGame);
     
-    // Boutons admin
     document.getElementById('addGameBtn').addEventListener('click', openAddGameModal);
     document.getElementById('exportDataBtn').addEventListener('click', exportData);
     document.getElementById('exitAdminBtn').addEventListener('click', exitAdminMode);
 }
 
-// =======================
-// MODE ADMIN
-// =======================
 function setupAdminKeyListener() {
     document.addEventListener('keydown', (event) => {
         const key = event.key.toLowerCase();
         CONFIG.keySequence.push(key);
         
-        // Garder seulement les dernières touches
         if (CONFIG.keySequence.length > CONFIG.ADMIN_KEY_SEQUENCE.length) {
             CONFIG.keySequence.shift();
         }
         
-        // Vérifier si la séquence correspond
         if (CONFIG.keySequence.join('') === CONFIG.ADMIN_KEY_SEQUENCE.join('')) {
             toggleAdminMode();
-            CONFIG.keySequence = []; // Reset la séquence
+            CONFIG.keySequence = []; 
         }
     });
 }
@@ -179,9 +156,6 @@ function updateAdminUI() {
     }
 }
 
-// =======================
-// DRAG AND DROP
-// =======================
 function enableDragAndDrop() {
     const gameItems = document.querySelectorAll('.game-item');
     gameItems.forEach(item => {
@@ -263,7 +237,6 @@ function handleDrop(e) {
     const game = JSON.parse(gameData);
     const newTier = e.currentTarget.id.replace('tier-', '').toUpperCase().replace('-', ' ');
     
-    // Mettre à jour le rang du jeu
     updateGameRank(game.name, newTier);
     
     return false;
@@ -279,9 +252,6 @@ function updateGameRank(gameName, newRank) {
     }
 }
 
-// =======================
-// GESTION DES TIERS
-// =======================
 function initializeTierList() {
     const tierList = document.getElementById('tierList');
     tierList.innerHTML = '';
@@ -309,13 +279,11 @@ function initializeTierList() {
 }
 
 function populateGames() {
-    // Vider tous les conteneurs
     const tierGamesContainers = document.querySelectorAll('.tier-games');
     tierGamesContainers.forEach(container => {
         container.innerHTML = '';
     });
     
-    // Ajouter les jeux
     AppState.games.forEach(game => {
         const gameElement = createGameElement(game);
         const tierContainer = document.getElementById(`tier-${game.rank.toLowerCase()}`);
@@ -327,7 +295,6 @@ function populateGames() {
         }
     });
     
-    // Réactiver le drag & drop si en mode admin
     if (AppState.isAdminMode) {
         enableDragAndDrop();
     }
@@ -346,14 +313,13 @@ function createGameElement(game) {
     gameImage.src = `pictures/${game.picture}`;
     gameImage.alt = game.name;
     gameImage.onerror = function() {
-        this.src = 'pictures/placeholder.jpg'; // Image de secours
+        this.src = 'pictures/placeholder.jpg'; 
         console.warn(`Image non trouvée pour ${game.name}`);
     };
     
     gameItem.appendChild(gameImage);
     
     gameItem.addEventListener('click', function(e) {
-        // Ne pas ouvrir le modal si on est en train de drag
         if (!e.target.classList.contains('dragging')) {
             showGameModal(game);
         }
@@ -362,9 +328,6 @@ function createGameElement(game) {
     return gameItem;
 }
 
-// =======================
-// MODAL DE DÉTAILS
-// =======================
 function showGameModal(game) {
     const modal = document.getElementById('gameModal');
     const modalImage = modal.querySelector('.modal-image');
@@ -378,7 +341,6 @@ function showGameModal(game) {
     modalYear.textContent = `Année de sortie : ${game.year}`;
     modalReview.textContent = game.review;
     
-    // Stocker le jeu actuel pour l'édition
     AppState.currentEditingGame = game;
     
     modal.style.display = 'block';
@@ -391,9 +353,6 @@ function editCurrentGame() {
     }
 }
 
-// =======================
-// AJOUT / ÉDITION DE JEUX
-// =======================
 function openAddGameModal() {
     const modal = document.getElementById('addGameModal');
     const title = document.getElementById('addGameModalTitle');
@@ -415,7 +374,6 @@ function openEditGameModal(game) {
     title.textContent = 'Modifier le jeu';
     deleteBtn.style.display = 'block';
     
-    // Pré-remplir le formulaire
     document.getElementById('gameName').value = game.name;
     document.getElementById('gameYear').value = game.year;
     document.getElementById('gameRank').value = game.rank;
@@ -443,15 +401,12 @@ function handleGameFormSubmit(e) {
     };
     
     if (AppState.currentEditingGame) {
-        // Mode édition
         const index = AppState.games.findIndex(g => g.name === AppState.currentEditingGame.name);
         if (index !== -1) {
             AppState.games[index] = formData;
             showNotification('Jeu modifié avec succès !', 'success');
         }
     } else {
-        // Mode ajout
-        // Vérifier si le jeu existe déjà
         const exists = AppState.games.some(g => g.name.toLowerCase() === formData.name.toLowerCase());
         if (exists) {
             showNotification('Un jeu avec ce nom existe déjà !', 'error');
@@ -486,9 +441,6 @@ function handleDeleteGame() {
     }
 }
 
-// =======================
-// EXPORT DES DONNÉES
-// =======================
 function exportData() {
     const dataStr = JSON.stringify({ games: AppState.games }, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
@@ -505,16 +457,11 @@ function exportData() {
     showNotification('Données exportées avec succès !', 'success');
 }
 
-// =======================
-// NOTIFICATIONS
-// =======================
 function showNotification(message, type = 'info') {
-    // Créer l'élément de notification
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
     
-    // Styles inline pour la notification
     Object.assign(notification.style, {
         position: 'fixed',
         top: '20px',
@@ -529,7 +476,6 @@ function showNotification(message, type = 'info') {
         maxWidth: '400px'
     });
     
-    // Couleurs selon le type
     const colors = {
         success: { bg: '#28a745', color: '#fff' },
         error: { bg: '#dc3545', color: '#fff' },
@@ -540,10 +486,8 @@ function showNotification(message, type = 'info') {
     notification.style.backgroundColor = colors[type]?.bg || colors.info.bg;
     notification.style.color = colors[type]?.color || colors.info.color;
     
-    // Ajouter au DOM
     document.body.appendChild(notification);
     
-    // Supprimer après 3 secondes
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => {
@@ -552,7 +496,6 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Ajouter les animations CSS dynamiquement
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
