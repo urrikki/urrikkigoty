@@ -20,6 +20,8 @@
             <div class="header-controls">
                 <button class="icon-btn" id="filterBtn" title="Filtres">🔍</button>
                 <button class="icon-btn" id="statsBtn" title="Statistiques">📊</button>
+                <button class="icon-btn" id="randomGameBtn" title="Jeu aléatoire">🎲</button>
+                <button class="icon-btn" id="compareBtn" title="Mode comparaison">⚖️</button>
                 <button class="icon-btn" id="themeToggle" title="Changer le thème">🌙</button>
             </div>
             
@@ -71,20 +73,47 @@
         <!-- Stats Panel -->
         <div class="stats-panel" id="statsPanel" style="display: none;">
             <div class="stats-content">
-                <h3>📊 Statistiques</h3>
+                <h3>📊 Statistiques Avancées</h3>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="totalGames">0</div>
-                        <div class="stat-label">Jeux Total</div>
+                        <div class="stat-label">🎮 Total des jeux</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="avgYear">0</div>
-                        <div class="stat-label">Année Moyenne</div>
+                        <div class="stat-value" id="latestYear">0</div>
+                        <div class="stat-label">📅 Année la plus récente</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="topTier">-</div>
-                        <div class="stat-label">Tier le plus fourni</div>
+                        <div class="stat-value" id="topYear">-</div>
+                        <div class="stat-label">🏆 Année la plus fournie</div>
                     </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="oldestGame">-</div>
+                        <div class="stat-label">🕰️ Jeu(x) le plus ancien</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="topDecade">-</div>
+                        <div class="stat-label">📈 Décennie la plus représentée</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="font-size: 1.2rem;" id="tierDistribution">-</div>
+                        <div class="stat-label">📊 Distribution par tier</div>
+                    </div>
+                </div>
+                
+                <!-- Graphique des décennies -->
+                <div class="chart-container">
+                    <h4>📈 Répartition par décennie</h4>
+                    <div class="decade-chart" id="decadeChart"></div>
+                </div>
+                
+                <!-- Liste des jeux S tier -->
+                <div class="s-tier-list">
+                    <h4>👑 Jeux S Tier</h4>
+                    <div class="s-tier-games" id="sTierGames"></div>
                 </div>
             </div>
         </div>
@@ -100,7 +129,7 @@
         <div class="tier-list" id="tierList">
         </div>
         
-        <!-- Modals remain the same -->
+        <!-- Modal détails jeu -->
         <div class="game-modal" id="gameModal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
@@ -116,12 +145,13 @@
                             <p class="modal-review"></p>
                         </div>
                         <button class="modal-edit-btn" id="modalEditBtn" style="display: none;">✏️ Modifier</button>
+                        <button class="fav-btn" id="toggleFavorite" style="display: none;">🤍 Ajouter aux favoris</button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Add/Edit Game Modal -->
+        <!-- Modal ajout/édition -->
         <div class="game-modal" id="addGameModal">
             <div class="modal-content add-game-modal-content">
                 <span class="close-modal" id="closeAddModal">&times;</span>
@@ -189,10 +219,37 @@
                         <button type="button" class="btn-cancel" id="cancelLogin">Annuler</button>
                     </div>
                 </form>
+                <p style="color: #8B7500; margin-top: 20px; font-size: 0.9rem; font-style: italic;">
+                    💡 Triple-cliquez sur le titre "GOTY" pour ouvrir cette fenêtre
+                </p>
+            </div>
+        </div>
+        
+        <!-- Modal comparaison -->
+        <div class="game-modal" id="comparisonModal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeComparison">&times;</span>
+                <h2>⚖️ Comparaison</h2>
+                <div class="comparison-container" id="comparisonContainer">
+                </div>
+                <div class="comparison-instructions">
+                    <p>🎮 Sélectionnez 2 jeux en mode comparaison pour les comparer côte à côte</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Favoris Panel -->
+        <div class="favorites-panel" id="favoritesPanel" style="display: none;">
+            <div class="favorites-content">
+                <h3>❤️ Mes Favoris</h3>
+                <div class="favorites-list" id="favoritesList">
+                    <p class="empty-favorites">Aucun jeu favori pour le moment</p>
+                </div>
+                <button class="filter-btn secondary" id="closeFavorites">Fermer</button>
             </div>
         </div>
     </div>
-
+    
     <script src="scripts/index.js"></script>
 </body>
 </html>
