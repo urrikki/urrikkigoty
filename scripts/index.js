@@ -1,4 +1,11 @@
 // ===== ÉTAT GLOBAL =====
+const CONFIG = {
+    CONFIG: 'd7b57d313fdc4a5815eefcbc108ea5bf6c126f5bc187e231fe3bb10d',
+    ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000, // 24 hours
+    STORAGE_KEY: 'gotyGamesData',
+    DATA_PATH: 'data/games.json'
+};
+
 const AppState = {
     games: [],
     filteredGames: [],
@@ -41,7 +48,6 @@ async function initializeApp() {
         console.error('❌ Erreur lors du chargement des données:', error);
         showNotification('Erreur de chargement des données', 'error');
         
-        // Load empty state if no data
         AppState.games = [];
         AppState.filteredGames = [];
         initializeTierList();
@@ -49,7 +55,7 @@ async function initializeApp() {
 }
 
 // ===== AUTHENTIFICATION SÉCURISÉE =====
-async function sha256(message) {
+async function sha224(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -494,14 +500,12 @@ function handleGameFormSubmit(e) {
     };
     
     if (AppState.currentEditingGame) {
-        // Mode édition
         const index = AppState.games.findIndex(g => g.name === AppState.currentEditingGame.name);
         if (index !== -1) {
             AppState.games[index] = formData;
             showNotification('✅ Jeu modifié avec succès !', 'success');
         }
     } else {
-        // Mode ajout
         const exists = AppState.games.some(g => g.name.toLowerCase() === formData.name.toLowerCase());
         if (exists) {
             showNotification('❌ Un jeu avec ce nom existe déjà !', 'error');
@@ -586,13 +590,11 @@ function exportData() {
 function setupEventListeners() {
     console.log('Setting up event listeners...');
     
-    // Thème
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleTheme);
     }
     
-    // Filtres
     const filterBtn = document.getElementById('filterBtn');
     const statsBtn = document.getElementById('statsBtn');
     const applyFiltersBtn = document.getElementById('applyFilters');
@@ -605,7 +607,6 @@ function setupEventListeners() {
     if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetFilters);
     if (searchInput) searchInput.addEventListener('input', debounce(applyFilters, 300));
     
-    // Admin
     const addGameBtn = document.getElementById('addGameBtn');
     const exportDataBtn = document.getElementById('exportDataBtn');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -614,7 +615,6 @@ function setupEventListeners() {
     if (exportDataBtn) exportDataBtn.addEventListener('click', exportData);
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
     
-    // Login
     const loginForm = document.getElementById('loginForm');
     const closeLogin = document.getElementById('closeLogin');
     const cancelLogin = document.getElementById('cancelLogin');
@@ -623,10 +623,8 @@ function setupEventListeners() {
     if (closeLogin) closeLogin.addEventListener('click', () => closeModal('loginModal'));
     if (cancelLogin) cancelLogin.addEventListener('click', () => closeModal('loginModal'));
     
-    // Modals existants
     setupModalListeners();
     
-    // Formulaire
     const addGameForm = document.getElementById('addGameForm');
     const cancelAddGame = document.getElementById('cancelAddGame');
     const deleteGameBtn = document.getElementById('deleteGameBtn');
@@ -701,7 +699,6 @@ function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
     if (!panel) return;
     
-    // Fermer les autres panels
     const panels = ['filterPanel', 'statsPanel'];
     panels.forEach(id => {
         if (id !== panelId) {
@@ -710,7 +707,6 @@ function togglePanel(panelId) {
         }
     });
     
-    // Basculer l'affichage du panel actuel
     panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
 }
 
@@ -730,7 +726,6 @@ function toggleTheme() {
     showNotification(isDark ? 'Thème sombre activé' : 'Thème clair activé', 'info');
 }
 
-// Vérifier le thème sauvegardé au démarrage
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
@@ -740,7 +735,6 @@ if (savedTheme === 'dark') {
 
 // ===== NOTIFICATIONS =====
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
     const existingNotifications = document.querySelectorAll('.notification');
     existingNotifications.forEach(notification => {
         notification.remove();
@@ -815,7 +809,5 @@ function debounce(func, wait) {
 }
 
 // Message de démarrage
-console.log('%c🎮 GOTY Tier List - Enhanced Edition', 'font-size: 20px; font-weight: bold; color: #D4AF37;');
-console.log('%c🔐 Sécurité: Authentification SHA-256', 'font-size: 14px; color: #28a745;');
-console.log('%c⚙️ Triple-clic sur "GOTY" pour le mode admin', 'font-size: 12px; color: #8B7500;');
-console.log('🔧 Password par défaut: "admin"');
+console.log('%cWelcome', 'font-size: 20px; font-weight: bold; color: #D4AF37;');
+console.log('%I like tristan so bad 🥰', 'font-size: 20px; font-weight: bold; color: #4b1601;');
