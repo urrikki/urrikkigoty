@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
     createParticles();
-    checkSavedAuth();
     setupTitleClickListener();
+    checkSavedAuth();
 });
 
 async function initializeApp() {
@@ -28,8 +28,8 @@ async function initializeApp() {
             const response = await fetch('data/games.json');
             if (!response.ok) throw new Error('Erreur de chargement du fichier JSON');
             const data = await response.json();
-            AppState.games = data.games;
-            AppState.filteredGames = [...data.games];
+            AppState.games = data.games || [];
+            AppState.filteredGames = [...AppState.games];
             console.log('✅ Données chargées depuis games.json');
         }
         
@@ -40,6 +40,11 @@ async function initializeApp() {
     } catch (error) {
         console.error('❌ Erreur lors du chargement des données:', error);
         showNotification('Erreur de chargement des données', 'error');
+        
+        // Load empty state if no data
+        AppState.games = [];
+        AppState.filteredGames = [];
+        initializeTierList();
     }
 }
 
@@ -48,8 +53,7 @@ async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 function checkSavedAuth() {
@@ -102,19 +106,18 @@ function updateAdminUI() {
     const adminBadge = document.getElementById('adminBadge');
     const adminControls = document.getElementById('adminControls');
     const modalEditBtn = document.getElementById('modalEditBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
     
     if (AppState.isAdminMode) {
         body.classList.add('admin-mode');
         adminBadge.style.display = 'block';
         adminControls.style.display = 'flex';
-        modalEditBtn.style.display = 'block';
+        if (modalEditBtn) modalEditBtn.style.display = 'block';
         enableDragAndDrop();
     } else {
         body.classList.remove('admin-mode');
         adminBadge.style.display = 'none';
         adminControls.style.display = 'none';
-        modalEditBtn.style.display = 'none';
+        if (modalEditBtn) modalEditBtn.style.display = 'none';
         disableDragAndDrop();
     }
 }
@@ -122,6 +125,9 @@ function updateAdminUI() {
 // ===== PARTICLES =====
 function createParticles() {
     const container = document.getElementById('particles');
+    if (!container) return;
+    
+    container.innerHTML = '';
     for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -136,6 +142,8 @@ function createParticles() {
 // ===== FILTRES ET RECHERCHE =====
 function populateYearFilter() {
     const yearFilter = document.getElementById('yearFilter');
+    if (!yearFilter) return;
+    
     const years = [...new Set(AppState.games.map(g => g.year))].sort((a, b) => b - a);
     yearFilter.innerHTML = '<option value="">Toutes les années</option>';
     years.forEach(year => {
@@ -147,9 +155,15 @@ function populateYearFilter() {
 }
 
 function applyFilters() {
-    AppState.filters.search = document.getElementById('searchInput').value.toLowerCase();
-    AppState.filters.year = document.getElementById('yearFilter').value;
-    AppState.filters.tier = document.getElementById('tierFilter').value;
+    const searchInput = document.getElementById('searchInput');
+    const yearFilter = document.getElementById('yearFilter');
+    const tierFilter = document.getElementById('tierFilter');
+    
+    if (!searchInput || !yearFilter || !tierFilter) return;
+    
+    AppState.filters.search = searchInput.value.toLowerCase();
+    AppState.filters.year = yearFilter.value;
+    AppState.filters.tier = tierFilter.value;
     
     AppState.filteredGames = AppState.games.filter(game => {
         const matchSearch = !AppState.filters.search || 
@@ -166,9 +180,14 @@ function applyFilters() {
 }
 
 function resetFilters() {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('yearFilter').value = '';
-    document.getElementById('tierFilter').value = '';
+    const searchInput = document.getElementById('searchInput');
+    const yearFilter = document.getElementById('yearFilter');
+    const tierFilter = document.getElementById('tierFilter');
+    
+    if (searchInput) searchInput.value = '';
+    if (yearFilter) yearFilter.value = '';
+    if (tierFilter) tierFilter.value = '';
+    
     AppState.filters = { search: '', year: '', tier: '' };
     AppState.filteredGames = [...AppState.games];
     refreshTierList();
@@ -177,26 +196,39 @@ function resetFilters() {
 
 // ===== STATISTIQUES =====
 function updateStats() {
-    const total = AppState.games.length;
-    if (total === 0) return;
+    const totalGames = document.getElementById('totalGames');
+    const avgYear = document.getElementById('avgYear');
+    const topTier = document.getElementById('topTier');
     
-    const avgYear = Math.round(AppState.games.reduce((sum, g) => sum + g.year, 0) / total);
+    if (!totalGames || !avgYear || !topTier) return;
+    
+    const total = AppState.games.length;
+    if (total === 0) {
+        totalGames.textContent = '0';
+        avgYear.textContent = '0';
+        topTier.textContent = '-';
+        return;
+    }
+    
+    const avgYearValue = Math.round(AppState.games.reduce((sum, g) => sum + g.year, 0) / total);
     
     const tierCount = {};
     AppState.games.forEach(g => {
         tierCount[g.rank] = (tierCount[g.rank] || 0) + 1;
     });
     
-    const topTier = Object.entries(tierCount).sort((a, b) => b[1] - a[1])[0];
+    const topTierEntry = Object.entries(tierCount).sort((a, b) => b[1] - a[1])[0];
     
-    document.getElementById('totalGames').textContent = total;
-    document.getElementById('avgYear').textContent = avgYear;
-    document.getElementById('topTier').textContent = topTier ? `${topTier[0]} (${topTier[1]})` : '-';
+    totalGames.textContent = total;
+    avgYear.textContent = avgYearValue;
+    topTier.textContent = topTierEntry ? `${topTierEntry[0]} (${topTierEntry[1]})` : '-';
 }
 
 // ===== TIER LIST =====
 function initializeTierList() {
     const tierList = document.getElementById('tierList');
+    if (!tierList) return;
+    
     tierList.innerHTML = '';
     
     const tiers = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'NP'];
@@ -315,12 +347,11 @@ function handleDragEnd(e) {
 }
 
 function handleDragOver(e) {
-    if (e.preventDefault) e.preventDefault();
+    e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     
     const tierRow = e.currentTarget.closest('.tier-row');
     if (tierRow) tierRow.classList.add('drag-over');
-    return false;
 }
 
 function handleDragLeave(e) {
@@ -329,8 +360,8 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e) {
-    if (e.stopPropagation) e.stopPropagation();
     e.preventDefault();
+    e.stopPropagation();
     
     const tierRow = e.currentTarget.closest('.tier-row');
     if (tierRow) tierRow.classList.remove('drag-over');
@@ -359,22 +390,36 @@ function updateGameRank(gameName, newRank) {
 
 // ===== MODALS =====
 function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-    document.body.style.overflow = 'auto';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 }
 
 function showGameModal(game) {
     const modal = document.getElementById('gameModal');
-    modal.querySelector('.modal-image').src = `pictures/${game.picture}`;
-    modal.querySelector('.modal-title').textContent = game.name;
-    modal.querySelector('.modal-year').textContent = `📅 ${game.year}`;
-    modal.querySelector('.modal-tier').textContent = `🏆 Tier ${game.rank}`;
-    modal.querySelector('.modal-review').textContent = game.review;
+    if (!modal) return;
+    
+    const modalImage = modal.querySelector('.modal-image');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalYear = modal.querySelector('.modal-year');
+    const modalTier = modal.querySelector('.modal-tier');
+    const modalReview = modal.querySelector('.modal-review');
+    
+    if (modalImage) modalImage.src = `pictures/${game.picture}`;
+    if (modalTitle) modalTitle.textContent = game.name;
+    if (modalYear) modalYear.textContent = `📅 ${game.year}`;
+    if (modalTier) modalTier.textContent = `🏆 Tier ${game.rank}`;
+    if (modalReview) modalReview.textContent = game.review;
     
     AppState.currentEditingGame = game;
     openModal('gameModal');
@@ -383,24 +428,28 @@ function showGameModal(game) {
 // ===== AJOUT / ÉDITION =====
 function openAddGameModal() {
     const modal = document.getElementById('addGameModal');
+    if (!modal) return;
+    
     const title = document.getElementById('addGameModalTitle');
     const deleteBtn = document.getElementById('deleteGameBtn');
     
-    title.textContent = 'Ajouter un jeu';
-    deleteBtn.style.display = 'none';
-    resetAddGameForm();
+    if (title) title.textContent = 'Ajouter un jeu';
+    if (deleteBtn) deleteBtn.style.display = 'none';
     
+    resetAddGameForm();
     AppState.currentEditingGame = null;
     openModal('addGameModal');
 }
 
 function openEditGameModal(game) {
     const modal = document.getElementById('addGameModal');
+    if (!modal) return;
+    
     const title = document.getElementById('addGameModalTitle');
     const deleteBtn = document.getElementById('deleteGameBtn');
     
-    title.textContent = 'Modifier le jeu';
-    deleteBtn.style.display = 'block';
+    if (title) title.textContent = 'Modifier le jeu';
+    if (deleteBtn) deleteBtn.style.display = 'block';
     
     document.getElementById('gameName').value = game.name;
     document.getElementById('gameYear').value = game.year;
@@ -420,28 +469,39 @@ function editCurrentGame() {
 }
 
 function resetAddGameForm() {
-    document.getElementById('addGameForm').reset();
+    const form = document.getElementById('addGameForm');
+    if (form) form.reset();
     AppState.currentEditingGame = null;
 }
 
 function handleGameFormSubmit(e) {
     e.preventDefault();
     
+    const gameName = document.getElementById('gameName');
+    const gameYear = document.getElementById('gameYear');
+    const gameRank = document.getElementById('gameRank');
+    const gamePicture = document.getElementById('gamePicture');
+    const gameReview = document.getElementById('gameReview');
+    
+    if (!gameName || !gameYear || !gameRank || !gamePicture || !gameReview) return;
+    
     const formData = {
-        name: document.getElementById('gameName').value.trim(),
-        year: parseInt(document.getElementById('gameYear').value),
-        rank: document.getElementById('gameRank').value,
-        picture: document.getElementById('gamePicture').value.trim(),
-        review: document.getElementById('gameReview').value.trim()
+        name: gameName.value.trim(),
+        year: parseInt(gameYear.value),
+        rank: gameRank.value,
+        picture: gamePicture.value.trim(),
+        review: gameReview.value.trim()
     };
     
     if (AppState.currentEditingGame) {
+        // Mode édition
         const index = AppState.games.findIndex(g => g.name === AppState.currentEditingGame.name);
         if (index !== -1) {
             AppState.games[index] = formData;
             showNotification('✅ Jeu modifié avec succès !', 'success');
         }
     } else {
+        // Mode ajout
         const exists = AppState.games.some(g => g.name.toLowerCase() === formData.name.toLowerCase());
         if (exists) {
             showNotification('❌ Un jeu avec ce nom existe déjà !', 'error');
@@ -469,14 +529,14 @@ function handleDeleteGame() {
     if (confirmDelete) {
         const index = AppState.games.findIndex(g => g.name === AppState.currentEditingGame.name);
         if (index !== -1) {
-            const deletedGame = AppState.games.splice(index, 1)[0];
+            AppState.games.splice(index, 1);
             AppState.filteredGames = [...AppState.games];
             saveToLocalStorage();
             refreshTierList();
             updateStats();
             closeModal('addGameModal');
             resetAddGameForm();
-            showNotification(`🗑️ ${deletedGame.name} supprimé avec succès`, 'success');
+            showNotification(`🗑️ Jeu supprimé avec succès`, 'success');
         }
     }
 }
@@ -524,50 +584,88 @@ function exportData() {
 
 // ===== EVENT LISTENERS =====
 function setupEventListeners() {
-    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    console.log('Setting up event listeners...');
     
-    document.getElementById('filterBtn').addEventListener('click', () => togglePanel('filterPanel'));
-    document.getElementById('statsBtn').addEventListener('click', () => togglePanel('statsPanel'));
-    document.getElementById('applyFilters').addEventListener('click', applyFilters);
-    document.getElementById('resetFilters').addEventListener('click', resetFilters);
-    document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
+    // Thème
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
     
-    document.getElementById('addGameBtn').addEventListener('click', openAddGameModal);
-    document.getElementById('exportDataBtn').addEventListener('click', exportData);
-    document.getElementById('logoutBtn').addEventListener('click', logout);
+    // Filtres
+    const filterBtn = document.getElementById('filterBtn');
+    const statsBtn = document.getElementById('statsBtn');
+    const applyFiltersBtn = document.getElementById('applyFilters');
+    const resetFiltersBtn = document.getElementById('resetFilters');
+    const searchInput = document.getElementById('searchInput');
     
-    document.getElementById('loginForm').addEventListener('submit', handleLogin);
-    document.getElementById('closeLogin').addEventListener('click', () => closeModal('loginModal'));
+    if (filterBtn) filterBtn.addEventListener('click', () => togglePanel('filterPanel'));
+    if (statsBtn) statsBtn.addEventListener('click', () => togglePanel('statsPanel'));
+    if (applyFiltersBtn) applyFiltersBtn.addEventListener('click', applyFilters);
+    if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetFilters);
+    if (searchInput) searchInput.addEventListener('input', debounce(applyFilters, 300));
     
+    // Admin
+    const addGameBtn = document.getElementById('addGameBtn');
+    const exportDataBtn = document.getElementById('exportDataBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (addGameBtn) addGameBtn.addEventListener('click', openAddGameModal);
+    if (exportDataBtn) exportDataBtn.addEventListener('click', exportData);
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
+    
+    // Login
+    const loginForm = document.getElementById('loginForm');
+    const closeLogin = document.getElementById('closeLogin');
+    const cancelLogin = document.getElementById('cancelLogin');
+    
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+    if (closeLogin) closeLogin.addEventListener('click', () => closeModal('loginModal'));
+    if (cancelLogin) cancelLogin.addEventListener('click', () => closeModal('loginModal'));
+    
+    // Modals existants
     setupModalListeners();
     
-    document.getElementById('addGameForm').addEventListener('submit', handleGameFormSubmit);
-    document.getElementById('cancelAddGame').addEventListener('click', () => {
+    // Formulaire
+    const addGameForm = document.getElementById('addGameForm');
+    const cancelAddGame = document.getElementById('cancelAddGame');
+    const deleteGameBtn = document.getElementById('deleteGameBtn');
+    const modalEditBtn = document.getElementById('modalEditBtn');
+    
+    if (addGameForm) addGameForm.addEventListener('submit', handleGameFormSubmit);
+    if (cancelAddGame) cancelAddGame.addEventListener('click', () => {
         closeModal('addGameModal');
         resetAddGameForm();
     });
-    document.getElementById('deleteGameBtn').addEventListener('click', handleDeleteGame);
-    document.getElementById('modalEditBtn').addEventListener('click', editCurrentGame);
+    if (deleteGameBtn) deleteGameBtn.addEventListener('click', handleDeleteGame);
+    if (modalEditBtn) modalEditBtn.addEventListener('click', editCurrentGame);
+    
+    console.log('Event listeners setup complete');
 }
 
 function setupModalListeners() {
     ['gameModal', 'addGameModal', 'loginModal'].forEach(modalId => {
         const modal = document.getElementById(modalId);
-        const closeBtn = modal.querySelector('.close-modal');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => closeModal(modalId));
+        if (modal) {
+            const closeBtn = modal.querySelector('.close-modal');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => closeModal(modalId));
+            }
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal(modalId);
+            });
         }
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal(modalId);
-        });
     });
 }
 
 function setupTitleClickListener() {
+    const mainTitle = document.getElementById('mainTitle');
+    if (!mainTitle) return;
+    
     let clickCount = 0;
     let clickTimer = null;
     
-    document.getElementById('mainTitle').addEventListener('click', () => {
+    mainTitle.addEventListener('click', () => {
         clickCount++;
         if (clickCount === 1) {
             clickTimer = setTimeout(() => clickCount = 0, 600);
@@ -583,8 +681,12 @@ function setupTitleClickListener() {
 
 async function handleLogin(e) {
     e.preventDefault();
-    const password = document.getElementById('loginPassword').value;
+    const passwordInput = document.getElementById('loginPassword');
     const errorDiv = document.getElementById('loginError');
+    
+    if (!passwordInput || !errorDiv) return;
+    
+    const password = passwordInput.value;
     
     try {
         await login(password);
@@ -597,11 +699,19 @@ async function handleLogin(e) {
 
 function togglePanel(panelId) {
     const panel = document.getElementById(panelId);
-    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    if (!panel) return;
     
-    const otherPanelId = panelId === 'filterPanel' ? 'statsPanel' : 'filterPanel';
-    const otherPanel = document.getElementById(otherPanelId);
-    otherPanel.style.display = 'none';
+    // Fermer les autres panels
+    const panels = ['filterPanel', 'statsPanel'];
+    panels.forEach(id => {
+        if (id !== panelId) {
+            const otherPanel = document.getElementById(id);
+            if (otherPanel) otherPanel.style.display = 'none';
+        }
+    });
+    
+    // Basculer l'affichage du panel actuel
+    panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
 }
 
 function toggleTheme() {
@@ -611,19 +721,31 @@ function toggleTheme() {
     body.classList.toggle('dark-theme');
     const isDark = body.classList.contains('dark-theme');
     
-    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    if (themeToggle) {
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+    }
+    
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
     
     showNotification(isDark ? 'Thème sombre activé' : 'Thème clair activé', 'info');
 }
 
-if (localStorage.getItem('theme') === 'dark') {
+// Vérifier le thème sauvegardé au démarrage
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
     document.body.classList.add('dark-theme');
-    document.getElementById('themeToggle').textContent = '☀️';
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) themeToggle.textContent = '☀️';
 }
 
 // ===== NOTIFICATIONS =====
 function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => {
+        notification.remove();
+    });
+    
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
@@ -632,23 +754,22 @@ function showNotification(message, type = 'info') {
         position: 'fixed',
         top: '20px',
         right: '20px',
-        padding: '18px 30px',
-        borderRadius: '12px',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.3)',
+        padding: '15px 25px',
+        borderRadius: '10px',
+        boxShadow: '0 5px 20px rgba(0, 0, 0, 0.3)',
         zIndex: '10000',
         fontWeight: '600',
         fontSize: '1rem',
-        animation: 'slideIn 0.4s ease',
+        animation: 'slideIn 0.3s ease',
         maxWidth: '400px',
-        backdropFilter: 'blur(10px)',
         fontFamily: 'var(--font-body)'
     });
     
     const colors = {
-        success: { bg: 'rgba(40, 167, 69, 0.95)', color: '#fff' },
-        error: { bg: 'rgba(220, 53, 69, 0.95)', color: '#fff' },
-        info: { bg: 'rgba(23, 162, 184, 0.95)', color: '#fff' },
-        warning: { bg: 'rgba(255, 193, 7, 0.95)', color: '#333' }
+        success: { bg: '#28a745', color: '#fff' },
+        error: { bg: '#dc3545', color: '#fff' },
+        info: { bg: '#17a2b8', color: '#fff' },
+        warning: { bg: '#ffc107', color: '#333' }
     };
     
     notification.style.backgroundColor = colors[type]?.bg || colors.info.bg;
@@ -657,11 +778,31 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
     
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.4s ease';
+        notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 400);
-    }, 3500);
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Add notification animations to DOM
+if (!document.querySelector('#notification-styles')) {
+    const style = document.createElement('style');
+    style.id = 'notification-styles';
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // ===== UTILITAIRES =====
@@ -673,21 +814,8 @@ function debounce(func, wait) {
     };
 }
 
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from { transform: translateX(500px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOut {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(500px); opacity: 0; }
-    }
-`;
-document.head.appendChild(style);
-
 // Message de démarrage
 console.log('%c🎮 GOTY Tier List - Enhanced Edition', 'font-size: 20px; font-weight: bold; color: #D4AF37;');
 console.log('%c🔐 Sécurité: Authentification SHA-256', 'font-size: 14px; color: #28a745;');
 console.log('%c⚙️ Triple-clic sur "GOTY" pour le mode admin', 'font-size: 12px; color: #8B7500;');
+console.log('🔧 Password par défaut: "admin"');

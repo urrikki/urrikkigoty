@@ -18,8 +18,8 @@
         <header>
             <!-- Header controls -->
             <div class="header-controls">
-                <button class="icon-btn" id="statsBtn" title="Statistiques">📊</button>
                 <button class="icon-btn" id="filterBtn" title="Filtres">🔍</button>
+                <button class="icon-btn" id="statsBtn" title="Statistiques">📊</button>
                 <button class="icon-btn" id="themeToggle" title="Changer le thème">🌙</button>
             </div>
             
@@ -178,24 +178,31 @@
             <div class="modal-content login-modal-content">
                 <span class="close-modal" id="closeLogin">&times;</span>
                 <h2>🔐 Connexion Admin</h2>
-                <p style="color: #8B7500; margin-bottom: 20px;">Triple-cliquez sur le titre "GOTY" pour ouvrir cette fenêtre</p>
                 <form id="loginForm">
                     <div class="form-group">
                         <label>Mot de passe administrateur</label>
                         <input type="password" id="loginPassword" required>
                         <div class="form-error" id="loginError"></div>
                     </div>
-                    <button type="submit" class="btn-submit">Se connecter</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">Se connecter</button>
+                        <button type="button" class="btn-cancel" id="cancelLogin">Annuler</button>
+                    </div>
                 </form>
+                <p style="color: #8B7500; margin-top: 20px; font-size: 0.9rem; font-style: italic;">
+                    💡 Triple-cliquez sur le titre "GOTY" pour ouvrir cette fenêtre
+                </p>
             </div>
         </div>
     </div>
 
+    <!-- Include configuration and scripts -->
     <script>
         const CONFIG = {
             ADMIN_PASSWORD_HASH: '2348f998744212575d85959674f9607ab26f67708a917157472832386337c904',
-            ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000,
-            STORAGE_KEY: 'gotyGamesData'
+            ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000, // 24 hours
+            STORAGE_KEY: 'gotyGamesData',
+            DATA_PATH: 'data/games.json'
         };
     </script>
     
