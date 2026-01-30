@@ -102,6 +102,7 @@ header {
     right: 0;
     display: flex;
     gap: 10px;
+    z-index: 100; 
 }
 
 .icon-btn {
@@ -118,12 +119,8 @@ header {
     justify-content: center;
     box-shadow: 0 4px 10px var(--shadow);
     color: var(--text-primary);
-}
-
-.icon-btn:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 6px 20px var(--shadow-hover);
-    background: var(--accent-gold-light);
+    z-index: 101; 
+    position: relative; 
 }
 
 .main-title {
@@ -141,7 +138,15 @@ header {
     cursor: pointer;
     user-select: none;
     animation: titleFloat 6s ease-in-out infinite;
+    z-index: 1; 
 }
+
+.icon-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 20px var(--shadow-hover);
+    background: var(--accent-gold-light);
+}
+
 
 @keyframes titleFloat {
     0%, 100% { transform: translateY(0px); }
