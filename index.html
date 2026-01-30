@@ -9,65 +9,27 @@
 </head>
 <body>
 
-    <!-- Fond animé -->
-    <div id="particles" class="particles"></div>
+<div id="particles" class="particles"></div>
 
-    <div class="container">
-        <header>
-            <h1 class="main-title">GOTY</h1>
-            <div class="crown-decoration">👑</div>
-            <div class="admin-badge" id="adminBadge" style="display: none;">
-                <span>🔧 MODE ADMIN</span>
-            </div>
-        </header>
-        
-        <div class="admin-controls" id="adminControls" style="display: none;">
-            <button class="admin-btn" id="addGameBtn">➕ Ajouter un jeu</button>
-            <button class="admin-btn" id="exportDataBtn">💾 Exporter les données</button>
-            <button class="admin-btn" id="exitAdminBtn">🚪 Quitter le mode admin</button>
+<div class="container">
+    <header>
+        <h1 class="main-title">GOTY</h1>
+        <div class="crown-decoration">👑</div>
+        <div class="admin-badge" id="adminBadge" style="display:none;">
+            🔧 MODE ADMIN
         </div>
-        
-        <div class="tier-list" id="tierList"></div>
+    </header>
 
-        <!-- MODALE CONSULTATION -->
-        <div class="game-modal" id="gameModal">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <div class="modal-body">
-                    <img class="modal-image">
-                    <div class="modal-info">
-                        <h2 class="modal-title"></h2>
-                        <p class="modal-year"></p>
-                        <p class="modal-review"></p>
-                        <button id="modalEditBtn" style="display:none;">✏️ Modifier</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODALE AJOUT / ÉDITION -->
-        <div class="game-modal" id="addGameModal">
-            <div class="modal-content">
-                <span class="close-modal" id="closeAddModal">&times;</span>
-
-                <form id="addGameForm">
-                    <input id="gameName" placeholder="Nom du jeu" required>
-                    <input id="gameYear" type="number" placeholder="Année" required>
-                    <select id="gameRank">
-                        <option>S</option><option>A</option><option>B</option>
-                        <option>C</option><option>D</option><option>E</option>
-                        <option>F</option><option>NP</option>
-                    </select>
-                    <input id="gamePicture" placeholder="image.jpg" required>
-                    <textarea id="gameReview" required></textarea>
-
-                    <button type="submit">💾 Enregistrer</button>
-                    <button type="button" id="deleteGameBtn" style="display:none;">🗑️ Supprimer</button>
-                </form>
-            </div>
-        </div>
+    <div class="admin-controls" id="adminControls" style="display:none;">
+        <button id="addGameBtn">➕ Ajouter</button>
+        <button id="exportDataBtn">💾 Exporter</button>
+        <button id="exitAdminBtn">🚪 Quitter</button>
     </div>
 
-    <script src="scripts/index.js"></script>
+    <!-- LA TIER LIST -->
+    <div class="tier-list" id="tierList"></div>
+</div>
+
+<script src="scripts/index.js"></script>
 </body>
 </html>
