@@ -57,7 +57,7 @@ async function initializeApp() {
 // ===== AUTHENTIFICATION SÉCURISÉE =====
 async function sha224(message) {
     const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashBuffer = await crypto.subtle.digest('SHA-224', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
@@ -77,7 +77,7 @@ function checkSavedAuth() {
 }
 
 async function login(password) {
-    const hash = await sha256(password);
+    const hash = await sha224(password);
     
     if (hash === CONFIG.ADMIN_PASSWORD_HASH) {
         const expiryTime = Date.now() + CONFIG.ADMIN_SESSION_DURATION;
