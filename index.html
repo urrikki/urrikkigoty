@@ -4,67 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOTY Tier List</title>
-
     <link rel="icon" type="image/png" href="pictures/gotytrophy.png">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:wght@400;600&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div id="particles" class="particles"></div>
-
-<div class="container">
-    <header>
-        <div class="header-controls">
-            <button id="statsBtn">📊</button>
-            <button id="filterBtn">🔍</button>
+    <div class="container">
+        <header>
+            <h1 class="main-title">GOTY</h1>
+            <div class="crown-decoration">👑</div>
+            <div class="admin-badge" id="adminBadge" style="display: none;">
+                <span>🔧 MODE ADMIN</span>
+            </div>
+        </header>
+        
+        <div class="admin-controls" id="adminControls" style="display: none;">
+            <button class="admin-btn" id="addGameBtn">➕ Ajouter un jeu</button>
+            <button class="admin-btn" id="exportDataBtn">💾 Exporter les données</button>
+            <button class="admin-btn" id="exitAdminBtn">🚪 Quitter le mode admin</button>
         </div>
-
-        <h1 class="main-title" id="mainTitle">GOTY</h1>
-        <div class="title-underline"></div>
-        <div class="crown-decoration">👑</div>
-
-        <div class="admin-badge" id="adminBadge" style="display:none;">
-            🔧 MODE ADMIN ACTIF
+        
+        <div class="tier-list" id="tierList">
         </div>
-    </header>
-
-    <!-- Filtres -->
-    <section id="filterPanel" class="panel" style="display:none;">
-        <input type="text" id="searchInput" placeholder="Recherche...">
-        <select id="yearFilter"><option value="">Toutes les années</option></select>
-        <select id="tierFilter">
-            <option value="">Tous les tiers</option>
-            <option>S</option><option>A</option><option>B</option>
-            <option>C</option><option>D</option><option>E</option>
-            <option>F</option><option>NP</option>
-        </select>
-        <button id="applyFilters">Appliquer</button>
-        <button id="resetFilters">Réinitialiser</button>
-    </section>
-
-    <!-- Stats -->
-    <section id="statsPanel" class="panel" style="display:none;">
-        <p>Total jeux : <span id="totalGames">0</span></p>
-        <p>Année moyenne : <span id="avgYear">-</span></p>
-        <p>Tier dominant : <span id="topTier">-</span></p>
-    </section>
-
-    <!-- Admin -->
-    <div id="adminControls" class="admin-controls" style="display:none;">
-        <button id="addGameBtn">➕ Ajouter</button>
-        <button id="exportDataBtn">💾 Export</button>
-        <button id="logoutBtn">🚪 Quitter</button>
+        
+        <div class="game-modal" id="gameModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <img class="modal-image" src="" alt="">
+                    <div class="modal-info">
+                        <h2 class="modal-title"></h2>
+                        <p class="modal-year"></p>
+                        <div class="modal-review-container">
+                            <p class="modal-review"></p>
+                        </div>
+                        <button class="modal-edit-btn" id="modalEditBtn" style="display: none;">✏️ Modifier</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-modal" id="addGameModal">
+            <div class="modal-content add-game-modal-content">
+                <span class="close-modal" id="closeAddModal">&times;</span>
+                <h2 class="modal-title" id="addGameModalTitle">Ajouter un jeu</h2>
+                <form id="addGameForm" class="add-game-form">
+                    <div class="form-group">
+                        <label for="gameName">Nom du jeu *</label>
+                        <input type="text" id="gameName" name="gameName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gameYear">Année de sortie *</label>
+                        <input type="number" id="gameYear" name="gameYear" min="1950" max="2030" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gameRank">Tier *</label>
+                        <select id="gameRank" name="gameRank" required>
+                            <option value="S">S - Exceptionnel</option>
+                            <option value="A">A - Excellent</option>
+                            <option value="B">B - Très bon</option>
+                            <option value="C">C - Bon</option>
+                            <option value="D">D - Moyen</option>
+                            <option value="E">E - Décevant</option>
+                            <option value="F">F - Mauvais</option>
+                            <option value="NP">NP - Non joué</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gamePicture">Image (nom du fichier) *</label>
+                        <input type="text" id="gamePicture" name="gamePicture" placeholder="exemple.jpg" required>
+                        <small>Assurez-vous que l'image est dans le dossier "pictures"</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gameReview">Review *</label>
+                        <textarea id="gameReview" name="gameReview" rows="8" required></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">💾 Enregistrer</button>
+                        <button type="button" class="btn-cancel" id="cancelAddGame">❌ Annuler</button>
+                        <button type="button" class="btn-delete" id="deleteGameBtn" style="display: none;">🗑️ Supprimer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- Tier List -->
-    <div id="tierList" class="tier-list"></div>
-</div>
-
-<script src="scripts/index.js"></script>
+    <script src="scripts/index.js"></script>
 </body>
 </html>
