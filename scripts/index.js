@@ -1,6 +1,6 @@
 // ===== ÉTAT GLOBAL =====
 const CONFIG = {
-    TRISTAN: 'd7b57d313fdc4a5815eefcbc108ea5bf6c126f5bc187e231fe3bb10d',
+    TRISTAN: '99ca281cb3220890708c422c7c561a61f7fe1fef088faa232025c41b863a2f246a5b8ac6fd8965c60b3ac6e3686009f0',
     ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000, // 24 hours
     STORAGE_KEY: 'gotyGamesData',
     DATA_PATH: 'data/games.json'
@@ -55,9 +55,9 @@ async function initializeApp() {
 }
 
 // ===== AUTHENTIFICATION SÉCURISÉE =====
-async function sha224(message) {
+async function sha(message) {
     const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-224', msgBuffer);
+    const hashBuffer = await crypto.subtle.digest('SHA-384', msgBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
@@ -77,7 +77,7 @@ function checkSavedAuth() {
 }
 
 async function login(password) {
-    const hash = await sha224(password);
+    const hash = await sha(password);
     
     if (hash === CONFIG.TRISTAN) {
         const expiryTime = Date.now() + CONFIG.ADMIN_SESSION_DURATION;
