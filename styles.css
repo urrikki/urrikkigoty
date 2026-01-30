@@ -1,14 +1,15 @@
 :root
 {
     --gold: #d4af37;
+    --bg: #000;
 }
 
 body
 {
     margin: 0;
-    background: #000;
-    color: #fff;
-    font-family: inherit;
+    background: var(--bg);
+    color: #f5ebe0;
+    font-family: 'Lora', serif;
 }
 
 .container
@@ -18,60 +19,86 @@ body
     padding: 40px;
 }
 
-.main-title
+header
 {
-    font-size: 5rem;
-    letter-spacing: 12px;
     text-align: center;
+    position: relative;
 }
 
-.main-title::after
+.header-controls
 {
-    content: "";
-    display: block;
-    width: 120px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+
+button
+{
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.main-title
+{
+    font-family: 'Cinzel', serif;
+    font-size: 5rem;
+    letter-spacing: 12px;
+}
+
+.title-underline
+{
+    width: 140px;
     height: 4px;
     background: var(--gold);
-    margin: 20px auto;
+    margin: 15px auto;
 }
 
 .crown-decoration
 {
-    text-align: center;
     font-size: 3rem;
+}
+
+.admin-badge
+{
+    margin-top: 15px;
+    color: var(--gold);
+}
+
+.panel
+{
+    margin: 30px auto;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 .admin-controls
 {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
 }
 
-.admin-controls button
-{
-    background: transparent;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-/* ===== TIER LIST ===== */
+/* Tier list */
 
 .tier-list
 {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .tier-row
 {
     display: flex;
-    min-height: 120px;
     border: 2px solid #333;
+    min-height: 120px;
 }
 
 .tier-label
@@ -80,6 +107,7 @@ body
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Cinzel', serif;
     font-size: 2rem;
     background: #111;
 }
@@ -88,9 +116,9 @@ body
 {
     flex: 1;
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     padding: 10px;
-    flex-wrap: wrap;
 }
 
 .game-item img
@@ -101,7 +129,7 @@ body
     cursor: pointer;
 }
 
-/* ===== PARTICLES ===== */
+/* Particules */
 
 .particles
 {
@@ -124,5 +152,5 @@ body
 @keyframes float
 {
     from { transform: translateY(100vh); }
-    to   { transform: translateY(-10vh); }
+    to { transform: translateY(-10vh); }
 }

@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOTY Tier List</title>
+
     <link rel="icon" type="image/png" href="pictures/gotytrophy.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,21 +19,50 @@
 
 <div class="container">
     <header>
-        <h1 class="main-title">GOTY</h1>
+        <div class="header-controls">
+            <button id="statsBtn">📊</button>
+            <button id="filterBtn">🔍</button>
+        </div>
+
+        <h1 class="main-title" id="mainTitle">GOTY</h1>
+        <div class="title-underline"></div>
         <div class="crown-decoration">👑</div>
+
         <div class="admin-badge" id="adminBadge" style="display:none;">
-            🔧 MODE ADMIN
+            🔧 MODE ADMIN ACTIF
         </div>
     </header>
 
-    <div class="admin-controls" id="adminControls" style="display:none;">
+    <!-- Filtres -->
+    <section id="filterPanel" class="panel" style="display:none;">
+        <input type="text" id="searchInput" placeholder="Recherche...">
+        <select id="yearFilter"><option value="">Toutes les années</option></select>
+        <select id="tierFilter">
+            <option value="">Tous les tiers</option>
+            <option>S</option><option>A</option><option>B</option>
+            <option>C</option><option>D</option><option>E</option>
+            <option>F</option><option>NP</option>
+        </select>
+        <button id="applyFilters">Appliquer</button>
+        <button id="resetFilters">Réinitialiser</button>
+    </section>
+
+    <!-- Stats -->
+    <section id="statsPanel" class="panel" style="display:none;">
+        <p>Total jeux : <span id="totalGames">0</span></p>
+        <p>Année moyenne : <span id="avgYear">-</span></p>
+        <p>Tier dominant : <span id="topTier">-</span></p>
+    </section>
+
+    <!-- Admin -->
+    <div id="adminControls" class="admin-controls" style="display:none;">
         <button id="addGameBtn">➕ Ajouter</button>
-        <button id="exportDataBtn">💾 Exporter</button>
-        <button id="exitAdminBtn">🚪 Quitter</button>
+        <button id="exportDataBtn">💾 Export</button>
+        <button id="logoutBtn">🚪 Quitter</button>
     </div>
 
-    <!-- LA TIER LIST -->
-    <div class="tier-list" id="tierList"></div>
+    <!-- Tier List -->
+    <div id="tierList" class="tier-list"></div>
 </div>
 
 <script src="scripts/index.js"></script>
