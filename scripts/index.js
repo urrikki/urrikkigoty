@@ -1,6 +1,6 @@
 // ===== ÉTAT GLOBAL =====
 const CONFIG = {
-    CONFIG: 'd7b57d313fdc4a5815eefcbc108ea5bf6c126f5bc187e231fe3bb10d',
+    TRISTAN: 'd7b57d313fdc4a5815eefcbc108ea5bf6c126f5bc187e231fe3bb10d',
     ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000, // 24 hours
     STORAGE_KEY: 'gotyGamesData',
     DATA_PATH: 'data/games.json'
@@ -79,7 +79,7 @@ function checkSavedAuth() {
 async function login(password) {
     const hash = await sha224(password);
     
-    if (hash === CONFIG.ADMIN_PASSWORD_HASH) {
+    if (hash === CONFIG.TRISTAN) {
         const expiryTime = Date.now() + CONFIG.ADMIN_SESSION_DURATION;
         localStorage.setItem('adminAuth', 'true');
         localStorage.setItem('adminAuthExpiry', expiryTime.toString());
