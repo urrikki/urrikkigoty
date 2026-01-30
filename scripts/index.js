@@ -1,57 +1,89 @@
 const AppState =
 {
     games: [],
-    isAdminMode: false,
-    currentEditingGame: null
+    isAdminMode: false
 };
 
 const CONFIG =
 {
-    ADMIN_KEY_SEQUENCE: ['a','d','m','i','n'],
-    keySequence: [],
-    STORAGE_KEY: 'gotyGamesData'
+    STORAGE_KEY: "gotyGamesData"
 };
 
 const SECURITY =
 {
-    ADMIN_HASH: "2348f998744212575d85959674f9607ab26f67708a917157472832386337c904"
+    ADMIN_HASH: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
 };
 
-document.addEventListener('DOMContentLoaded', () =>
+document.addEventListener("DOMContentLoaded", () =>
 {
-    initializeApp();
-    setupAdminKeyListener();
+    loadGames();
+    buildTierList();
     createParticles();
+    setupAdminLogin();
 });
 
-async function initializeApp()
+async function loadGames()
 {
     const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+
     if (saved)
     {
         AppState.games = JSON.parse(saved).games;
     }
     else
     {
-        const res = await fetch('data/games.json');
+        const res = await fetch("data/games.json");
         AppState.games = (await res.json()).games;
     }
-    initializeTierList();
 }
 
-function save()
+function buildTierList()
 {
-    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ games: AppState.games }));
-}
+    const tiers = ["S","A","B","C","D","E","F","NP"];
+    const tierList = document.getElementById("tierList");
+    tierList.innerHTML = "";
 
-function setupAdminKeyListener()
-{
-    document.addEventListener('keydown', async e =>
+    tiers.forEach(tier =>
     {
-        CONFIG.keySequence.push(e.key.toLowerCase());
-        CONFIG.keySequence = CONFIG.keySequence.slice(-5);
+        const row = document.createElement("div");
+        row.className = "tier-row";
 
-        if (CONFIG.keySequence.join('') === 'admin')
+        const label = document.createElement("div");
+        label.className = "tier-label";
+        label.textContent = tier;
+
+        const games = document.createElement("div");
+        games.className = "tier-games";
+        games.id = `tier-${tier.toLowerCase()}`;
+
+        row.append(label, games);
+        tierList.appendChild(row);
+    });
+
+    populateGames();
+}
+
+function populateGames()
+{
+    AppState.games.forEach(game =>
+    {
+        const item = document.createElement("div");
+        item.className = "game-item";
+
+        const img = document.createElement("img");
+        img.src = `pictures/${game.picture}`;
+        img.alt = game.name;
+
+        item.appendChild(img);
+        document.getElementById(`tier-${game.rank.toLowerCase()}`).appendChild(item);
+    });
+}
+
+function setupAdminLogin()
+{
+    document.addEventListener("keydown", async e =>
+    {
+        if (e.key.toLowerCase() === "a")
         {
             const pwd = prompt("Mot de passe admin");
             if (!pwd) return;
@@ -59,61 +91,10 @@ function setupAdminKeyListener()
             const hash = await sha256(pwd);
             if (hash === SECURITY.ADMIN_HASH)
             {
-                AppState.isAdminMode = !AppState.isAdminMode;
-                updateAdminUI();
+                document.getElementById("adminBadge").style.display = "block";
+                document.getElementById("adminControls").style.display = "flex";
             }
-            else
-            {
-                alert("Mot de passe incorrect");
-            }
-            CONFIG.keySequence = [];
         }
-    });
-}
-
-function updateAdminUI()
-{
-    adminBadge.style.display = AppState.isAdminMode ? 'block' : 'none';
-    adminControls.style.display = AppState.isAdminMode ? 'flex' : 'none';
-}
-
-function initializeTierList()
-{
-    const tiers = ['S','A','B','C','D','E','F','NP'];
-    tierList.innerHTML = '';
-
-    tiers.forEach(t =>
-    {
-        const row = document.createElement('div');
-        row.className = 'tier-row';
-
-        const label = document.createElement('div');
-        label.textContent = t;
-
-        const games = document.createElement('div');
-        games.className = 'tier-games';
-        games.id = `tier-${t.toLowerCase()}`;
-
-        row.append(label, games);
-        tierList.appendChild(row);
-    });
-
-    refresh();
-}
-
-function refresh()
-{
-    document.querySelectorAll('.tier-games').forEach(c => c.innerHTML = '');
-    AppState.games.forEach(g =>
-    {
-        const el = document.createElement('div');
-        el.className = 'game-item';
-
-        const img = document.createElement('img');
-        img.src = `pictures/${g.picture}`;
-        el.appendChild(img);
-
-        document.getElementById(`tier-${g.rank.toLowerCase()}`).appendChild(el);
     });
 }
 
@@ -122,7 +103,7 @@ async function sha256(text)
     const data = new TextEncoder().encode(text);
     const hash = await crypto.subtle.digest("SHA-256", data);
     return Array.from(new Uint8Array(hash))
-        .map(b => b.toString(16).padStart(2, "0"))
+        .map(b => b.toString(16).padStart(2,"0"))
         .join("");
 }
 
