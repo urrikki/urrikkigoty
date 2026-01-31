@@ -73,7 +73,7 @@
         <!-- Stats Panel -->
         <div class="stats-panel" id="statsPanel" style="display: none;">
             <div class="stats-content">
-                <h3>📊 Statistiques Avancées</h3>
+                <h3>📊 Statistiques</h3>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value" id="totalGames">0</div>
@@ -84,36 +84,15 @@
                         <div class="stat-label">📅 Année la plus récente</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="topYear">-</div>
-                        <div class="stat-label">🏆 Année la plus fournie</div>
+                        <div class="stat-value" id="latestGame">-</div>
+                        <div class="stat-label">🆕 Dernier jeu ajouté</div>
                     </div>
                 </div>
                 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="oldestGame">-</div>
-                        <div class="stat-label">🕰️ Jeu(x) le plus ancien</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="topDecade">-</div>
-                        <div class="stat-label">📈 Décennie la plus représentée</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" style="font-size: 1.2rem;" id="tierDistribution">-</div>
-                        <div class="stat-label">📊 Distribution par tier</div>
-                    </div>
-                </div>
-                
-                <!-- Graphique des décennies -->
+                <!-- Tier Distribution Visualization -->
                 <div class="chart-container">
-                    <h4>📈 Répartition par décennie</h4>
-                    <div class="decade-chart" id="decadeChart"></div>
-                </div>
-                
-                <!-- Liste des jeux S tier -->
-                <div class="s-tier-list">
-                    <h4>👑 Jeux S Tier</h4>
-                    <div class="s-tier-games" id="sTierGames"></div>
+                    <h4>📊 Distribution par Tier</h4>
+                    <div class="tier-distribution-chart" id="tierDistributionChart"></div>
                 </div>
             </div>
         </div>
@@ -235,17 +214,6 @@
                 <div class="comparison-instructions">
                     <p>🎮 Sélectionnez 2 jeux en mode comparaison pour les comparer côte à côte</p>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Favoris Panel -->
-        <div class="favorites-panel" id="favoritesPanel" style="display: none;">
-            <div class="favorites-content">
-                <h3>❤️ Mes Favoris</h3>
-                <div class="favorites-list" id="favoritesList">
-                    <p class="empty-favorites">Aucun jeu favori pour le moment</p>
-                </div>
-                <button class="filter-btn secondary" id="closeFavorites">Fermer</button>
             </div>
         </div>
     </div>

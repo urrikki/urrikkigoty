@@ -4,7 +4,12 @@ const AppState = {
     filteredGames: [],
     isAdminMode: false,
     currentEditingGame: null,
-    filters: { search: '', year: '', tier: '' },
+    filters: { 
+        search: '', 
+        year: '', 
+        tier: '', 
+        favoritesOnly: false 
+    },
     comparisonMode: false,
     selectedForComparison: []
 };
@@ -176,6 +181,10 @@ function applyFilters() {
     AppState.filters.year = yearFilter.value;
     AppState.filters.tier = tierFilter.value;
     
+    // Get favorites
+    const favorites = JSON.parse(localStorage.getItem('gotyFavorites') || '[]');
+    const favoriteNames = favorites.map(f => f.name);
+    
     AppState.filteredGames = AppState.games.filter(game => {
         const matchSearch = !AppState.filters.search || 
             game.name.toLowerCase().includes(AppState.filters.search);
@@ -183,11 +192,15 @@ function applyFilters() {
             game.year.toString() === AppState.filters.year;
         const matchTier = !AppState.filters.tier || 
             game.rank === AppState.filters.tier;
-        return matchSearch && matchYear && matchTier;
+        const matchFavorites = !AppState.filters.favoritesOnly || 
+            favoriteNames.includes(game.name);
+        
+        return matchSearch && matchYear && matchTier && matchFavorites;
     });
     
     refreshTierList();
-    showNotification(`${AppState.filteredGames.length} jeu(x) trouvé(s)`, 'info');
+    const count = AppState.filteredGames.length;
+    showNotification(`${count} jeu${count !== 1 ? 'x' : ''} trouvé${count !== 1 ? 's' : ''}`, 'info');
 }
 
 function resetFilters() {
@@ -199,13 +212,26 @@ function resetFilters() {
     if (yearFilter) yearFilter.value = '';
     if (tierFilter) tierFilter.value = '';
     
-    AppState.filters = { search: '', year: '', tier: '' };
+    AppState.filters = { 
+        search: '', 
+        year: '', 
+        tier: '', 
+        favoritesOnly: false
+    };
+    
+    // Reset favorites button
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (favoritesBtn) {
+        favoritesBtn.textContent = '🤍';
+        favoritesBtn.style.background = '';
+    }
+    
     AppState.filteredGames = [...AppState.games];
     refreshTierList();
     showNotification('Filtres réinitialisés', 'info');
 }
 
-// ===== NOUVELLES STATISTIQUES =====
+// ===== STATISTIQUES SIMPLIFIÉES =====
 function updateStats() {
     if (AppState.games.length === 0) return;
     
@@ -217,103 +243,90 @@ function updateStats() {
     const latestYear = Math.max(...AppState.games.map(g => g.year));
     document.getElementById('latestYear').textContent = latestYear;
     
-    // 3. Année avec le plus de jeux
-    const yearCounts = {};
-    AppState.games.forEach(g => {
-        yearCounts[g.year] = (yearCounts[g.year] || 0) + 1;
-    });
-    const topYear = Object.entries(yearCounts).sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('topYear').textContent = topYear ? `${topYear[0]} (${topYear[1]} jeux)` : '-';
+    // 3. Dernier jeu ajouté (le plus récent par année)
+    const latestGames = AppState.games.filter(g => g.year === latestYear);
+    const latestGameName = latestGames.length > 0 ? 
+        `${latestGames[0].name} (${latestGames[0].year})` : '-';
+    document.getElementById('latestGame').textContent = latestGameName;
     
-    // 4. Distribution des tiers
+    // 4. Distribution des tiers avec visualisation
     const tierCounts = {};
     AppState.games.forEach(g => {
         tierCounts[g.rank] = (tierCounts[g.rank] || 0) + 1;
     });
     
-    let tierDistribution = [];
-    Object.entries(tierCounts).forEach(([tier, count]) => {
-        const percentage = Math.round((count / total) * 100);
-        tierDistribution.push(`${tier}: ${percentage}%`);
-    });
+    // Créer un graphique visuel pour la distribution
+    renderTierDistributionChart(tierCounts, total);
+}
+
+function renderTierDistributionChart(tierCounts, total) {
+    const chartContainer = document.getElementById('tierDistributionChart');
+    if (!chartContainer) return;
+    
+    chartContainer.innerHTML = '';
     
     const tierOrder = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'NP'];
-    tierDistribution.sort((a, b) => {
-        const tierA = a.split(':')[0];
-        const tierB = b.split(':')[0];
-        return tierOrder.indexOf(tierA) - tierOrder.indexOf(tierB);
-    });
+    const colors = {
+        'S': '#FFD700',
+        'A': '#FF6B6B',
+        'B': '#4ECDC4',
+        'C': '#45B7D1',
+        'D': '#96CEB4',
+        'E': '#FFEAA7',
+        'F': '#DDA0DD',
+        'NP': '#778899'
+    };
     
-    document.getElementById('tierDistribution').textContent = tierDistribution.join(' | ');
-    
-    // 5. Jeu le plus ancien
-    const oldestYear = Math.min(...AppState.games.map(g => g.year));
-    const oldestGames = AppState.games.filter(g => g.year === oldestYear);
-    document.getElementById('oldestGame').textContent = `${oldestYear} (${oldestGames.length} jeu${oldestGames.length > 1 ? 'x' : ''})`;
-    
-    // 6. Distribution par décennie
-    const decades = {};
-    AppState.games.forEach(g => {
-        const decade = Math.floor(g.year / 10) * 10;
-        decades[decade] = (decades[decade] || 0) + 1;
-    });
-    
-    const topDecade = Object.entries(decades).sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('topDecade').textContent = topDecade ? `${topDecade[0]}s (${topDecade[1]} jeux)` : '-';
-    
-    // 7. Graphique des décennies
-    renderDecadeChart(decades);
-    
-    // 8. Liste des jeux S tier
-    renderSTierGames();
-}
-
-function renderDecadeChart(decades) {
-    const decadeChart = document.getElementById('decadeChart');
-    if (!decadeChart) return;
-    
-    const maxCount = Math.max(...Object.values(decades));
-    if (maxCount === 0) return;
-    
-    decadeChart.innerHTML = '';
-    Object.entries(decades).sort((a, b) => a[0] - b[0]).forEach(([decade, count]) => {
+    tierOrder.forEach(tier => {
+        const count = tierCounts[tier] || 0;
+        const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+        
+        const barContainer = document.createElement('div');
+        barContainer.className = 'tier-distribution-bar-container';
+        barContainer.style.margin = '8px 0';
+        
+        const tierInfo = document.createElement('div');
+        tierInfo.className = 'tier-info';
+        tierInfo.style.display = 'flex';
+        tierInfo.style.justifyContent = 'space-between';
+        tierInfo.style.marginBottom = '4px';
+        
+        const tierLabel = document.createElement('span');
+        tierLabel.className = 'tier-label-small';
+        tierLabel.textContent = `Tier ${tier}`;
+        tierLabel.style.fontWeight = 'bold';
+        tierLabel.style.color = colors[tier];
+        
+        const tierStats = document.createElement('span');
+        tierStats.className = 'tier-stats';
+        tierStats.textContent = `${count} jeu${count !== 1 ? 'x' : ''} (${percentage}%)`;
+        tierStats.style.color = 'var(--text-secondary)';
+        
+        tierInfo.appendChild(tierLabel);
+        tierInfo.appendChild(tierStats);
+        
+        const barBackground = document.createElement('div');
+        barBackground.className = 'tier-bar-background';
+        barBackground.style.height = '20px';
+        barBackground.style.background = 'var(--bg-tier)';
+        barBackground.style.borderRadius = '10px';
+        barBackground.style.overflow = 'hidden';
+        
         const bar = document.createElement('div');
-        bar.className = 'decade-bar';
-        bar.style.height = `${(count / maxCount) * 100}%`;
-        bar.title = `${decade}s: ${count} jeu${count > 1 ? 'x' : ''}`;
+        bar.className = 'tier-bar';
+        bar.style.width = `${percentage}%`;
+        bar.style.height = '100%';
+        bar.style.background = colors[tier];
+        bar.style.borderRadius = '10px';
+        bar.style.transition = 'width 1s ease-in-out';
+        bar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
         
-        const label = document.createElement('div');
-        label.className = 'decade-label';
-        label.textContent = `${decade}s`;
+        barBackground.appendChild(bar);
         
-        bar.appendChild(label);
-        decadeChart.appendChild(bar);
+        barContainer.appendChild(tierInfo);
+        barContainer.appendChild(barBackground);
+        chartContainer.appendChild(barContainer);
     });
-}
-
-function renderSTierGames() {
-    const sTierGames = document.getElementById('sTierGames');
-    if (!sTierGames) return;
-    
-    const sGames = AppState.games.filter(g => g.rank === 'S');
-    
-    sTierGames.innerHTML = '';
-    sGames.slice(0, 8).forEach(game => {
-        const item = document.createElement('div');
-        item.className = 's-tier-game-item';
-        item.textContent = game.name;
-        item.title = `${game.name} (${game.year})`;
-        sTierGames.appendChild(item);
-    });
-    
-    if (sGames.length > 8) {
-        const more = document.createElement('div');
-        more.className = 's-tier-game-item';
-        more.textContent = `+${sGames.length - 8} autres`;
-        more.style.background = 'var(--bg-secondary)';
-        more.style.color = 'var(--text-secondary)';
-        sTierGames.appendChild(more);
-    }
 }
 
 // ===== TIER LIST =====
@@ -447,13 +460,14 @@ function toggleFocusMode(tier) {
 
 // ===== DÉCOUVERTE ALÉATOIRE =====
 function showRandomGame() {
-    if (AppState.filteredGames.length === 0) {
+    if (AppState.games.length === 0) {
         showNotification('Aucun jeu à afficher', 'warning');
         return;
     }
     
-    const randomIndex = Math.floor(Math.random() * AppState.filteredGames.length);
-    const randomGame = AppState.filteredGames[randomIndex];
+    // Use ALL games, not filtered games
+    const randomIndex = Math.floor(Math.random() * AppState.games.length);
+    const randomGame = AppState.games[randomIndex];
     
     // Animation du bouton
     const randomBtn = document.getElementById('randomGameBtn');
@@ -462,7 +476,7 @@ function showRandomGame() {
     setTimeout(() => {
         randomBtn.style.animation = '';
         showGameModal(randomGame);
-        showNotification(`Découverte : ${randomGame.name}`, 'info');
+        showNotification(`🎲 Découverte aléatoire : ${randomGame.name}`, 'info');
     }, 1000);
 }
 
@@ -471,19 +485,38 @@ function setupFavoritesButton() {
     const favoritesBtn = document.createElement('button');
     favoritesBtn.className = 'icon-btn';
     favoritesBtn.id = 'favoritesBtn';
-    favoritesBtn.title = 'Mes favoris';
-    favoritesBtn.textContent = '❤️';
+    favoritesBtn.title = 'Afficher les favoris';
+    favoritesBtn.textContent = '🤍';
     
     document.querySelector('.header-controls').appendChild(favoritesBtn);
     
     favoritesBtn.addEventListener('click', () => {
-        togglePanel('favoritesPanel');
-        renderFavorites();
+        toggleFavoritesFilter();
     });
     
-    document.getElementById('closeFavorites').addEventListener('click', () => {
-        document.getElementById('favoritesPanel').style.display = 'none';
-    });
+    // Update button state on load
+    updateFavoritesButton();
+}
+
+function toggleFavoritesFilter() {
+    AppState.filters.favoritesOnly = !AppState.filters.favoritesOnly;
+    applyFilters();
+    updateFavoritesButton();
+}
+
+function updateFavoritesButton() {
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (!favoritesBtn) return;
+    
+    if (AppState.filters.favoritesOnly) {
+        favoritesBtn.textContent = '❤️';
+        favoritesBtn.style.background = 'var(--accent-gold)';
+        showNotification('Filtre favoris activé', 'success');
+    } else {
+        favoritesBtn.textContent = '🤍';
+        favoritesBtn.style.background = '';
+        showNotification('Filtre favoris désactivé', 'info');
+    }
 }
 
 function toggleFavorite() {
@@ -500,8 +533,7 @@ function toggleFavorite() {
             name: game.name, 
             year: game.year,
             rank: game.rank,
-            picture: game.picture,
-            added: new Date().toISOString() 
+            picture: game.picture
         });
         if (favBtn) favBtn.innerHTML = '❤️ Retirer des favoris';
         showNotification(`${game.name} ajouté aux favoris`, 'success');
@@ -513,9 +545,9 @@ function toggleFavorite() {
     
     localStorage.setItem('gotyFavorites', JSON.stringify(favorites));
     
-    // Mettre à jour l'affichage si le panneau est ouvert
-    if (document.getElementById('favoritesPanel').style.display === 'block') {
-        renderFavorites();
+    // If favorites filter is active, refresh the tier list
+    if (AppState.filters.favoritesOnly) {
+        applyFilters();
     }
 }
 
@@ -530,65 +562,35 @@ function updateFavoriteButton(game) {
     favBtn.style.display = 'block';
 }
 
-function renderFavorites() {
-    const favoritesList = document.getElementById('favoritesList');
-    if (!favoritesList) return;
-    
-    const favorites = JSON.parse(localStorage.getItem('gotyFavorites') || '[]');
-    
-    if (favorites.length === 0) {
-        favoritesList.innerHTML = '<p class="empty-favorites">Aucun jeu favori pour le moment</p>';
-        return;
-    }
-    
-    favoritesList.innerHTML = '';
-    favorites.forEach((fav, index) => {
-        const favItem = document.createElement('div');
-        favItem.className = 'favorite-item';
-        
-        favItem.innerHTML = `
-            <div>
-                <div class="favorite-name">${fav.name}</div>
-                <div class="favorite-year">${fav.year} • Tier ${fav.rank}</div>
-            </div>
-            <button class="remove-favorite" data-index="${index}">✕</button>
-        `;
-        
-        favoritesList.appendChild(favItem);
-    });
-    
-    // Ajouter les événements de suppression
-    document.querySelectorAll('.remove-favorite').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.dataset.index);
-            removeFavorite(index);
-        });
-    });
-}
-
-function removeFavorite(index) {
-    const favorites = JSON.parse(localStorage.getItem('gotyFavorites') || '[]');
-    const removedGame = favorites.splice(index, 1)[0];
-    
-    localStorage.setItem('gotyFavorites', JSON.stringify(favorites));
-    renderFavorites();
-    showNotification(`${removedGame.name} retiré des favoris`, 'info');
-}
-
 // ===== COMPARAISON DE JEUX =====
 function toggleComparisonMode() {
     AppState.comparisonMode = !AppState.comparisonMode;
     const compareBtn = document.getElementById('compareBtn');
+    const body = document.body;
     
     if (AppState.comparisonMode) {
         compareBtn.style.background = 'var(--accent-gold)';
+        compareBtn.style.animation = 'pulse 1s infinite';
+        body.classList.add('comparison-mode');
         AppState.selectedForComparison = [];
-        showNotification('Mode comparaison activé - Sélectionnez 2 jeux', 'info');
+        showNotification('⚖️ Mode comparaison activé - Sélectionnez 2 jeux', 'info');
+        
+        // Add selection indicator to all games
+        document.querySelectorAll('.game-item').forEach(item => {
+            item.style.boxShadow = '0 0 0 2px var(--accent-gold)';
+        });
     } else {
         compareBtn.style.background = '';
+        compareBtn.style.animation = '';
+        body.classList.remove('comparison-mode');
         clearComparisonSelection();
         showNotification('Mode comparaison désactivé', 'info');
         closeModal('comparisonModal');
+        
+        // Remove selection indicator
+        document.querySelectorAll('.game-item').forEach(item => {
+            item.style.boxShadow = '';
+        });
     }
 }
 
@@ -597,11 +599,13 @@ function selectForComparison(game, element) {
         // Déselectionner
         AppState.selectedForComparison = AppState.selectedForComparison.filter(g => g.name !== game.name);
         element.classList.remove('comparison-selected');
+        element.style.boxShadow = '0 0 0 2px var(--accent-gold)';
     } else {
         // Sélectionner (max 2)
         if (AppState.selectedForComparison.length < 2) {
             AppState.selectedForComparison.push(game);
             element.classList.add('comparison-selected');
+            element.style.boxShadow = '0 0 0 4px var(--accent-red)';
         } else {
             showNotification('Maximum 2 jeux pour la comparaison', 'warning');
             return;
@@ -610,13 +614,16 @@ function selectForComparison(game, element) {
     
     // Si 2 jeux sélectionnés, afficher la comparaison
     if (AppState.selectedForComparison.length === 2) {
-        showComparisonModal();
+        setTimeout(() => {
+            showComparisonModal();
+        }, 500);
     }
 }
 
 function clearComparisonSelection() {
     document.querySelectorAll('.game-item.comparison-selected').forEach(item => {
         item.classList.remove('comparison-selected');
+        item.style.boxShadow = '0 0 0 2px var(--accent-gold)';
     });
     AppState.selectedForComparison = [];
 }
@@ -1061,7 +1068,7 @@ function togglePanel(panelId) {
     if (!panel) return;
     
     // Fermer les autres panels
-    const panels = ['filterPanel', 'statsPanel', 'favoritesPanel'];
+    const panels = ['filterPanel', 'statsPanel'];
     panels.forEach(id => {
         if (id !== panelId) {
             const otherPanel = document.getElementById(id);
@@ -1172,9 +1179,3 @@ function debounce(func, wait) {
         timeout = setTimeout(() => func(...args), wait);
     };
 }
-
-// Message de démarrage
-console.log('%c🎮 GOTY Tier List - Enhanced Edition', 'font-size: 20px; font-weight: bold; color: #D4AF37;');
-console.log('%c🔐 Sécurité: Authentification SHA-384', 'font-size: 14px; color: #28a745;');
-console.log('%c⚙️ Triple-clic sur "GOTY" pour le mode admin', 'font-size: 12px; color: #8B7500;');
-console.log('🔧 Password par défaut: "admin" (changez le hash !)');
