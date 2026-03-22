@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>GOTY Tier List</title>
     <link rel="icon" type="image/png" href="pictures/gotytrophy.png">
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -99,7 +100,7 @@
             </div>
         </div>
 
-        <!-- Admin controls (visible only in admin mode) -->
+        <!-- Admin controls -->
         <div class="admin-controls" id="adminControls" style="display: none;">
             <button class="admin-btn" id="addGameBtn"><i class="fas fa-plus-circle"></i> Ajouter un jeu</button>
             <button class="admin-btn" id="exportDataBtn"><i class="fas fa-download"></i> Exporter JSON</button>
@@ -111,7 +112,7 @@
             <div class="tier-list" id="tierList"></div>
         </div>
 
-        <!-- Modals -->
+        <!-- Modals (same structure as before, but with refined classes) -->
         <div class="modal" id="gameModal">
             <div class="modal-content">
                 <button class="modal-close"><i class="fas fa-times"></i></button>
@@ -140,6 +141,7 @@
                 <button class="modal-close" id="closeAddModal"><i class="fas fa-times"></i></button>
                 <h2 class="modal-title" id="addGameModalTitle"><i class="fas fa-plus-circle"></i> Ajouter un jeu</h2>
                 <form id="addGameForm" class="add-game-form">
+                    <!-- form fields same as before -->
                     <div class="form-row">
                         <div class="form-group">
                             <label><i class="fas fa-gamepad"></i> Nom *</label>
