@@ -17,32 +17,9 @@ const CONFIG = {
     STORAGE_KEY: 'gotyGamesData'
 };
 
-const DEFAULT_GAMES = [
-    { name: "Baldur's Gate 3", year: 2023, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co670h.webp", review: "Un chef-d'œuvre du RPG. Larian Studios repousse toutes les limites du genre avec une liberté de choix vertigineuse, un système de combat D&D 5e parfaitement adapté et une narration exceptionnelle." },
-    { name: "Elden Ring", year: 2022, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp", review: "FromSoftware et Miyazaki signent leur magnum opus. L'open world sublime la formule Souls avec une direction artistique à couper le souffle." },
-    { name: "The Legend of Zelda: Tears of the Kingdom", year: 2023, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5vmg.webp", review: "Nintendo réinvente encore la formule Zelda. Le système Ultrahand transforme chaque joueur en ingénieur créatif." },
-    { name: "God of War Ragnarök", year: 2022, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5s5v.webp", review: "Santa Monica Studio livre une suite épique et émouvante. Le combat est plus riche, les royaumes plus variés." },
-    { name: "Hades", year: 2020, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2a24.webp", review: "Supergiant Games réinvente le roguelike avec un gameplay addictif et une narration qui se dévoile à chaque run." },
-    { name: "The Last of Us Part II", year: 2020, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5ziw.webp", review: "Naughty Dog repousse les limites techniques et narratives. Ambitieux dans sa structure et son propos." },
-    { name: "Sekiro: Shadows Die Twice", year: 2019, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7f.webp", review: "Le système de parade est une révolution. Un jeu d'action exigeant et incroyablement satisfaisant." },
-    { name: "Disco Elysium", year: 2019, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1sfj.webp", review: "ZA/UM crée un RPG purement narratif d'une profondeur littéraire rarement vue dans le jeu vidéo." },
-    { name: "It Takes Two", year: 2021, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2tvk.webp", review: "Hazelight prouve que le jeu coopératif peut être une expérience narrative riche." },
-    { name: "Deathloop", year: 2021, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2jbv.webp", review: "Arkane maîtrise la boucle temporelle avec style. Level design intelligent." },
-    { name: "Resident Evil Village", year: 2021, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2ls1.webp", review: "Capcom continue de renouveler la franchise. Lady Dimitrescu et le village sont mémorables." },
-    { name: "Metroid Dread", year: 2021, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3r4i.webp", review: "MercurySteam ressuscite le Metroid 2D avec maestria. Les zones EMMI créent une tension palpable." },
-    { name: "Astro Bot", year: 2024, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co91in.webp", review: "Team Asobi livre un platformer 3D joyeux et inventif, débordant de surprises." },
-    { name: "Final Fantasy VII Rebirth", year: 2024, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7l5e.webp", review: "Square Enix réussit un monde ouvert captivant et un combat hybride encore plus raffiné." },
-    { name: "Stellar Blade", year: 2024, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7iov.webp", review: "Shift Up surprend avec un action-RPG solide au combat satisfaisant." },
-    { name: "Cyberpunk 2077", year: 2020, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4hk1.webp", review: "Après les patchs, le jeu révèle enfin tout son potentiel narratif et son monde fascinant." },
-    { name: "Star Wars Jedi: Survivor", year: 2023, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.webp", review: "Respawn élargit la formule avec succès. Plus de stances, un monde plus ouvert." },
-    { name: "Alan Wake 2", year: 2023, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bos.webp", review: "Remedy signe un survival horror d'auteur. La double narration est brillante." },
-    { name: "Ghost of Tsushima", year: 2020, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5gy5.webp", review: "Sucker Punch crée le plus bel open world de la génération. Combat au katana viscéral." },
-    { name: "Stray", year: 2022, rank: 'C', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4hrz.webp", review: "Une expérience courte mais charmante. Incarner un chat en ville cyberpunk est fun." },
-    { name: "Forspoken", year: 2023, rank: 'D', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co52gd.webp", review: "Open world générique malgré un système de magie parkour intéressant." },
-    { name: "Saints Row (2022)", year: 2022, rank: 'E', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4xhe.webp", review: "Volition rate le reboot. Ton incertain, bugs et monde vide." },
-    { name: "Skull and Bones", year: 2024, rank: 'F', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co80pe.webp", review: "Ubisoft livre un jeu de pirates creux, répétitif et sans âme." },
-    { name: "Metaphor: ReFantazio", year: 2024, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co8ckv.webp", review: "Atlus transcende le genre JRPG avec un univers fantasy politique captivant et une DA somptueuse." }
-];
+const DEFAULT_GAMES = [];
+
+const DATA_PATH = 'data/games.json';
 
 const TIERS = ['S','A','B','C','D','E','F','NP'];
 const TIER_COLORS = { S:'#d97706', A:'#ef4444', B:'#10b981', C:'#3b82f6', D:'#8b5cf6', E:'#ec4899', F:'#6b7280', NP:'#94a3b8' };
@@ -56,15 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
 });
 
-function initializeApp() {
-    const saved = loadFromLocalStorage();
-    AppState.games = (saved?.games?.length) ? saved.games : [...DEFAULT_GAMES];
-    AppState.filteredGames = [...AppState.games];
-    renderCurrentView();
-    updateStats();
-    populateYearFilter();
-    updateGameCount();
-    showNotification('Tier List chargée', 'success');
+async function initializeApp() {
+    try {
+        const saved = loadFromLocalStorage();
+        if (saved?.games?.length) {
+            AppState.games = saved.games;
+        } else {
+            const response = await fetch(DATA_PATH);
+            const data = await response.json();
+            AppState.games = data.games || [];
+        }
+        AppState.filteredGames = [...AppState.games];
+        renderCurrentView();
+        updateStats();
+        populateYearFilter();
+        updateGameCount();
+        showNotification('Tier List chargée', 'success');
+    } catch (err) {
+        console.error(err);
+        showNotification('Erreur de chargement', 'error');
+    }
 }
 
 // ===== NOTIFICATIONS =====
@@ -184,7 +172,7 @@ function createGameElement(game, index = 0) {
     if (AppState.selectedForComparison.some(g => g.name === game.name)) div.classList.add('compare-selected');
     div.style.animationDelay = `${index * 0.03}s`;
     const img = document.createElement('img');
-    img.src = game.picture;
+    img.src = game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture;
     img.alt = game.name;
     img.loading = 'lazy';
     img.onerror = () => img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23ddd"/></svg>';
@@ -243,7 +231,7 @@ function renderGallery() {
         card.className = 'gallery-card';
         card.style.animationDelay = `${i * 0.02}s`;
         card.innerHTML = `
-            <div class="gallery-card-img"><img src="${game.picture}" alt="${game.name}" loading="lazy"></div>
+            <div class="gallery-card-img"><img src="${game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture}" alt="${game.name}" loading="lazy"></div>
             <div class="gallery-card-info">
                 <h3>${game.name}</h3>
                 <div class="gallery-card-meta">
@@ -419,7 +407,7 @@ function showComparisonModal() {
     AppState.selectedForComparison.forEach(g => {
         container.innerHTML += `
             <div class="comparison-game">
-                <img src="${g.picture}" alt="${g.name}">
+                <img src="${g.picture.startsWith('http') ? g.picture : 'pictures/' + g.picture}" alt="${g.name}">
                 <div class="comparison-game-info">
                     <h3>${g.name}</h3>
                     <p class="meta"><i class="far fa-calendar-alt"></i> ${g.year} &nbsp; <i class="fas fa-trophy"></i> Tier ${g.rank}</p>
@@ -435,7 +423,7 @@ function openModal(id) { const m = document.getElementById(id); if (m) m.style.d
 function closeModal(id) { const m = document.getElementById(id); if (m) m.style.display = 'none'; }
 
 function showGameModal(game) {
-    document.getElementById('modalImage').src = game.picture;
+    document.getElementById('modalImage').src = game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture;
     document.getElementById('modalTitle').innerText = game.name;
     document.getElementById('modalYear').innerHTML = `<i class="far fa-calendar-alt"></i> ${game.year}`;
     document.getElementById('modalTier').innerHTML = `<i class="fas fa-trophy"></i> Tier ${game.rank}`;
