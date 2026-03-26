@@ -135,9 +135,10 @@ function toggleTheme() {
 function switchView(view) {
     AppState.currentView = view;
     document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-    document.getElementById('tierListView').style.display = view === 'tierlist' ? 'block' : 'none';
-    document.getElementById('timelineView').style.display = view === 'timeline' ? 'block' : 'none';
-    document.getElementById('galleryView').style.display = view === 'gallery' ? 'block' : 'none';
+    document.getElementById('tierListView').style.display = view === 'tierlist' ? '' : 'none';
+    document.getElementById('timelineView').style.display = view === 'timeline' ? '' : 'none';
+    document.getElementById('galleryView').style.display = view === 'gallery' ? '' : 'none';
+    
     renderCurrentView();
 }
 

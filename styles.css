@@ -206,17 +206,12 @@ body::before {
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: flex-start;
+    width: 100%;
 }
 
 .gallery-card {
-    width: 150px;
+    width: 200px;
     flex-shrink: 0;
-    cursor: pointer;
-    border: 1px solid var(--border-light);
-    background: var(--bg-surface);
-    overflow: hidden;
-    transition: var(--transition);
-    animation: gameAppear 0.25s ease-out both;
 }
 
 .gallery-card-img {
