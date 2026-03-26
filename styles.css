@@ -199,8 +199,9 @@ body::before {
 /* ===== GALLERY ===== */
 .gallery-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
+    gap: 1.2rem;
+    justify-content: center;
 }
 
 .gallery-card {
@@ -210,29 +211,46 @@ body::before {
     overflow: hidden;
     transition: var(--transition);
     animation: gameAppear 0.25s ease-out both;
+    width: 150px; /* largeur fixe */
 }
 
 .gallery-card-img {
-    aspect-ratio: 3/4;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
 }
 
+.gallery-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-card-img img {
+    transform: scale(1.05);
+}
+
 .gallery-card-info {
-    padding: 0.5rem;
+    padding: 0.6rem;
 }
 
 .gallery-card-info h3 {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
 }
 
 .gallery-card-meta {
-    font-size: 0.5rem;
-    gap: 0.3rem;
+    font-size: 0.6rem;
+    color: var(--accent-muted);
+    display: flex;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 /* ===== ADMIN ===== */
