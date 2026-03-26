@@ -202,15 +202,15 @@ body::before {
 }
 
 .gallery-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
-    justify-content: start;  /* pour aligner à gauche, éviter l'étirement */
-    width: 100%;
+    justify-content: flex-start;
 }
 
 .gallery-card {
-    width: 150px; /* largeur fixe pour chaque carte */
+    width: 150px;
+    flex-shrink: 0;
     cursor: pointer;
     border: 1px solid var(--border-light);
     background: var(--bg-surface);
