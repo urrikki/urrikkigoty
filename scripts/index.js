@@ -4,22 +4,48 @@ const AppState = {
     filteredGames: [],
     isAdminMode: false,
     currentEditingGame: null,
-    filters: { 
-        search: '', 
-        year: '', 
-        tier: '', 
-        favoritesOnly: false 
-    },
+    filters: { search: '', year: '', tier: '', favoritesOnly: false },
+    sortBy: 'default',
     comparisonMode: false,
-    selectedForComparison: []
+    selectedForComparison: [],
+    currentView: 'tierlist'
 };
 
 const CONFIG = {
     TRISTAN: 'b53f3d5a331ac7ba157a9745e50ef88531f577d84ad1059ad287fdc26575161d62a154e1bc2a5143f24b4760846e49d6',
     ADMIN_SESSION_DURATION: 24 * 60 * 60 * 1000,
-    STORAGE_KEY: 'gotyGamesData',
-    DATA_PATH: 'data/games.json'
+    STORAGE_KEY: 'gotyGamesData'
 };
+
+const DEFAULT_GAMES = [
+    { name: "Baldur's Gate 3", year: 2023, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co670h.webp", review: "Un chef-d'œuvre du RPG. Larian Studios repousse toutes les limites du genre avec une liberté de choix vertigineuse, un système de combat D&D 5e parfaitement adapté et une narration exceptionnelle." },
+    { name: "Elden Ring", year: 2022, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp", review: "FromSoftware et Miyazaki signent leur magnum opus. L'open world sublime la formule Souls avec une direction artistique à couper le souffle." },
+    { name: "The Legend of Zelda: Tears of the Kingdom", year: 2023, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5vmg.webp", review: "Nintendo réinvente encore la formule Zelda. Le système Ultrahand transforme chaque joueur en ingénieur créatif." },
+    { name: "God of War Ragnarök", year: 2022, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5s5v.webp", review: "Santa Monica Studio livre une suite épique et émouvante. Le combat est plus riche, les royaumes plus variés." },
+    { name: "Hades", year: 2020, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2a24.webp", review: "Supergiant Games réinvente le roguelike avec un gameplay addictif et une narration qui se dévoile à chaque run." },
+    { name: "The Last of Us Part II", year: 2020, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5ziw.webp", review: "Naughty Dog repousse les limites techniques et narratives. Ambitieux dans sa structure et son propos." },
+    { name: "Sekiro: Shadows Die Twice", year: 2019, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7f.webp", review: "Le système de parade est une révolution. Un jeu d'action exigeant et incroyablement satisfaisant." },
+    { name: "Disco Elysium", year: 2019, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1sfj.webp", review: "ZA/UM crée un RPG purement narratif d'une profondeur littéraire rarement vue dans le jeu vidéo." },
+    { name: "It Takes Two", year: 2021, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2tvk.webp", review: "Hazelight prouve que le jeu coopératif peut être une expérience narrative riche." },
+    { name: "Deathloop", year: 2021, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2jbv.webp", review: "Arkane maîtrise la boucle temporelle avec style. Level design intelligent." },
+    { name: "Resident Evil Village", year: 2021, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2ls1.webp", review: "Capcom continue de renouveler la franchise. Lady Dimitrescu et le village sont mémorables." },
+    { name: "Metroid Dread", year: 2021, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co3r4i.webp", review: "MercurySteam ressuscite le Metroid 2D avec maestria. Les zones EMMI créent une tension palpable." },
+    { name: "Astro Bot", year: 2024, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co91in.webp", review: "Team Asobi livre un platformer 3D joyeux et inventif, débordant de surprises." },
+    { name: "Final Fantasy VII Rebirth", year: 2024, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7l5e.webp", review: "Square Enix réussit un monde ouvert captivant et un combat hybride encore plus raffiné." },
+    { name: "Stellar Blade", year: 2024, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co7iov.webp", review: "Shift Up surprend avec un action-RPG solide au combat satisfaisant." },
+    { name: "Cyberpunk 2077", year: 2020, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4hk1.webp", review: "Après les patchs, le jeu révèle enfin tout son potentiel narratif et son monde fascinant." },
+    { name: "Star Wars Jedi: Survivor", year: 2023, rank: 'B', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5w0w.webp", review: "Respawn élargit la formule avec succès. Plus de stances, un monde plus ouvert." },
+    { name: "Alan Wake 2", year: 2023, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co6bos.webp", review: "Remedy signe un survival horror d'auteur. La double narration est brillante." },
+    { name: "Ghost of Tsushima", year: 2020, rank: 'A', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5gy5.webp", review: "Sucker Punch crée le plus bel open world de la génération. Combat au katana viscéral." },
+    { name: "Stray", year: 2022, rank: 'C', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4hrz.webp", review: "Une expérience courte mais charmante. Incarner un chat en ville cyberpunk est fun." },
+    { name: "Forspoken", year: 2023, rank: 'D', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co52gd.webp", review: "Open world générique malgré un système de magie parkour intéressant." },
+    { name: "Saints Row (2022)", year: 2022, rank: 'E', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co4xhe.webp", review: "Volition rate le reboot. Ton incertain, bugs et monde vide." },
+    { name: "Skull and Bones", year: 2024, rank: 'F', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co80pe.webp", review: "Ubisoft livre un jeu de pirates creux, répétitif et sans âme." },
+    { name: "Metaphor: ReFantazio", year: 2024, rank: 'S', picture: "https://images.igdb.com/igdb/image/upload/t_cover_big/co8ckv.webp", review: "Atlus transcende le genre JRPG avec un univers fantasy politique captivant et une DA somptueuse." }
+];
+
+const TIERS = ['S','A','B','C','D','E','F','NP'];
+const TIER_COLORS = { S:'#d97706', A:'#ef4444', B:'#10b981', C:'#3b82f6', D:'#8b5cf6', E:'#ec4899', F:'#6b7280', NP:'#94a3b8' };
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,47 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     checkSavedAuth();
     setupTitleClickListener();
+    initTheme();
 });
 
-async function initializeApp() {
-    try {
-        const savedData = loadFromLocalStorage();
-        if (savedData?.games?.length) {
-            AppState.games = savedData.games;
-        } else {
-            const response = await fetch(CONFIG.DATA_PATH);
-            const data = await response.json();
-            AppState.games = data.games || [];
-        }
-        AppState.filteredGames = [...AppState.games];
-        initializeTierList();
-        updateStats();
-        populateYearFilter();
-        showNotification('Tier List chargée', 'success');
-    } catch (err) {
-        console.error(err);
-        showNotification('Erreur de chargement', 'error');
-    }
+function initializeApp() {
+    const saved = loadFromLocalStorage();
+    AppState.games = (saved?.games?.length) ? saved.games : [...DEFAULT_GAMES];
+    AppState.filteredGames = [...AppState.games];
+    renderCurrentView();
+    updateStats();
+    populateYearFilter();
+    updateGameCount();
+    showNotification('Tier List chargée', 'success');
 }
 
 // ===== NOTIFICATIONS =====
 function showNotification(message, type = 'info') {
+    const colors = { success: '#10b981', error: '#ef4444', info: '#6366f1', warning: '#f59e0b' };
     const notif = document.createElement('div');
-    notif.className = `notification-${type}`;
+    notif.className = 'notification';
     notif.textContent = message;
-    notif.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
-        color: white;
-        padding: 0.75rem 1.25rem;
-        border-radius: 2rem;
-        font-size: 0.9rem;
-        z-index: 10000;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        animation: slideInRight 0.2s ease;
-    `;
+    notif.style.background = colors[type] || colors.info;
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 2500);
 }
@@ -83,7 +89,7 @@ function checkSavedAuth() {
     const auth = localStorage.getItem('adminAuth');
     const expiry = parseInt(localStorage.getItem('adminAuthExpiry') || '0');
     if (auth === 'true' && Date.now() < expiry) activateAdminMode();
-    else logout();
+    else logout(true);
 }
 
 async function login(pwd) {
@@ -99,12 +105,12 @@ async function login(pwd) {
     throw new Error('Mot de passe incorrect');
 }
 
-function logout() {
+function logout(silent) {
     localStorage.removeItem('adminAuth');
     localStorage.removeItem('adminAuthExpiry');
     AppState.isAdminMode = false;
     updateAdminUI();
-    showNotification('Déconnexion', 'info');
+    if (!silent) showNotification('Déconnexion', 'info');
 }
 
 function activateAdminMode() {
@@ -116,190 +122,295 @@ function updateAdminUI() {
     const badge = document.getElementById('adminBadge');
     const controls = document.getElementById('adminControls');
     const editBtn = document.getElementById('modalEditBtn');
-    document.body.classList.toggle('admin-mode', AppState.isAdminMode);
     if (badge) badge.style.display = AppState.isAdminMode ? 'block' : 'none';
     if (controls) controls.style.display = AppState.isAdminMode ? 'flex' : 'none';
     if (editBtn) editBtn.style.display = AppState.isAdminMode ? 'inline-flex' : 'none';
-    if (AppState.isAdminMode) enableDragAndDrop();
-    else disableDragAndDrop();
 }
 
-// ===== TIER LIST RENDERING =====
-function initializeTierList() {
+// ===== THEME =====
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+        document.body.classList.add('dark-theme');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+    }
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('themeToggle').innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
+
+// ===== VIEWS =====
+function switchView(view) {
+    AppState.currentView = view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+    document.getElementById('tierListView').style.display = view === 'tierlist' ? 'block' : 'none';
+    document.getElementById('timelineView').style.display = view === 'timeline' ? 'block' : 'none';
+    document.getElementById('galleryView').style.display = view === 'gallery' ? 'block' : 'none';
+    renderCurrentView();
+}
+
+function renderCurrentView() {
+    applyFiltersAndSort();
+    if (AppState.currentView === 'tierlist') renderTierList();
+    else if (AppState.currentView === 'timeline') renderTimeline();
+    else if (AppState.currentView === 'gallery') renderGallery();
+    updateGameCount();
+}
+
+// ===== TIER LIST =====
+function renderTierList() {
     const container = document.getElementById('tierList');
-    if (!container) return;
     container.innerHTML = '';
-    ['S','A','B','C','D','E','F','NP'].forEach(tier => {
+    TIERS.forEach(tier => {
         const row = document.createElement('div');
         row.className = 'tier-row';
-        row.innerHTML = `<div class="tier-label">${tier}</div><div class="tier-games" id="tier-${tier.toLowerCase()}"></div>`;
+        row.innerHTML = `<div class="tier-label" style="--tier-color: var(--tier-${tier.toLowerCase()})"><span>${tier}</span></div><div class="tier-games" id="tier-${tier.toLowerCase()}"></div>`;
         container.appendChild(row);
     });
-    populateGames();
-}
-
-function populateGames() {
-    const containers = document.querySelectorAll('.tier-games');
-    containers.forEach(c => c.innerHTML = '');
-    AppState.filteredGames.forEach(game => {
-        const el = createGameElement(game);
+    AppState.filteredGames.forEach((game, i) => {
+        const el = createGameElement(game, i);
         const target = document.getElementById(`tier-${game.rank.toLowerCase()}`);
         if (target) target.appendChild(el);
     });
-    if (AppState.isAdminMode) enableDragAndDrop();
 }
 
-function createGameElement(game) {
+function createGameElement(game, index = 0) {
     const div = document.createElement('div');
     div.className = 'game-item';
-    div.dataset.game = JSON.stringify(game);
+    if (AppState.selectedForComparison.some(g => g.name === game.name)) div.classList.add('compare-selected');
+    div.style.animationDelay = `${index * 0.03}s`;
     const img = document.createElement('img');
-    img.src = `pictures/${game.picture}`;
+    img.src = game.picture;
     img.alt = game.name;
-    img.onerror = () => img.src = 'pictures/placeholder.jpg';
+    img.loading = 'lazy';
+    img.onerror = () => img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23ddd"/></svg>';
     div.appendChild(img);
-    div.addEventListener('click', (e) => {
-        if (!e.target.closest('.game-item')) return;
+    div.addEventListener('click', () => {
         if (AppState.comparisonMode) selectForComparison(game, div);
         else showGameModal(game);
     });
     return div;
 }
 
-// ===== FILTERS =====
+// ===== TIMELINE =====
+function renderTimeline() {
+    const container = document.getElementById('timelineView');
+    container.innerHTML = '';
+    const byYear = new Map();
+    AppState.filteredGames.forEach(g => {
+        if (!byYear.has(g.year)) byYear.set(g.year, []);
+        byYear.get(g.year).push(g);
+    });
+    const sorted = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+    sorted.forEach(([year, games], yi) => {
+        const section = document.createElement('div');
+        section.className = 'timeline-year';
+        section.style.animationDelay = `${yi * 0.08}s`;
+        games.sort((a, b) => TIERS.indexOf(a.rank) - TIERS.indexOf(b.rank));
+        section.innerHTML = `
+            <div class="timeline-marker">${year}</div>
+            <div class="timeline-connector"></div>
+            <div class="timeline-content">
+                <div class="timeline-header"><span>${games.length} jeu${games.length > 1 ? 'x' : ''}</span></div>
+                <div class="timeline-games" id="timeline-${year}"></div>
+            </div>
+        `;
+        container.appendChild(section);
+        const gamesContainer = section.querySelector('.timeline-games');
+        games.forEach((game, i) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'timeline-game-wrapper';
+            wrapper.appendChild(createGameElement(game, i));
+            const tag = document.createElement('span');
+            tag.className = 'tier-tag';
+            tag.textContent = game.rank;
+            wrapper.appendChild(tag);
+            gamesContainer.appendChild(wrapper);
+        });
+    });
+}
+
+// ===== GALLERY =====
+function renderGallery() {
+    const container = document.getElementById('galleryView');
+    container.innerHTML = '';
+    AppState.filteredGames.forEach((game, i) => {
+        const card = document.createElement('div');
+        card.className = 'gallery-card';
+        card.style.animationDelay = `${i * 0.02}s`;
+        card.innerHTML = `
+            <div class="gallery-card-img"><img src="${game.picture}" alt="${game.name}" loading="lazy"></div>
+            <div class="gallery-card-info">
+                <h3>${game.name}</h3>
+                <div class="gallery-card-meta">
+                    <span><i class="far fa-calendar-alt"></i> ${game.year}</span>
+                    <span><i class="fas fa-trophy"></i> ${game.rank}</span>
+                </div>
+            </div>
+        `;
+        card.addEventListener('click', () => showGameModal(game));
+        container.appendChild(card);
+    });
+}
+
+// ===== FILTERS & SORT =====
+function applyFiltersAndSort() {
+    const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+    const year = document.getElementById('yearFilter')?.value || '';
+    const tier = document.getElementById('tierFilter')?.value || '';
+    const sort = document.getElementById('sortBy')?.value || 'default';
+    const favs = loadFavorites();
+
+    AppState.filteredGames = AppState.games.filter(g => {
+        if (search && !g.name.toLowerCase().includes(search)) return false;
+        if (year && g.year.toString() !== year) return false;
+        if (tier && g.rank !== tier) return false;
+        if (AppState.filters.favoritesOnly && !favs.includes(g.name)) return false;
+        return true;
+    });
+
+    if (sort === 'name') AppState.filteredGames.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sort === 'year') AppState.filteredGames.sort((a, b) => b.year - a.year);
+}
+
 function populateYearFilter() {
     const select = document.getElementById('yearFilter');
     if (!select) return;
-    const years = [...new Set(AppState.games.map(g => g.year))].sort((a,b)=>b-a);
-    select.innerHTML = '<option value="">Toutes les années</option>';
+    const years = [...new Set(AppState.games.map(g => g.year))].sort((a, b) => b - a);
+    select.innerHTML = '<option value="">Toutes</option>';
     years.forEach(y => select.innerHTML += `<option value="${y}">${y}</option>`);
-}
-
-function applyFilters() {
-    const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
-    const year = document.getElementById('yearFilter')?.value || '';
-    const tier = document.getElementById('tierFilter')?.value || '';
-    const favs = JSON.parse(localStorage.getItem('gotyFavorites') || '[]').map(f => f.name);
-    AppState.filteredGames = AppState.games.filter(g => {
-        return (!search || g.name.toLowerCase().includes(search)) &&
-               (!year || g.year.toString() === year) &&
-               (!tier || g.rank === tier) &&
-               (!AppState.filters.favoritesOnly || favs.includes(g.name));
-    });
-    refreshTierList();
-    showNotification(`${AppState.filteredGames.length} jeu(x)`, 'info');
 }
 
 function resetFilters() {
     document.getElementById('searchInput').value = '';
     document.getElementById('yearFilter').value = '';
     document.getElementById('tierFilter').value = '';
+    document.getElementById('sortBy').value = 'default';
     AppState.filters.favoritesOnly = false;
-    document.getElementById('favoritesBtn').innerHTML = '<i class="far fa-heart"></i>';
-    AppState.filteredGames = [...AppState.games];
-    refreshTierList();
+    document.getElementById('favoritesBtn').classList.remove('active');
+    renderCurrentView();
 }
 
-function refreshTierList() { populateGames(); }
+function updateGameCount() {
+    const el = document.getElementById('gameCount');
+    if (el) el.textContent = `${AppState.filteredGames.length} jeu${AppState.filteredGames.length !== 1 ? 'x' : ''}`;
+}
 
 // ===== STATS =====
 function updateStats() {
     const total = AppState.games.length;
     const latestYear = Math.max(...AppState.games.map(g => g.year), 0);
-    const latestGame = AppState.games.filter(g => g.year === latestYear)[0];
+    const latestGame = AppState.games.find(g => g.year === latestYear);
     document.getElementById('totalGames').innerText = total;
     document.getElementById('latestYear').innerText = latestYear;
-    document.getElementById('latestGame').innerText = latestGame ? `${latestGame.name} (${latestGame.year})` : '—';
-    renderTierChart();
+    document.getElementById('latestGame').innerText = latestGame ? latestGame.name : '—';
+    renderCharts();
 }
 
-function renderTierChart() {
-    const container = document.getElementById('tierDistributionChart');
-    if (!container) return;
-    const counts = {S:0,A:0,B:0,C:0,D:0,E:0,F:0,NP:0};
+function renderCharts() {
+    // Tier chart
+    const tierContainer = document.getElementById('tierChart');
+    if (!tierContainer) return;
+    const counts = {};
+    TIERS.forEach(t => counts[t] = 0);
     AppState.games.forEach(g => counts[g.rank]++);
     const total = AppState.games.length;
-    const colors = {S:'#f59e0b', A:'#ef4444', B:'#10b981', C:'#3b82f6', D:'#8b5cf6', E:'#ec489a', F:'#6b7280', NP:'#94a3b8'};
-    container.innerHTML = '';
-    for (let tier of Object.keys(counts)) {
-        const percent = total ? Math.round((counts[tier]/total)*100) : 0;
-        const row = document.createElement('div');
-        row.className = 'tier-bar-container';
-        row.innerHTML = `
-            <span class="tier-label-small" style="color:${colors[tier]}">${tier}</span>
-            <div class="tier-bar-bg"><div class="tier-bar" style="width:${percent}%; background:${colors[tier]}"></div></div>
-            <span class="tier-stats">${counts[tier]} (${percent}%)</span>
-        `;
-        container.appendChild(row);
-    }
+    tierContainer.innerHTML = '';
+    TIERS.forEach(tier => {
+        const pct = total ? Math.round((counts[tier] / total) * 100) : 0;
+        tierContainer.innerHTML += `
+            <div class="chart-bar-row">
+                <span class="chart-bar-label" style="color:${TIER_COLORS[tier]}">${tier}</span>
+                <div class="chart-bar-bg"><div class="chart-bar" style="width:${pct}%;background:${TIER_COLORS[tier]}"></div></div>
+                <span class="chart-bar-value">${counts[tier]} (${pct}%)</span>
+            </div>`;
+    });
+
+    // Year chart
+    const yearContainer = document.getElementById('yearChart');
+    if (!yearContainer) return;
+    const yearCounts = {};
+    AppState.games.forEach(g => { yearCounts[g.year] = (yearCounts[g.year] || 0) + 1; });
+    const years = Object.keys(yearCounts).sort();
+    const maxCount = Math.max(...Object.values(yearCounts));
+    yearContainer.innerHTML = '';
+    years.forEach(y => {
+        const pct = maxCount ? Math.round((yearCounts[y] / maxCount) * 100) : 0;
+        yearContainer.innerHTML += `
+            <div class="chart-bar-row">
+                <span class="chart-bar-label">${y}</span>
+                <div class="chart-bar-bg"><div class="chart-bar" style="width:${pct}%;background:var(--text-primary)"></div></div>
+                <span class="chart-bar-value">${yearCounts[y]}</span>
+            </div>`;
+    });
 }
 
 // ===== FAVORITES =====
+function loadFavorites() {
+    try { return JSON.parse(localStorage.getItem('gotyFavorites') || '[]'); } catch { return []; }
+}
+function saveFavorites(favs) { localStorage.setItem('gotyFavorites', JSON.stringify(favs)); }
+
 function toggleFavoritesFilter() {
     AppState.filters.favoritesOnly = !AppState.filters.favoritesOnly;
-    const btn = document.getElementById('favoritesBtn');
-    if (AppState.filters.favoritesOnly) btn.innerHTML = '<i class="fas fa-heart"></i>';
-    else btn.innerHTML = '<i class="far fa-heart"></i>';
-    applyFilters();
+    document.getElementById('favoritesBtn').classList.toggle('active', AppState.filters.favoritesOnly);
+    renderCurrentView();
 }
 
 function toggleFavorite() {
     if (!AppState.currentEditingGame) return;
-    const game = AppState.currentEditingGame;
-    let favs = JSON.parse(localStorage.getItem('gotyFavorites') || '[]');
-    const exists = favs.some(f => f.name === game.name);
-    if (exists) favs = favs.filter(f => f.name !== game.name);
-    else favs.push({ name: game.name, year: game.year, rank: game.rank, picture: game.picture });
-    localStorage.setItem('gotyFavorites', JSON.stringify(favs));
-    const favBtn = document.getElementById('toggleFavorite');
-    favBtn.innerHTML = exists ? '<i class="far fa-heart"></i> Ajouter aux favoris' : '<i class="fas fa-heart"></i> Retirer des favoris';
-    if (AppState.filters.favoritesOnly) applyFilters();
+    const name = AppState.currentEditingGame.name;
+    let favs = loadFavorites();
+    const exists = favs.includes(name);
+    if (exists) favs = favs.filter(n => n !== name);
+    else favs.push(name);
+    saveFavorites(favs);
+    updateFavoriteButton(AppState.currentEditingGame);
     showNotification(exists ? 'Retiré des favoris' : 'Ajouté aux favoris', 'info');
 }
 
 function updateFavoriteButton(game) {
-    const favs = JSON.parse(localStorage.getItem('gotyFavorites') || '[]');
-    const isFav = favs.some(f => f.name === game.name);
+    const favs = loadFavorites();
+    const isFav = favs.includes(game.name);
     const btn = document.getElementById('toggleFavorite');
-    if (btn) btn.innerHTML = isFav ? '<i class="fas fa-heart"></i> Retirer des favoris' : '<i class="far fa-heart"></i> Ajouter aux favoris';
+    if (btn) {
+        btn.innerHTML = isFav ? '<i class="fas fa-heart"></i> Retirer des favoris' : '<i class="far fa-heart"></i> Ajouter aux favoris';
+        btn.classList.toggle('active', isFav);
+    }
 }
 
-// ===== COMPARAISON =====
+// ===== COMPARISON =====
 function toggleComparisonMode() {
     AppState.comparisonMode = !AppState.comparisonMode;
     const btn = document.getElementById('compareBtn');
-    document.body.classList.toggle('comparison-mode', AppState.comparisonMode);
-    if (AppState.comparisonMode) {
-        btn.style.background = 'var(--accent-primary)';
-        btn.style.color = 'white';
+    btn.classList.toggle('active', AppState.comparisonMode);
+    document.body.classList.toggle('compare-mode', AppState.comparisonMode);
+    if (!AppState.comparisonMode) {
         AppState.selectedForComparison = [];
-        showNotification('Mode comparaison actif – choisissez 2 jeux', 'info');
-    } else {
-        btn.style.background = '';
-        btn.style.color = '';
-        clearComparisonSelection();
         closeModal('comparisonModal');
+        renderCurrentView();
+        showNotification('Comparaison désactivée', 'info');
+    } else {
+        AppState.selectedForComparison = [];
+        showNotification('Sélectionnez 2 jeux', 'info');
     }
 }
 
-function selectForComparison(game, element) {
-    if (AppState.selectedForComparison.some(g => g.name === game.name)) {
-        AppState.selectedForComparison = AppState.selectedForComparison.filter(g => g.name !== game.name);
-        element.classList.remove('comparison-selected');
+function selectForComparison(game, el) {
+    const idx = AppState.selectedForComparison.findIndex(g => g.name === game.name);
+    if (idx !== -1) {
+        AppState.selectedForComparison.splice(idx, 1);
+        el.classList.remove('compare-selected');
     } else {
-        if (AppState.selectedForComparison.length >= 2) {
-            showNotification('Maximum 2 jeux', 'warning');
-            return;
-        }
+        if (AppState.selectedForComparison.length >= 2) { showNotification('Maximum 2 jeux', 'warning'); return; }
         AppState.selectedForComparison.push(game);
-        element.classList.add('comparison-selected');
+        el.classList.add('compare-selected');
     }
     if (AppState.selectedForComparison.length === 2) showComparisonModal();
-}
-
-function clearComparisonSelection() {
-    document.querySelectorAll('.game-item.comparison-selected').forEach(el => el.classList.remove('comparison-selected'));
-    AppState.selectedForComparison = [];
 }
 
 function showComparisonModal() {
@@ -308,67 +419,30 @@ function showComparisonModal() {
     AppState.selectedForComparison.forEach(g => {
         container.innerHTML += `
             <div class="comparison-game">
-                <img src="pictures/${g.picture}" alt="${g.name}">
-                <h3>${g.name}</h3>
-                <p>📅 ${g.year} | 🏆 ${g.rank}</p>
-                <div class="comparison-review">${g.review}</div>
-            </div>
-        `;
+                <img src="${g.picture}" alt="${g.name}">
+                <div class="comparison-game-info">
+                    <h3>${g.name}</h3>
+                    <p class="meta"><i class="far fa-calendar-alt"></i> ${g.year} &nbsp; <i class="fas fa-trophy"></i> Tier ${g.rank}</p>
+                    <p class="review">${g.review}</p>
+                </div>
+            </div>`;
     });
     openModal('comparisonModal');
 }
 
-// ===== DRAG & DROP (admin) =====
-function enableDragAndDrop() {
-    document.querySelectorAll('.game-item').forEach(el => {
-        el.draggable = true;
-        el.addEventListener('dragstart', e => { e.dataTransfer.setData('game-data', e.target.closest('.game-item').dataset.game); e.target.classList.add('dragging'); });
-        el.addEventListener('dragend', e => e.target.classList.remove('dragging'));
-    });
-    document.querySelectorAll('.tier-games').forEach(zone => {
-        zone.addEventListener('dragover', e => e.preventDefault());
-        zone.addEventListener('drop', e => {
-            e.preventDefault();
-            const data = e.dataTransfer.getData('game-data');
-            if (!data) return;
-            const game = JSON.parse(data);
-            const newTier = zone.id.replace('tier-', '').toUpperCase();
-            const idx = AppState.games.findIndex(g => g.name === game.name);
-            if (idx !== -1) {
-                AppState.games[idx].rank = newTier;
-                saveToLocalStorage();
-                AppState.filteredGames = [...AppState.games];
-                refreshTierList();
-                updateStats();
-                showNotification(`${game.name} → Tier ${newTier}`, 'success');
-            }
-        });
-    });
-}
-
-function disableDragAndDrop() {
-    document.querySelectorAll('.game-item').forEach(el => el.draggable = false);
-}
-
 // ===== MODALS =====
-function openModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.style.display = 'flex';
-}
-function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (modal) modal.style.display = 'none';
-}
+function openModal(id) { const m = document.getElementById(id); if (m) m.style.display = 'flex'; }
+function closeModal(id) { const m = document.getElementById(id); if (m) m.style.display = 'none'; }
 
 function showGameModal(game) {
-    const modal = document.getElementById('gameModal');
-    modal.querySelector('.modal-image').src = `pictures/${game.picture}`;
-    modal.querySelector('.modal-title').innerText = game.name;
-    modal.querySelector('.modal-year').innerHTML = `<i class="far fa-calendar-alt"></i> ${game.year}`;
-    modal.querySelector('.modal-tier').innerHTML = `<i class="fas fa-trophy"></i> Tier ${game.rank}`;
-    modal.querySelector('.modal-review').innerText = game.review;
+    document.getElementById('modalImage').src = game.picture;
+    document.getElementById('modalTitle').innerText = game.name;
+    document.getElementById('modalYear').innerHTML = `<i class="far fa-calendar-alt"></i> ${game.year}`;
+    document.getElementById('modalTier').innerHTML = `<i class="fas fa-trophy"></i> Tier ${game.rank}`;
+    document.getElementById('modalReview').innerText = game.review;
     AppState.currentEditingGame = game;
     updateFavoriteButton(game);
+    updateAdminUI();
     openModal('gameModal');
 }
 
@@ -382,7 +456,7 @@ function openAddGameModal() {
 
 function openEditGameModal(game) {
     document.getElementById('addGameModalTitle').innerHTML = '<i class="fas fa-edit"></i> Modifier le jeu';
-    document.getElementById('deleteGameBtn').style.display = 'block';
+    document.getElementById('deleteGameBtn').style.display = 'inline-flex';
     document.getElementById('gameName').value = game.name;
     document.getElementById('gameYear').value = game.year;
     document.getElementById('gameRank').value = game.rank;
@@ -392,39 +466,25 @@ function openEditGameModal(game) {
     openModal('addGameModal');
 }
 
-function editCurrentGame() {
-    if (AppState.currentEditingGame) {
-        closeModal('gameModal');
-        openEditGameModal(AppState.currentEditingGame);
-    }
-}
-
 function handleGameFormSubmit(e) {
     e.preventDefault();
-    const formData = {
+    const data = {
         name: document.getElementById('gameName').value.trim(),
         year: parseInt(document.getElementById('gameYear').value),
         rank: document.getElementById('gameRank').value,
         picture: document.getElementById('gamePicture').value.trim(),
         review: document.getElementById('gameReview').value.trim()
     };
-    if (!formData.name || !formData.year || !formData.picture || !formData.review) {
-        showNotification('Veuillez remplir tous les champs', 'error');
-        return;
-    }
+    if (!data.name || !data.year || !data.picture || !data.review) { showNotification('Remplissez tous les champs', 'error'); return; }
     if (AppState.currentEditingGame) {
         const idx = AppState.games.findIndex(g => g.name === AppState.currentEditingGame.name);
-        if (idx !== -1) AppState.games[idx] = formData;
+        if (idx !== -1) AppState.games[idx] = data;
     } else {
-        if (AppState.games.some(g => g.name.toLowerCase() === formData.name.toLowerCase())) {
-            showNotification('Ce jeu existe déjà', 'error');
-            return;
-        }
-        AppState.games.push(formData);
+        if (AppState.games.some(g => g.name.toLowerCase() === data.name.toLowerCase())) { showNotification('Ce jeu existe déjà', 'error'); return; }
+        AppState.games.push(data);
     }
     saveToLocalStorage();
-    AppState.filteredGames = [...AppState.games];
-    refreshTierList();
+    renderCurrentView();
     updateStats();
     populateYearFilter();
     closeModal('addGameModal');
@@ -435,9 +495,8 @@ function handleDeleteGame() {
     if (!AppState.currentEditingGame) return;
     if (confirm(`Supprimer "${AppState.currentEditingGame.name}" ?`)) {
         AppState.games = AppState.games.filter(g => g.name !== AppState.currentEditingGame.name);
-        AppState.filteredGames = [...AppState.games];
         saveToLocalStorage();
-        refreshTierList();
+        renderCurrentView();
         updateStats();
         populateYearFilter();
         closeModal('addGameModal');
@@ -446,19 +505,13 @@ function handleDeleteGame() {
 }
 
 // ===== STORAGE =====
-function saveToLocalStorage() {
-    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ games: AppState.games }));
-}
-function loadFromLocalStorage() {
-    const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
-}
+function saveToLocalStorage() { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ games: AppState.games })); }
+function loadFromLocalStorage() { try { return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); } catch { return null; } }
 
 // ===== RANDOM =====
 function showRandomGame() {
     if (!AppState.games.length) return;
-    const random = AppState.games[Math.floor(Math.random() * AppState.games.length)];
-    showGameModal(random);
+    showGameModal(AppState.games[Math.floor(Math.random() * AppState.games.length)]);
 }
 
 // ===== EXPORT =====
@@ -469,25 +522,33 @@ function exportData() {
     a.download = `goty-export-${new Date().toISOString().slice(0,10)}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
-    showNotification('Export JSON réussi', 'success');
+    showNotification('Export réussi', 'success');
 }
 
-// ===== THEME =====
-function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    const btn = document.getElementById('themeToggle');
-    btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+// ===== TITLE TRIPLE CLICK =====
+function setupTitleClickListener() {
+    let clicks = 0, timer;
+    document.getElementById('siteTitle').addEventListener('click', () => {
+        clicks++;
+        if (clicks === 3) { clicks = 0; clearTimeout(timer); openModal('loginModal'); }
+        else { clearTimeout(timer); timer = setTimeout(() => clicks = 0, 500); }
+    });
+}
+
+// ===== PANELS =====
+function togglePanel(id) {
+    const panel = document.getElementById(id);
+    const isVisible = panel.style.display !== 'none';
+    document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+    panel.style.display = isVisible ? 'none' : 'block';
 }
 
 // ===== EVENT LISTENERS =====
 function setupEventListeners() {
     document.getElementById('filterBtn').addEventListener('click', () => togglePanel('filterPanel'));
     document.getElementById('statsBtn').addEventListener('click', () => togglePanel('statsPanel'));
-    document.getElementById('closeFilterPanel')?.addEventListener('click', () => closePanel('filterPanel'));
-    document.getElementById('closeStatsPanel')?.addEventListener('click', () => closePanel('statsPanel'));
-    document.getElementById('applyFilters').addEventListener('click', applyFilters);
+    document.getElementById('closeFilterPanel')?.addEventListener('click', () => document.getElementById('filterPanel').style.display = 'none');
+    document.getElementById('closeStatsPanel')?.addEventListener('click', () => document.getElementById('statsPanel').style.display = 'none');
     document.getElementById('resetFilters').addEventListener('click', resetFilters);
     document.getElementById('randomGameBtn').addEventListener('click', showRandomGame);
     document.getElementById('compareBtn').addEventListener('click', toggleComparisonMode);
@@ -495,51 +556,35 @@ function setupEventListeners() {
     document.getElementById('favoritesBtn').addEventListener('click', toggleFavoritesFilter);
     document.getElementById('addGameBtn')?.addEventListener('click', openAddGameModal);
     document.getElementById('exportDataBtn')?.addEventListener('click', exportData);
-    document.getElementById('logoutBtn')?.addEventListener('click', logout);
+    document.getElementById('logoutBtn')?.addEventListener('click', () => logout(false));
+
+    // Instant search
+    document.getElementById('searchInput')?.addEventListener('input', () => renderCurrentView());
+    document.getElementById('yearFilter')?.addEventListener('change', () => renderCurrentView());
+    document.getElementById('tierFilter')?.addEventListener('change', () => renderCurrentView());
+    document.getElementById('sortBy')?.addEventListener('change', () => renderCurrentView());
+
+    // View toggle
+    document.querySelectorAll('.view-btn').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
+
+    // Modal closes
+    document.getElementById('closeGameModal')?.addEventListener('click', () => closeModal('gameModal'));
+    document.getElementById('closeComparison')?.addEventListener('click', () => { closeModal('comparisonModal'); AppState.selectedForComparison = []; renderCurrentView(); });
+    document.getElementById('closeAddModal')?.addEventListener('click', () => closeModal('addGameModal'));
+    document.getElementById('cancelAddGame')?.addEventListener('click', () => closeModal('addGameModal'));
+    document.getElementById('closeLogin')?.addEventListener('click', () => closeModal('loginModal'));
+    document.getElementById('toggleFavorite')?.addEventListener('click', toggleFavorite);
+    document.getElementById('modalEditBtn')?.addEventListener('click', () => { closeModal('gameModal'); openEditGameModal(AppState.currentEditingGame); });
+    document.getElementById('addGameForm')?.addEventListener('submit', handleGameFormSubmit);
+    document.getElementById('deleteGameBtn')?.addEventListener('click', handleDeleteGame);
     document.getElementById('loginForm')?.addEventListener('submit', async e => {
         e.preventDefault();
-        const pwd = document.getElementById('loginPassword').value;
-        try { await login(pwd); } catch(err) { document.getElementById('loginError').innerText = err.message; document.getElementById('loginError').classList.add('show'); }
+        try { await login(document.getElementById('loginPassword').value); }
+        catch(err) { document.getElementById('loginError').innerText = err.message; }
     });
-    document.getElementById('cancelLogin')?.addEventListener('click', () => closeModal('loginModal'));
-    document.getElementById('closeLogin')?.addEventListener('click', () => closeModal('loginModal'));
-    document.getElementById('closeComparison')?.addEventListener('click', () => closeModal('comparisonModal'));
-    document.getElementById('addGameForm').addEventListener('submit', handleGameFormSubmit);
-    document.getElementById('cancelAddGame').addEventListener('click', () => closeModal('addGameModal'));
-    document.getElementById('deleteGameBtn').addEventListener('click', handleDeleteGame);
-    document.getElementById('modalEditBtn').addEventListener('click', editCurrentGame);
-    document.getElementById('toggleFavorite').addEventListener('click', toggleFavorite);
+
     // Close modals on backdrop click
-    document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; }));
-    document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => btn.closest('.modal').style.display = 'none'));
-    document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
-}
-
-function togglePanel(panelId) {
-    const panel = document.getElementById(panelId);
-    if (panel.style.display === 'none') { closeAllPanels(); panel.style.display = 'block'; }
-    else panel.style.display = 'none';
-}
-function closePanel(panelId) { document.getElementById(panelId).style.display = 'none'; }
-function closeAllPanels() { ['filterPanel','statsPanel'].forEach(id => document.getElementById(id).style.display = 'none'); }
-
-function setupTitleClickListener() {
-    let clickCount = 0;
-    const title = document.querySelector('.site-title');
-    title.addEventListener('click', () => {
-        clickCount++;
-        if (clickCount === 3) { openModal('loginModal'); clickCount = 0; }
-        setTimeout(() => clickCount = 0, 600);
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal.id); });
     });
-}
-
-function debounce(fn, delay) {
-    let timer;
-    return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); };
-}
-
-// Load saved theme
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-theme');
-    document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
 }
