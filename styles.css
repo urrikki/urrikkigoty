@@ -197,21 +197,26 @@ body::before {
 .timeline-game-wrapper .tier-tag { font-size: 0.55rem; color: var(--accent-muted); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600; }
 
 /* ===== GALLERY ===== */
+#galleryView {
+    width: 100%;
+}
+
 .gallery-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
-    gap: 1.2rem;
-    justify-content: center;
+    gap: 1rem;
+    justify-content: start;  /* pour aligner à gauche, éviter l'étirement */
+    width: 100%;
 }
 
 .gallery-card {
+    width: 150px; /* largeur fixe pour chaque carte */
     cursor: pointer;
     border: 1px solid var(--border-light);
     background: var(--bg-surface);
     overflow: hidden;
     transition: var(--transition);
     animation: gameAppear 0.25s ease-out both;
-    width: 150px; /* largeur fixe */
 }
 
 .gallery-card-img {
