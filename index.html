@@ -168,7 +168,12 @@
                                 <option value="F">F</option><option value="NP">NP</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Image URL *</label><input type="text" id="gamePicture" required></div>
+                        <div class="form-group">
+                            <label>Image (upload ou URL) *</label>
+                            <input type="text" id="gamePicture" placeholder="exemple.jpg ou data:image..." required>
+                            <input type="file" id="gamePictureFile" accept="image/jpeg,image/png,image/webp,image/jpg" style="margin-top: 0.5rem;">
+                            <small>Choisissez une image locale ou saisissez un nom de fichier (si l'image est déjà dans le dossier "pictures").</small>
+                        </div>
                     </div>
                     <div class="form-group"><label>Review *</label><textarea id="gameReview" rows="4" required></textarea></div>
                     <div class="form-actions">

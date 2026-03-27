@@ -173,7 +173,12 @@ function createGameElement(game, index = 0) {
     if (AppState.selectedForComparison.some(g => g.name === game.name)) div.classList.add('compare-selected');
     div.style.animationDelay = `${index * 0.03}s`;
     const img = document.createElement('img');
-    img.src = game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture;
+    // Support Base64, HTTP URLs, and relative paths
+    if (game.picture && (game.picture.startsWith('data:image') || game.picture.startsWith('http'))) {
+        img.src = game.picture;
+    } else {
+        img.src = 'pictures/' + (game.picture || 'placeholder.jpg');
+    }
     img.alt = game.name;
     img.loading = 'lazy';
     img.onerror = () => img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23ddd"/></svg>';
@@ -231,8 +236,15 @@ function renderGallery() {
         const card = document.createElement('div');
         card.className = 'gallery-card';
         card.style.animationDelay = `${i * 0.02}s`;
+        // Support Base64, HTTP URLs, and relative paths
+        let imgSrc;
+        if (game.picture && (game.picture.startsWith('data:image') || game.picture.startsWith('http'))) {
+            imgSrc = game.picture;
+        } else {
+            imgSrc = 'pictures/' + (game.picture || 'placeholder.jpg');
+        }
         card.innerHTML = `
-            <div class="gallery-card-img"><img src="${game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture}" alt="${game.name}" loading="lazy"></div>
+            <div class="gallery-card-img"><img src="${imgSrc}" alt="${game.name}" loading="lazy"></div>
             <div class="gallery-card-info">
                 <h3>${game.name}</h3>
                 <div class="gallery-card-meta">
@@ -406,9 +418,15 @@ function showComparisonModal() {
     const container = document.getElementById('comparisonContainer');
     container.innerHTML = '';
     AppState.selectedForComparison.forEach(g => {
+        let imgSrc;
+        if (g.picture && (g.picture.startsWith('data:image') || g.picture.startsWith('http'))) {
+            imgSrc = g.picture;
+        } else {
+            imgSrc = 'pictures/' + (g.picture || 'placeholder.jpg');
+        }
         container.innerHTML += `
             <div class="comparison-game">
-                <img src="${g.picture.startsWith('http') ? g.picture : 'pictures/' + g.picture}" alt="${g.name}">
+                <img src="${imgSrc}" alt="${g.name}">
                 <div class="comparison-game-info">
                     <h3>${g.name}</h3>
                     <p class="meta"><i class="far fa-calendar-alt"></i> ${g.year} &nbsp; <i class="fas fa-trophy"></i> Tier ${g.rank}</p>
@@ -424,7 +442,13 @@ function openModal(id) { const m = document.getElementById(id); if (m) m.style.d
 function closeModal(id) { const m = document.getElementById(id); if (m) m.style.display = 'none'; }
 
 function showGameModal(game) {
-    document.getElementById('modalImage').src = game.picture.startsWith('http') ? game.picture : 'pictures/' + game.picture;
+    let imgSrc;
+    if (game.picture && (game.picture.startsWith('data:image') || game.picture.startsWith('http'))) {
+        imgSrc = game.picture;
+    } else {
+        imgSrc = 'pictures/' + (game.picture || 'placeholder.jpg');
+    }
+    document.getElementById('modalImage').src = imgSrc;
     document.getElementById('modalTitle').innerText = game.name;
     document.getElementById('modalYear').innerHTML = `<i class="far fa-calendar-alt"></i> ${game.year}`;
     document.getElementById('modalTier').innerHTML = `<i class="fas fa-trophy"></i> Tier ${game.rank}`;
@@ -570,6 +594,18 @@ function setupEventListeners() {
         e.preventDefault();
         try { await login(document.getElementById('loginPassword').value); }
         catch(err) { document.getElementById('loginError').innerText = err.message; }
+    });
+
+    // Image upload handler
+    document.getElementById('gamePictureFile')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            document.getElementById('gamePicture').value = ev.target.result;
+            showNotification('Image chargée (Base64)', 'success');
+        };
+        reader.readAsDataURL(file);
     });
 
     // Close modals on backdrop click
