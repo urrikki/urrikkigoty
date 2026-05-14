@@ -612,4 +612,33 @@ function setupEventListeners() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal.id); });
     });
+
+    // Escape key closes any open modal
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (modal.style.display === 'flex') closeModal(modal.id);
+            });
+        }
+        // Ctrl+F / Cmd+F → focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+            const filterPanel = document.getElementById('filterPanel');
+            const isOpen = filterPanel.style.display !== 'none';
+            if (!isOpen) togglePanel('filterPanel');
+            e.preventDefault();
+            setTimeout(() => document.getElementById('searchInput')?.focus(), 50);
+        }
+    });
+
+    // Scroll-to-top button
+    const scrollBtn = document.createElement('button');
+    scrollBtn.id = 'scrollTopBtn';
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollBtn.title = 'Retour en haut';
+    scrollBtn.setAttribute('aria-label', 'Retour en haut de page');
+    document.body.appendChild(scrollBtn);
+    window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('visible', window.scrollY > 300);
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
