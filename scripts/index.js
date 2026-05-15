@@ -35,13 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initializeApp() {
     try {
+        // Toujours fetcher games.json (source de vérité) avec cache-busting
+        const response = await fetch(DATA_PATH + '?v=' + Date.now());
+        const data = await response.json();
+        const remoteGames = data.games || [];
+
+        // Les modifs admin overrident le remote, mais le remote apporte les nouveaux jeux
         const saved = loadFromLocalStorage();
         if (saved?.games?.length) {
-            AppState.games = saved.games;
+            const localNames = new Set(saved.games.map(g => g.name));
+            const remoteOnlyGames = remoteGames.filter(g => !localNames.has(g.name));
+            AppState.games = [...saved.games, ...remoteOnlyGames];
         } else {
-            const response = await fetch(DATA_PATH);
-            const data = await response.json();
-            AppState.games = data.games || [];
+            AppState.games = remoteGames;
         }
         AppState.filteredGames = [...AppState.games];
         renderCurrentView();
