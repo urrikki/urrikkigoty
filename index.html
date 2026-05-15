@@ -214,43 +214,24 @@
         </div>
     </div>
 
-    <!-- ===== VERSION — change ce numéro à chaque déploiement ===== -->
-    <!-- ===== VERSION — change uniquement ce numéro à chaque déploiement ===== -->
-    <script>
-        const SITE_VERSION = '1.0.0';
-    </script>
+
 
     <!-- Modules JS chargés avec cache-busting automatique -->
-    <script>
-        (function() {
-            const v = window.SITE_VERSION || '1.0.0';
-            const modules = [
-                'scripts/state.js',
-                'scripts/ui.js',
-                'scripts/storage.js',
-                'scripts/auth.js',
-                'scripts/favorites.js',
-                'scripts/filters.js',
-                'scripts/stats.js',
-                'scripts/modal.js',
-                'scripts/views.js',
-                'scripts/gameForm.js',
-                'scripts/index.js'
-            ];
 
-            // CSS
-            document.querySelector('link[href^="styles.css"]').href = 'styles.css?v=' + v;
+    <!-- ===== VERSION : change uniquement le numéro ici ===== -->
+    <!-- Pour forcer la mise à jour chez tout le monde : passe 1.0.0 → 1.0.1 etc. -->
+    <script src="scripts/state.js?v=1.0.0"></script>
+    <script src="scripts/ui.js?v=1.0.0"></script>
+    <script src="scripts/storage.js?v=1.0.0"></script>
+    <script src="scripts/auth.js?v=1.0.0"></script>
+    <script src="scripts/favorites.js?v=1.0.0"></script>
+    <script src="scripts/filters.js?v=1.0.0"></script>
+    <script src="scripts/stats.js?v=1.0.0"></script>
+    <script src="scripts/modal.js?v=1.0.0"></script>
+    <script src="scripts/views.js?v=1.0.0"></script>
+    <script src="scripts/gameForm.js?v=1.0.0"></script>
+    <script src="scripts/index.js?v=1.0.0"></script>
+    <link rel="stylesheet" href="styles.css?v=1.0.0">
 
-            // JS — chargement séquentiel pour respecter l'ordre
-            function loadNext(i) {
-                if (i >= modules.length) return;
-                const s = document.createElement('script');
-                s.src = modules[i] + '?v=' + v;
-                s.onload = () => loadNext(i + 1);
-                document.body.appendChild(s);
-            }
-            loadNext(0);
-        })();
-    </script>
 </body>
 </html>
