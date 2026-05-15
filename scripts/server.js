@@ -1,0 +1,133 @@
+const express = require('express');
+const crypto  = require('crypto');
+const cors    = require('cors');
+
+const app = express();
+app.use(express.json());
+
+// ── CORS : autorise uniquement ton domaine GitHub Pages ──
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || '*';
+app.use(cors({
+    origin: ALLOWED_ORIGIN,
+    methods: ['POST'],
+    allowedHeaders: ['Content-Type']
+}));
+
+// ── Rate limiting maison (en mémoire) ──
+const attempts = new Map(); // ip → { count, blockedUntil }
+const MAX_ATTEMPTS   = 5;
+const BLOCK_DURATION = 15 * 60 * 1000; // 15 min
+
+function isBlocked(ip) {
+    const entry = attempts.get(ip);
+    if (!entry) return false;
+    if (entry.blockedUntil && Date.now() < entry.blockedUntil) return true;
+    if (entry.blockedUntil && Date.now() >= entry.blockedUntil) {
+        attempts.delete(ip);
+        return false;
+    }
+    return false;
+}
+
+function registerFail(ip) {
+    const entry = attempts.get(ip) || { count: 0, blockedUntil: null };
+    entry.count++;
+    if (entry.count >= MAX_ATTEMPTS) {
+        entry.blockedUntil = Date.now() + BLOCK_DURATION;
+        console.warn(`[AUTH] IP bloquée: ${ip} jusqu'à ${new Date(entry.blockedUntil).toISOString()}`);
+    }
+    attempts.set(ip, entry);
+}
+
+function registerSuccess(ip) {
+    attempts.delete(ip);
+}
+
+// ── Hash SHA-384 ──
+function sha384(str) {
+    return crypto.createHash('sha384').update(str, 'utf8').digest('hex');
+}
+
+// ── POST /api/login ──
+app.post('/api/login', (req, res) => {
+    const ip  = req.headers['x-forwarded-for']?.split(',')[0] || req.ip;
+    const pwd = req.body?.password;
+
+    if (isBlocked(ip)) {
+        const entry = attempts.get(ip);
+        const remaining = Math.ceil((entry.blockedUntil - Date.now()) / 60000);
+        return res.status(429).json({ ok: false, error: `Trop de tentatives. Réessaie dans ${remaining} min.` });
+    }
+
+    if (!pwd || typeof pwd !== 'string') {
+        return res.status(400).json({ ok: false, error: 'Mot de passe manquant.' });
+    }
+
+    const hash = sha384(pwd);
+    const expected = process.env.ADMIN_HASH;
+
+    if (!expected) {
+        console.error('[AUTH] ADMIN_HASH non défini dans les variables d\'environnement !');
+        return res.status(500).json({ ok: false, error: 'Erreur serveur.' });
+    }
+
+    // Comparaison en temps constant (évite timing attacks)
+    const hashBuf     = Buffer.from(hash,     'hex');
+    const expectedBuf = Buffer.from(expected, 'hex');
+
+    if (hashBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(hashBuf, expectedBuf)) {
+        registerFail(ip);
+        const entry = attempts.get(ip) || { count: 0 };
+        const left  = MAX_ATTEMPTS - entry.count;
+        return res.status(401).json({ ok: false, error: `Mot de passe incorrect. ${left} tentative${left > 1 ? 's' : ''} restante${left > 1 ? 's' : ''}.` });
+    }
+
+    registerSuccess(ip);
+
+    // Token signé (HMAC) : payload + expiry
+    const expiry  = Date.now() + 24 * 60 * 60 * 1000; // 24h
+    const payload = `admin:${expiry}`;
+    const secret  = process.env.TOKEN_SECRET;
+    if (!secret) {
+        console.error('[AUTH] TOKEN_SECRET non défini !');
+        return res.status(500).json({ ok: false, error: 'Erreur serveur.' });
+    }
+    const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+    const token = Buffer.from(JSON.stringify({ payload, signature })).toString('base64');
+
+    res.json({ ok: true, token, expiry });
+});
+
+// ── POST /api/verify ──
+app.post('/api/verify', (req, res) => {
+    const { token } = req.body || {};
+    if (!token) return res.status(400).json({ ok: false });
+
+    try {
+        const { payload, signature } = JSON.parse(Buffer.from(token, 'base64').toString('utf8'));
+        const secret   = process.env.TOKEN_SECRET;
+        const expected = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+
+        // Vérification signature + expiry
+        const sigBuf = Buffer.from(signature, 'hex');
+        const expBuf = Buffer.from(expected,  'hex');
+        if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
+            return res.status(401).json({ ok: false, error: 'Token invalide.' });
+        }
+
+        const expiry = parseInt(payload.split(':')[1]);
+        if (Date.now() > expiry) {
+            return res.status(401).json({ ok: false, error: 'Session expirée.' });
+        }
+
+        res.json({ ok: true, expiry });
+    } catch {
+        res.status(400).json({ ok: false, error: 'Token malformé.' });
+    }
+});
+
+// ── Health check ──
+app.get('/health', (_, res) => res.json({ status: 'ok' }));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`[AUTH] Serveur démarré sur le port ${PORT}`));

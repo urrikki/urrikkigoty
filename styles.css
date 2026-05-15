@@ -373,6 +373,63 @@ body::before {
 .game-item:nth-child(9) { animation-delay: 0.24s; }
 .game-item:nth-child(10) { animation-delay: 0.27s; }
 
+
+/* ===== SKELETON LOADERS ===== */
+@keyframes shimmer {
+    0%   { background-position: -600px 0; }
+    100% { background-position:  600px 0; }
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bg-elevated) 25%,
+        var(--bg-surface)  50%,
+        var(--bg-elevated) 75%
+    );
+    background-size: 600px 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Skeleton tier row */
+.skeleton-row {
+    display: flex;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.skeleton-label {
+    width: 72px;
+    min-width: 72px;
+    height: 110px;
+    border-right: 1px solid var(--border-light);
+}
+
+.skeleton-games {
+    flex: 1;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+/* Skeleton game item — même taille que .game-item */
+.skeleton-game {
+    width: 100px;
+    height: 100px;
+    border: 1px solid var(--border-light);
+    flex-shrink: 0;
+}
+
+/* Délai progressif pour l'effet de vague */
+.skeleton-game:nth-child(1) { animation-delay: 0s; }
+.skeleton-game:nth-child(2) { animation-delay: 0.08s; }
+.skeleton-game:nth-child(3) { animation-delay: 0.16s; }
+.skeleton-game:nth-child(4) { animation-delay: 0.24s; }
+.skeleton-game:nth-child(5) { animation-delay: 0.32s; }
+.skeleton-game:nth-child(6) { animation-delay: 0.40s; }
+
 /* ===== SCROLL TO TOP ===== */
 #scrollTopBtn {
     position: fixed; bottom: 1.5rem; right: 1.5rem;
