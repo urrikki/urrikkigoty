@@ -126,6 +126,139 @@ app.post('/api/verify', (req, res) => {
     }
 });
 
+
+// ═══════════════════════════════════════════
+// GITHUB API — lecture/écriture de games.json
+// ═══════════════════════════════════════════
+
+const GITHUB_API   = 'https://api.github.com';
+const GITHUB_REPO  = process.env.GITHUB_REPO;       // urrikki/urrikkigoty
+const GITHUB_FILE  = process.env.GITHUB_FILE_PATH;  // data/games.json
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+function githubHeaders() {
+    return {
+        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/json'
+    };
+}
+
+// Récupérer le SHA du fichier + son contenu actuel
+async function getFileInfo() {
+    const res = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+        headers: githubHeaders()
+    });
+    if (!res.ok) throw new Error(`GitHub GET error: ${res.status}`);
+    const data = await res.json();
+    const content = JSON.parse(Buffer.from(data.content, 'base64').toString('utf8'));
+    return { sha: data.sha, content };
+}
+
+// Écrire le fichier sur GitHub
+async function writeFile(games, sha, message) {
+    const body = JSON.stringify({
+        message,
+        content: Buffer.from(JSON.stringify({ games }, null, 2)).toString('base64'),
+        sha
+    });
+    const res = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+        method: 'PUT',
+        headers: githubHeaders(),
+        body
+    });
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(`GitHub PUT error: ${res.status} — ${JSON.stringify(err)}`);
+    }
+    return res.json();
+}
+
+// Middleware : vérifie que la requête vient d'un admin authentifié
+function requireAdmin(req, res, next) {
+    const { token } = req.body || {};
+    if (!token) return res.status(401).json({ ok: false, error: 'Token manquant.' });
+    try {
+        const { payload, signature } = JSON.parse(Buffer.from(token, 'base64').toString('utf8'));
+        const secret   = process.env.TOKEN_SECRET;
+        const expected = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+        const sigBuf   = Buffer.from(signature, 'hex');
+        const expBuf   = Buffer.from(expected,  'hex');
+        if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
+            return res.status(401).json({ ok: false, error: 'Token invalide.' });
+        }
+        const expiry = parseInt(payload.split(':')[1]);
+        if (Date.now() > expiry) return res.status(401).json({ ok: false, error: 'Session expirée.' });
+        next();
+    } catch {
+        res.status(400).json({ ok: false, error: 'Token malformé.' });
+    }
+}
+
+// ── GET /api/games — lire games.json depuis GitHub ──
+app.get('/api/games', async (req, res) => {
+    try {
+        const { content } = await getFileInfo();
+        res.json({ ok: true, games: content.games || [] });
+    } catch (err) {
+        console.error('[GAMES] Erreur lecture:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ── POST /api/games/add — ajouter un jeu ──
+app.post('/api/games/add', requireAdmin, async (req, res) => {
+    try {
+        const game = req.body.game;
+        if (!game?.name || !game?.year || !game?.rank) {
+            return res.status(400).json({ ok: false, error: 'Données incomplètes.' });
+        }
+        const { sha, content } = await getFileInfo();
+        const games = content.games || [];
+        if (games.some(g => g.name.toLowerCase() === game.name.toLowerCase())) {
+            return res.status(409).json({ ok: false, error: 'Ce jeu existe déjà.' });
+        }
+        games.push(game);
+        await writeFile(games, sha, `➕ Ajout : ${game.name}`);
+        res.json({ ok: true, games });
+    } catch (err) {
+        console.error('[GAMES] Erreur ajout:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ── POST /api/games/update — modifier un jeu ──
+app.post('/api/games/update', requireAdmin, async (req, res) => {
+    try {
+        const { originalName, game } = req.body;
+        const { sha, content } = await getFileInfo();
+        const games = content.games || [];
+        const idx = games.findIndex(g => g.name === originalName);
+        if (idx === -1) return res.status(404).json({ ok: false, error: 'Jeu introuvable.' });
+        games[idx] = game;
+        await writeFile(games, sha, `✏️ Modif : ${game.name}`);
+        res.json({ ok: true, games });
+    } catch (err) {
+        console.error('[GAMES] Erreur modif:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
+// ── POST /api/games/delete — supprimer un jeu ──
+app.post('/api/games/delete', requireAdmin, async (req, res) => {
+    try {
+        const { name } = req.body;
+        const { sha, content } = await getFileInfo();
+        const games = (content.games || []).filter(g => g.name !== name);
+        await writeFile(games, sha, `🗑️ Suppression : ${name}`);
+        res.json({ ok: true, games });
+    } catch (err) {
+        console.error('[GAMES] Erreur suppression:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
 // ── Health check ──
 app.get('/health', (_, res) => res.json({ status: 'ok' }));
 

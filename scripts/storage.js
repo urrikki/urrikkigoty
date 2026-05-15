@@ -50,20 +50,21 @@ function loadFromLocalStorage() {
 
 // ===== CHARGEMENT INITIAL =====
 async function loadGames() {
-    // Toujours fetcher games.json (source de vérité) avec cache-busting
-    const response = await fetch(DATA_PATH + '?v=' + Date.now());
-    const data = await response.json();
-    const remoteGames = data.games || [];
-
-    // Fusionner : les modifs admin locales priment, le remote apporte les nouveaux jeux
-    const saved = loadFromLocalStorage();
-    if (saved?.games?.length) {
-        const localNames = new Set(saved.games.map(g => g.name));
-        const remoteOnlyGames = remoteGames.filter(g => !localNames.has(g.name));
-        AppState.games = [...saved.games, ...remoteOnlyGames];
-    } else {
-        AppState.games = remoteGames;
+    // Charger depuis Railway (qui lit GitHub) — toujours frais
+    try {
+        const res = await fetch(`${AUTH_API}/api/games`);
+        const data = await res.json();
+        if (data.ok) {
+            AppState.games = data.games || [];
+            return;
+        }
+    } catch {
+        // Fallback : lire games.json directement si Railway injoignable
+        console.warn('[STORAGE] Railway injoignable, fallback sur games.json');
     }
+    const res = await fetch(DATA_PATH + '?v=' + Date.now());
+    const data = await res.json();
+    AppState.games = data.games || [];
 }
 
 // ===== EXPORT JSON =====
