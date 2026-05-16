@@ -1,5 +1,6 @@
 // ===== POINT D'ENTRÉE =====
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof initPremium === 'function') initPremium();
     if (typeof initAnimations === 'function') initAnimations();
     initializeApp();
     setupEventListeners();
