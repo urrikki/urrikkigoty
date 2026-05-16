@@ -478,6 +478,81 @@ html {
 .skeleton-game:nth-child(5) { animation-delay: 0.32s; }
 .skeleton-game:nth-child(6) { animation-delay: 0.40s; }
 
+
+/* ===== DRAG & DROP ADMIN ===== */
+
+/* Curseur grab en mode admin */
+.admin-drag-active .game-item {
+    cursor: grab;
+}
+.admin-drag-active .game-item:active {
+    cursor: grabbing;
+}
+
+/* Ghost — l'emplacement vide pendant le drag */
+.drag-ghost {
+    opacity: 0.25;
+    border: 2px dashed var(--text-primary) !important;
+    background: transparent !important;
+}
+
+/* L'élément en cours de drag */
+.drag-dragging {
+    opacity: 0.95;
+    transform: scale(1.08) rotate(2deg) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4) !important;
+    z-index: 9999;
+    cursor: grabbing !important;
+}
+
+/* Highlight du tier cible pendant le drag */
+.tier-games.sortable-over {
+    background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+    outline: 2px dashed var(--text-primary);
+    outline-offset: -4px;
+    border-radius: 4px;
+}
+
+/* Empêcher le clic pendant le drag */
+.is-dragging .game-item {
+    pointer-events: none;
+}
+.is-dragging .drag-dragging {
+    pointer-events: all;
+}
+
+/* Badge "mode réordonnement" visible en admin */
+.admin-drag-active .tier-label::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px dashed color-mix(in srgb, var(--text-primary) 30%, transparent);
+}
+
+/* ===== INDICATEUR DE SAUVEGARDE ===== */
+#saveIndicator {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    z-index: 600;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+}
+#saveIndicator.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* ===== SCROLL TO TOP ===== */
 #scrollTopBtn {
     position: fixed; bottom: 1.5rem; right: 1.5rem;

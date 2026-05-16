@@ -1,6 +1,6 @@
 // ===== CONFIG AUTH =====
 // Remplace cette URL par celle de ton service Railway une fois déployé
-const AUTH_API = 'https://urrikkigoty-production.up.railway.app';
+const AUTH_API = 'https://ton-service.up.railway.app';
 
 // ===== AUTH =====
 function checkSavedAuth() {
@@ -79,4 +79,10 @@ function updateAdminUI() {
     if (badge)    badge.style.display    = AppState.isAdminMode ? 'block'       : 'none';
     if (controls) controls.style.display = AppState.isAdminMode ? 'flex'        : 'none';
     if (editBtn)  editBtn.style.display  = AppState.isAdminMode ? 'inline-flex' : 'none';
+
+    // Activer/désactiver le mode drag sur la tier list
+    const tierList = document.getElementById('tierList');
+    if (tierList) tierList.classList.toggle('admin-drag-active', AppState.isAdminMode);
+    if (!AppState.isAdminMode && typeof destroyDragDrop === 'function') destroyDragDrop();
+    if (AppState.isAdminMode && AppState.currentView === 'tierlist' && typeof enableDragDrop === 'function') enableDragDrop();
 }

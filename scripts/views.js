@@ -29,6 +29,7 @@ function renderCurrentView() {
 
 // ===== TIER LIST =====
 function renderTierList() {
+    destroyDragDrop();
     const container = document.getElementById('tierList');
     container.innerHTML = '';
     TIERS.forEach(tier => {
@@ -46,11 +47,17 @@ function renderTierList() {
         const target = document.getElementById(`tier-${game.rank.toLowerCase()}`);
         if (target) target.appendChild(el);
     });
+
+    // Activer drag & drop si admin
+    if (AppState.isAdminMode && typeof enableDragDrop === 'function') {
+        enableDragDrop();
+    }
 }
 
 function createGameElement(game, index = 0) {
     const div = document.createElement('div');
     div.className = 'game-item';
+    div.dataset.name = game.name;
     if (AppState.selectedForComparison.some(g => g.name === game.name)) div.classList.add('compare-selected');
     div.style.animationDelay = `${index * 0.03}s`;
 

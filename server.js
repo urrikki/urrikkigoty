@@ -259,6 +259,23 @@ app.post('/api/games/delete', requireAdmin, async (req, res) => {
     }
 });
 
+
+// ── POST /api/games/reorder — sauvegarder le nouvel ordre ──
+app.post('/api/games/reorder', requireAdmin, async (req, res) => {
+    try {
+        const { games } = req.body;
+        if (!Array.isArray(games)) {
+            return res.status(400).json({ ok: false, error: 'Format invalide.' });
+        }
+        const { sha } = await getFileInfo();
+        await writeFile(games, sha, '↕️ Réordonnancement de la tier list');
+        res.json({ ok: true, games });
+    } catch (err) {
+        console.error('[REORDER] Erreur:', err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+
 // ── Health check ──
 app.get('/health', (_, res) => res.json({ status: 'ok' }));
 
