@@ -1,12 +1,20 @@
 // ===== MODALS =====
 function openModal(id) {
     const m = document.getElementById(id);
-    if (m) m.style.display = 'flex';
+    if (m) {
+        m.style.display = 'flex';
+        if (typeof animateModalOpen === 'function') animateModalOpen(id);
+    }
 }
 
 function closeModal(id) {
     const m = document.getElementById(id);
-    if (m) m.style.display = 'none';
+    if (!m) return;
+    if (typeof animateModalClose === 'function') {
+        animateModalClose(id, () => m.style.display = 'none');
+    } else {
+        m.style.display = 'none';
+    }
 }
 
 // ===== MODALE JEU =====

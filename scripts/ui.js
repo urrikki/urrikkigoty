@@ -6,7 +6,12 @@ function showNotification(message, type = 'info') {
     notif.textContent = message;
     notif.style.background = colors[type] || colors.info;
     document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 2500);
+    if (typeof animateNotification === 'function') animateNotification(notif);
+    setTimeout(() => {
+        if (typeof gsap !== 'undefined') {
+            gsap.to(notif, { x: 60, opacity: 0, duration: 0.3, onComplete: () => notif.remove() });
+        } else { notif.remove(); }
+    }, 2500);
 }
 
 // ===== THEME =====

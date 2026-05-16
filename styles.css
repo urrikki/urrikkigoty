@@ -374,6 +374,54 @@ body::before {
 .game-item:nth-child(10) { animation-delay: 0.27s; }
 
 
+
+/* ===== ANIMATIONS GSAP ===== */
+
+/* Titre hero — overflow hidden pour le slide-up */
+.logo-area {
+    overflow: hidden;
+}
+.site-title .char {
+    display: inline-block;
+    will-change: transform, opacity;
+}
+
+/* Game item — GPU acceleration pour le tilt */
+.game-item {
+    will-change: transform;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Gallery card — même chose */
+.gallery-card {
+    will-change: transform;
+    transform-style: preserve-3d;
+}
+
+/* Tier rows — prêtes pour GSAP */
+.tier-row {
+    will-change: transform, opacity;
+}
+
+/* Modales — GPU */
+.modal-content {
+    will-change: transform, opacity;
+}
+
+/* Vue containers — pour les transitions */
+.tier-list-container,
+.timeline-container,
+.gallery-container {
+    will-change: opacity, transform;
+}
+
+/* Smooth scroll — désactiver le scroll natif sur html */
+html {
+    scroll-behavior: auto !important; /* Lenis gère ça */
+}
+
 /* ===== SKELETON LOADERS ===== */
 @keyframes shimmer {
     0%   { background-position: -600px 0; }

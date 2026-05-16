@@ -24,6 +24,7 @@ function renderCurrentView() {
     else if (AppState.currentView === 'timeline') renderTimeline();
     else if (AppState.currentView === 'gallery') renderGallery();
     updateGameCount();
+    document.dispatchEvent(new CustomEvent('viewRendered'));
 }
 
 // ===== TIER LIST =====
