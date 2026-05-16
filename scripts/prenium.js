@@ -3,6 +3,11 @@
 
 // ── Custom Cursor ──
 function initCustomCursor() {
+    // Désactiver sur mobile / touch
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    document.body.classList.add('has-custom-cursor');
+
     const cursor = document.createElement('div');
     cursor.id = 'cursor-dot';
     const ring = document.createElement('div');
@@ -12,11 +17,16 @@ function initCustomCursor() {
 
     let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
+    let isVisible = false;
 
     document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         gsap.set(cursor, { x: mouseX, y: mouseY });
+        if (!isVisible) {
+            isVisible = true;
+            gsap.to([cursor, ring], { opacity: 1, duration: 0.3 });
+        }
     });
 
     // Ring follows with lag
@@ -28,27 +38,35 @@ function initCustomCursor() {
     }
     animateRing();
 
-    // Cursor states
+    // Cursor states — uniquement sur les game-items
     document.addEventListener('mouseover', e => {
-        const target = e.target;
-        if (target.closest('.game-item') || target.closest('.view-btn') || target.closest('.icon-btn')) {
-            cursor.classList.add('cursor-hover');
-            ring.classList.add('cursor-hover');
-        }
-        if (target.closest('.game-item')) {
+        if (!(e.target instanceof Element)) return;
+        if (e.target.closest('.game-item')) {
             ring.classList.add('cursor-game');
+            ring.classList.remove('cursor-hover');
+        } else if (e.target.closest('.view-btn') || e.target.closest('.icon-btn')) {
+            ring.classList.add('cursor-hover');
+            ring.classList.remove('cursor-game');
         }
     });
 
     document.addEventListener('mouseout', e => {
-        const target = e.target;
-        if (target.closest('.game-item') || target.closest('.view-btn') || target.closest('.icon-btn')) {
-            cursor.classList.remove('cursor-hover');
+        if (!(e.target instanceof Element)) return;
+        if (e.target.closest('.game-item')) {
+            ring.classList.remove('cursor-game');
+        } else if (e.target.closest('.view-btn') || e.target.closest('.icon-btn')) {
             ring.classList.remove('cursor-hover');
         }
-        if (target.closest('.game-item')) {
-            ring.classList.remove('cursor-game');
-        }
+    });
+
+    // Cacher quand la souris sort de la fenêtre
+    document.addEventListener('mouseleave', () => {
+        gsap.to([cursor, ring], { opacity: 0, duration: 0.2 });
+        isVisible = false;
+    });
+    document.addEventListener('mouseenter', () => {
+        gsap.to([cursor, ring], { opacity: 1, duration: 0.2 });
+        isVisible = true;
     });
 }
 

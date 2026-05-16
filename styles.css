@@ -629,7 +629,7 @@ html {
     overflow: hidden;
     transform-style: preserve-3d;
     will-change: transform;
-    cursor: none;
+    cursor: none; /* remplacé par cursor custom */
 }
 
 .game-item img {
@@ -700,6 +700,61 @@ html {
 
 .gallery-card:hover img {
     transform: scale(1.05);
+}
+
+
+/* ===== CURSOR FIX — garder curseur natif sur éléments interactifs ===== */
+body.has-custom-cursor {
+    cursor: none;
+}
+body.has-custom-cursor input,
+body.has-custom-cursor select,
+body.has-custom-cursor textarea,
+body.has-custom-cursor button,
+body.has-custom-cursor .icon-btn,
+body.has-custom-cursor .view-btn,
+body.has-custom-cursor .panel,
+body.has-custom-cursor .filter-panel,
+body.has-custom-cursor .stats-panel,
+body.has-custom-cursor .modal-content,
+body.has-custom-cursor .admin-btn,
+body.has-custom-cursor .btn-submit,
+body.has-custom-cursor .btn-cancel,
+body.has-custom-cursor .btn-delete,
+body.has-custom-cursor label {
+    cursor: none; /* le cursor custom gère tout */
+}
+
+/* Fix 3 : drag & drop — zone de drop visible avec gap */
+.tier-games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px;
+    min-height: 60px; /* zone de drop toujours cliquable */
+    align-content: flex-start;
+    transition: background 0.2s ease, outline 0.2s ease;
+}
+
+/* Indicateur de position pendant le drag */
+.sortable-ghost {
+    opacity: 0;
+}
+
+.sortable-chosen {
+    opacity: 0.5;
+}
+
+.sortable-drag {
+    opacity: 1 !important;
+}
+
+/* Ligne d'insertion entre les items */
+.tier-games.sortable-over {
+    background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+    outline: 2px dashed color-mix(in srgb, var(--text-primary) 40%, transparent);
+    outline-offset: -4px;
+    border-radius: 6px;
 }
 
 /* ===== SCROLL TO TOP ===== */

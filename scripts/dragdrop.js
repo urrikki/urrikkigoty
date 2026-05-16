@@ -10,13 +10,17 @@ function enableDragDrop() {
     tierContainers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',          // même groupe = drag entre tiers possible
-            animation: 180,
-            ghostClass: 'drag-ghost',
-            chosenClass: 'drag-chosen',
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
             dragClass: 'drag-dragging',
             forceFallback: false,
-            delay: 80,               // petit délai pour ne pas conflicter avec le clic
-            delayOnTouchOnly: true,
+            delay: 120,              // délai pour distinguer clic et drag
+            delayOnTouchOnly: false,
+            // Indicateur de position précis
+            invertSwap: false,
+            swapThreshold: 0.65,     // zone de swap plus large = plus intuitif
+            emptyInsertThreshold: 20, // zone pour insérer dans un tier vide
 
             onStart() {
                 document.body.classList.add('is-dragging');
