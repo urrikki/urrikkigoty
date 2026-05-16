@@ -1,6 +1,6 @@
 // ===== CONFIG AUTH =====
 // Remplace cette URL par celle de ton service Railway une fois déployé
-const AUTH_API = 'https://ton-service.up.railway.app';
+const AUTH_API = 'https://urrikkigoty-production.up.railway.app';
 
 // ===== AUTH =====
 function checkSavedAuth() {

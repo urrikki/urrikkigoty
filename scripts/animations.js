@@ -104,6 +104,7 @@ function animateGameItems() {
 // ── Effet 3D tilt au hover sur les game items ──
 function initTiltEffect() {
     document.addEventListener('mousemove', e => {
+        if (!(e.target instanceof Element)) return;
         const item = e.target.closest('.game-item');
         if (!item) return;
 
@@ -124,6 +125,7 @@ function initTiltEffect() {
     });
 
     document.addEventListener('mouseleave', e => {
+        if (!(e.target instanceof Element)) return;
         const item = e.target.closest('.game-item');
         if (!item) return;
         gsap.to(item, {
