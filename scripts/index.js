@@ -1,6 +1,6 @@
 // ===== POINT D'ENTRÉE =====
 document.addEventListener('DOMContentLoaded', () => {
-    initAnimations();
+    if (typeof initAnimations === 'function') initAnimations();
     initializeApp();
     setupEventListeners();
     checkSavedAuth();
