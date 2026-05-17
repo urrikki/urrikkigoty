@@ -177,17 +177,23 @@ function initCustomCursor() {
 // ===== TITRE EDITORIAL (split + animation cascade) =====
 
 function initEditorialTitle() {
-    const title    = document.getElementById('siteTitle');
+    const title = document.getElementById('siteTitle');
     const subtitle = document.querySelector('.site-subtitle');
     if (!title) return;
 
+    // 1. État initial : boutons invisibles mais bien positionnés (pour l'animation)
+    gsap.set('.action-buttons .icon-btn', { opacity: 0, y: -10 });
+
+    // 2. Split du titre en caractères (inchangé, mais on garde le wrapper)
     const html = [...title.textContent].map(char => {
         const cls = char === '.' ? 'char title-accent' : 'char';
         return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
     }).join('');
     title.innerHTML = html;
 
+    // 3. Timeline (titre + sous-titre + boutons)
     const tl = gsap.timeline({ delay: 0.15 });
+
     tl.from(title.querySelectorAll('.char'), {
         yPercent: 110,
         duration: 1,
@@ -205,15 +211,14 @@ function initEditorialTitle() {
         y: -10,
         stagger: 0.06,
         duration: 0.4,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        clearProps: 'opacity,transform'   // ← NETTOIE APRÈS L'ANIMATION
     }, '-=0.4');
 
-    // 🛠️ FORCE LA VISIBILITÉ (en cas d'échec)
-    setTimeout(() => {
-        document.querySelectorAll('.action-buttons .icon-btn').forEach(btn => {
-            gsap.set(btn, { opacity: 1, y: 0, clearProps: 'opacity,transform' });
-        });
-    }, 1000);
+    // 4. Sécurité : forcer la visibilité finale au cas où (optionnel, mais prudent)
+    tl.call(() => {
+        gsap.set('.action-buttons .icon-btn', { opacity: 1, y: 0, clearProps: 'opacity,transform' });
+    }, null, null, '+=0.1');
 }
 
 // ===== LABELS TIERS (apparition monumentale) =====
