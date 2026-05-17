@@ -387,7 +387,7 @@ function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    //initGrain();
+    initGrain();
     initGoldLine();
     initCustomCursor();
     initCoverTilt();          
