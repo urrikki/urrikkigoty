@@ -175,12 +175,12 @@ function initCustomCursor() {
 
 // ── Révélation editoriale du titre ──
 // ===== TITRE EDITORIAL (split + animation cascade) =====
+
 function initEditorialTitle() {
     const title    = document.getElementById('siteTitle');
     const subtitle = document.querySelector('.site-subtitle');
     if (!title) return;
 
-    // Split en caractères avec wrapper
     const html = [...title.textContent].map(char => {
         const cls = char === '.' ? 'char title-accent' : 'char';
         return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
@@ -207,6 +207,13 @@ function initEditorialTitle() {
         duration: 0.4,
         ease: 'power2.out'
     }, '-=0.4');
+
+    // 🛠️ FORCE LA VISIBILITÉ (en cas d'échec)
+    setTimeout(() => {
+        document.querySelectorAll('.action-buttons .icon-btn').forEach(btn => {
+            gsap.set(btn, { opacity: 1, y: 0, clearProps: 'opacity,transform' });
+        });
+    }, 1000);
 }
 
 // ===== LABELS TIERS (apparition monumentale) =====
@@ -317,7 +324,7 @@ function initGrain() {
         pointer-events: none;
         z-index: 9998;
         mix-blend-mode: normal;
-        opacity: 0.25;
+        opacity: 0.15;
     `;
     document.body.appendChild(canvas);
 
