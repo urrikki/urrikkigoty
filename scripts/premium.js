@@ -174,13 +174,13 @@ function initCustomCursor() {
 }
 
 // ── Révélation editoriale du titre ──
+// ===== TITRE EDITORIAL (split + animation cascade) =====
 function initEditorialTitle() {
     const title    = document.getElementById('siteTitle');
     const subtitle = document.querySelector('.site-subtitle');
-    const buttons  = document.querySelectorAll('.action-buttons .icon-btn');
     if (!title) return;
 
-    // Split en chars avec wrapper clip
+    // Split en caractères avec wrapper
     const html = [...title.textContent].map(char => {
         const cls = char === '.' ? 'char title-accent' : 'char';
         return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
@@ -188,8 +188,7 @@ function initEditorialTitle() {
     title.innerHTML = html;
 
     const tl = gsap.timeline({ delay: 0.15 });
-    tl
-    .from(title.querySelectorAll('.char'), {
+    tl.from(title.querySelectorAll('.char'), {
         yPercent: 110,
         duration: 1,
         stagger: 0.06,
@@ -201,7 +200,7 @@ function initEditorialTitle() {
         duration: 0.6,
         ease: 'power3.out'
     }, '-=0.5')
-    .from(buttons, {
+    .from('.action-buttons .icon-btn', {
         opacity: 0,
         y: -10,
         stagger: 0.06,
@@ -210,35 +209,33 @@ function initEditorialTitle() {
     }, '-=0.4');
 }
 
-// ── Tier labels — entrée monumentale ──
+// ===== LABELS TIERS (apparition monumentale) =====
 function initTierLabelsReveal() {
-    document.addEventListener('viewRendered', () => {
-        document.querySelectorAll('.tier-label span:not([data-anim])').forEach(label => {
-            label.setAttribute('data-anim', '1');
-            gsap.from(label, {
-                scrollTrigger: { trigger: label, start: 'top 92%', once: true },
-                opacity: 0,
-                scale: 3,
-                duration: 0.7,
-                ease: 'expo.out'
-            });
+    const labels = document.querySelectorAll('.tier-label span:not([data-anim])');
+    labels.forEach(label => {
+        label.setAttribute('data-anim', '1');
+        gsap.from(label, {
+            scrollTrigger: { trigger: label, start: 'top 92%', once: true },
+            opacity: 0,
+            scale: 3,
+            duration: 0.7,
+            ease: 'expo.out'
         });
     });
 }
 
-// ── Tier rows — entrée gauche/droite alternée ──
+// ===== RANGÉES TIERS (entrée latérale alternée) =====
 function initTierRowsReveal() {
-    document.addEventListener('viewRendered', () => {
-        document.querySelectorAll('.tier-row:not([data-anim])').forEach((row, i) => {
-            row.setAttribute('data-anim', '1');
-            gsap.from(row, {
-                scrollTrigger: { trigger: row, start: 'top 90%', once: true },
-                x: i % 2 === 0 ? -40 : 40,
-                opacity: 0,
-                duration: 0.7,
-                delay: i * 0.04,
-                ease: 'power4.out'
-            });
+    const rows = document.querySelectorAll('.tier-row:not([data-anim])');
+    rows.forEach((row, i) => {
+        row.setAttribute('data-anim', '1');
+        gsap.from(row, {
+            scrollTrigger: { trigger: row, start: 'top 90%', once: true },
+            x: i % 2 === 0 ? -40 : 40,
+            opacity: 0,
+            duration: 0.7,
+            delay: i * 0.04,
+            ease: 'power4.out'
         });
     });
 }
@@ -319,7 +316,7 @@ function initGrain() {
         width: 100vw; height: 100vh;
         pointer-events: none;
         z-index: 9998;
-        mix-blend-mode: soft-light;
+        mix-blend-mode: normal;
         opacity: 0.25;
     `;
     document.body.appendChild(canvas);
@@ -390,8 +387,12 @@ function initPremium() {
     initGrain();
     initGoldLine();
     initCustomCursor();
-    initCoverTilt();          
-    initTierLabelsReveal();
-    initTierRowsReveal();
-    initCinematicTransitions();
+    
+    // === ANIMATIONS===
+    initEditorialTitle();       // titre décomposé + cascade
+    initTierLabelsReveal();     // labels des tiers qui s'affichent avec scale
+    initTierRowsReveal();       // rangées qui viennent de gauche/droite
+    initCoverTilt();            // effet 3D sur les covers
+    initCinematicTransitions(); // transitions entre vues
+    // initViewToggleReveal();  // déjà géré par animations.js 
 }
