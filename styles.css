@@ -1156,38 +1156,17 @@ body.has-custom-cursor .icon-btn,
 body.has-custom-cursor .view-btn,
 body.has-custom-cursor .gallery-card,
 body.has-custom-cursor .admin-btn {
-    cursor: none;
+    cursor: none;  
+}
+
+#cursor-trail-container,
+.cursor-trail {
+    pointer-events: none !important;
 }
 
 #cursor-dot {
-    position: fixed;
-    width: 5px; height: 5px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    mix-blend-mode: normal;
-    opacity: 0;
-    transition: width 0.2s, height 0.2s, background 0.2s;
+    transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
 }
-
-#cursor-ring {
-    position: fixed;
-    width: 32px; height: 32px;
-    border: 1px solid rgba(201,168,76,0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: width 0.35s var(--ease), height 0.35s var(--ease), border-color 0.35s, border-radius 0.35s;
-}
-
-#cursor-ring.cursor-hover { width: 56px; height: 56px; border-color: var(--gold); }
-#cursor-ring.cursor-game  { width: 72px; height: 72px; border-radius: 2px; border-color: var(--gold); }
-
-@media (hover: none) { #cursor-dot, #cursor-ring { display: none; } }
 
 /* =====================================================
    SAVE INDICATOR
@@ -1312,4 +1291,14 @@ body::after {
 .admin-controls {
     position: relative;
     z-index: 10;
+}
+
+#grain-overlay,
+#cursor-dot,
+#cursor-ring {
+    pointer-events: none !important;
+}
+
+body, .app-wrapper, .tier-list-container, .game-item, button, .icon-btn {
+    pointer-events: auto !important;
 }

@@ -56,12 +56,10 @@ async function loadGames() {
             AppState.games = data.games;
             return;
         }
-        // Si l'API répond mais avec data.ok === false, on loggue et on continue vers fallback
         console.warn('[STORAGE] API renvoyé ok=false, fallback sur games.json', data.error);
     } catch (err) {
         console.warn('[STORAGE] Railway injoignable, fallback sur games.json', err);
     }
-    // Fallback : fichier local
     const res = await fetch(DATA_PATH + '?v=' + Date.now());
     const data = await res.json();
     AppState.games = data.games || [];
