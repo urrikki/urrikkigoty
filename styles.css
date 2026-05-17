@@ -1271,3 +1271,45 @@ body.has-custom-cursor .admin-btn {
     .timeline-container { padding-left: 3.5rem; }
     #scrollTopBtn { bottom: 1rem; right: 1rem; }
 }
+
+/* ===== FIXES CRITIQUES ===== */
+
+/* Panels au dessus du grain overlay */
+.panel, .filter-panel, .stats-panel {
+    position: relative;
+    z-index: 10;
+    pointer-events: all;
+}
+
+/* Grain ne bloque pas les clics */
+#grain-overlay {
+    pointer-events: none !important;
+}
+
+/* body::after (texture) ne bloque pas */
+body::after {
+    pointer-events: none !important;
+    z-index: 0;
+}
+
+/* Les inputs dans les panels sont toujours cliquables */
+.panel input,
+.panel select,
+.panel button,
+.panel label {
+    position: relative;
+    z-index: 11;
+    pointer-events: all;
+}
+
+/* Modales au dessus de tout */
+.modal {
+    z-index: 1000;
+    pointer-events: all;
+}
+
+/* Admin controls */
+.admin-controls {
+    position: relative;
+    z-index: 10;
+}
