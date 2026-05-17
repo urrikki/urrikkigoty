@@ -47,15 +47,18 @@ function animateNotification(el) {
     );
 }
 
-// Initialisation globale (sans refaire le titre, sans double tilt)
 function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
-    initLenis();
-    animateViewToggle();
+    initLenis();               // smooth scroll (si vous voulez le garder)
+    // animateHeroTitle();     // ← À SUPPRIMER (remplacé par initEditorialTitle de premium.js)
+    // animateViewToggle();    // ← À SUPPRIMER (car premium.js gère aussi)
+    // initTiltEffect();       // ← À SUPPRIMER (remplacé par initCoverTilt de premium.js)
     initHeaderParallax();
-
-    // On écoute l'événement de rendu pour rafraîchir ScrollTrigger
+    
     document.addEventListener('viewRendered', () => {
         ScrollTrigger.refresh();
+        // On relance les animations ScrollTrigger sur les nouveaux éléments
+        initTierLabelsReveal();   // si besoin de réattacher après rendu
+        initTierRowsReveal();
     });
 }

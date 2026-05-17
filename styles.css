@@ -1014,6 +1014,10 @@ body::after {
 /* =====================================================
    CURSEUR PERSONNALISÉ (doré avec traînée)
    ===================================================== */
+html, body, * {
+    cursor: none !important;
+}
+
 body.has-custom-cursor,
 body.has-custom-cursor button,
 body.has-custom-cursor .game-item,
