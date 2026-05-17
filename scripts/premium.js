@@ -2,16 +2,17 @@
 // Curseur doré + animations editoriales + transitions cinématiques
 
 // ===== CURSEUR DORÉ + TRAÎNÉE LUMINEUSE (hors tier list) =====
+// ===== CURSEUR DORÉ OPTIMISÉ (sans lag) =====
 function initCustomCursor() {
     if (window.matchMedia('(hover: none)').matches) return;
 
-    // Supprimer l'ancien curseur s'il existe
+    // Supprimer les anciens éléments
     const oldDot = document.getElementById('cursor-dot');
-    const oldRing = document.getElementById('cursor-ring');
+    const oldContainer = document.getElementById('cursor-trail-container');
     if (oldDot) oldDot.remove();
-    if (oldRing) oldRing.remove();
+    if (oldContainer) oldContainer.remove();
 
-    // Créer la boule principale (dorée, lumineuse)
+    // Boule principale
     const dot = document.createElement('div');
     dot.id = 'cursor-dot';
     dot.style.cssText = `
@@ -24,12 +25,11 @@ function initCustomCursor() {
         pointer-events: none;
         z-index: 10000;
         transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s;
         will-change: left, top;
     `;
     document.body.appendChild(dot);
 
-    // Conteneur pour la traînée (plusieurs petites boules)
+    // Conteneur pour la traînée
     const trailContainer = document.createElement('div');
     trailContainer.id = 'cursor-trail-container';
     trailContainer.style.cssText = `
@@ -41,15 +41,13 @@ function initCustomCursor() {
     `;
     document.body.appendChild(trailContainer);
 
-    // Paramètres de la traînée
-    const TRAIL_LENGTH = 12;      // nombre de traces
-    const TRAIL_DECAY = 0.85;     // coefficient de réduction de taille
-    let trailPositions = [];       // stocke les positions {x, y}
-    let lastTimestamp = 0;
-    let isInsideTierList = false;  // flag pour savoir si on est dans la tier list
-
-    // Créer les éléments de la traînée (invisible au début)
-    const trailElements = [];
+    const TRAIL_LENGTH = 10;      // légèrement réduit pour les perfs
+    const TRAIL_DECAY = 0.85;
+    let trailPositions = [];       // stocke {x, y}
+    let lastTrailAdd = 0;
+    const TRAIL_INTERVAL_MS = 16;  // ~60 fps max (au lieu de 125)
+    
+    let trailElements = [];
     for (let i = 0; i < TRAIL_LENGTH; i++) {
         const trail = document.createElement('div');
         trail.className = 'cursor-trail';
@@ -60,95 +58,103 @@ function initCustomCursor() {
             background: radial-gradient(circle, #E2C47A, #B8860B);
             border-radius: 50%;
             opacity: 0;
-            transition: opacity 0.15s linear;
+            transition: opacity 0.1s linear;
             filter: blur(0.5px);
             pointer-events: none;
             box-shadow: 0 0 6px rgba(201,168,76,0.6);
+            will-change: left, top, width, height, opacity;
         `;
         trailContainer.appendChild(trail);
         trailElements.push(trail);
     }
 
-    // Mettre à jour la position de la boule principale et ajouter un point à la traînée
     let mouseX = 0, mouseY = 0;
-    let lastX = 0, lastY = 0;
-
+    let isInsideTierList = false;
+    
+    // Mise en cache des dimensions de la tier list (mise à jour seulement au resize ou scroll)
+    let tierListRect = { left: 0, right: 0, top: 0, bottom: 0 };
+    let rectValid = false;
+    
+    function updateTierListRect() {
+        const tierListZone = document.querySelector('.tier-list-container');
+        if (tierListZone) {
+            const rect = tierListZone.getBoundingClientRect();
+            tierListRect = { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+            rectValid = true;
+        } else {
+            rectValid = false;
+        }
+    }
+    
+    // Mettre à jour au démarrage et aux événements de scroll/resize
+    updateTierListRect();
+    window.addEventListener('resize', () => { updateTierListRect(); });
+    window.addEventListener('scroll', () => { updateTierListRect(); }, { passive: true });
+    
+    function checkIfInsideTierList(clientX, clientY) {
+        if (!rectValid) return false;
+        return (clientX >= tierListRect.left && clientX <= tierListRect.right &&
+                clientY >= tierListRect.top && clientY <= tierListRect.bottom);
+    }
+    
     function addTrailPoint(x, y) {
-        trailPositions.unshift({ x, y, age: 0 });
+        trailPositions.unshift({ x, y });
         if (trailPositions.length > TRAIL_LENGTH) trailPositions.pop();
     }
-
-    function updateTrail() {
-        // Mettre à jour chaque trace en fonction de sa position dans l'historique
+    
+    // Animation de la traînée (une seule RAF, sans recalcul de zone à chaque frame)
+    function updateTrailDisplay() {
         for (let i = 0; i < trailElements.length; i++) {
             const pos = trailPositions[i];
             if (pos && !isInsideTierList) {
-                const element = trailElements[i];
-                element.style.left = pos.x + 'px';
-                element.style.top = pos.y + 'px';
-                // Taille décroissante et opacité
+                const el = trailElements[i];
+                el.style.left = pos.x + 'px';
+                el.style.top = pos.y + 'px';
                 const scale = Math.pow(TRAIL_DECAY, i);
                 const size = 8 * scale;
-                element.style.width = size + 'px';
-                element.style.height = size + 'px';
-                element.style.opacity = 0.6 * scale;
-                element.style.transform = 'translate(-50%, -50%)';
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.opacity = 0.6 * scale;
             } else {
-                // Si on est dans la tier list, on cache la traînée
                 trailElements[i].style.opacity = '0';
             }
         }
-        requestAnimationFrame(updateTrail);
+        requestAnimationFrame(updateTrailDisplay);
     }
-    updateTrail();
-
-    // Détecter si la souris est dans la zone de la tier list
-    function checkIfInsideTierList(e) {
-        const tierListZone = document.querySelector('.tier-list-container');
-        if (!tierListZone) return false;
-        const rect = tierListZone.getBoundingClientRect();
-        const x = e.clientX;
-        const y = e.clientY;
-        return (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom);
-    }
-
-    // Événement mousemove
+    updateTrailDisplay();
+    
+    // Gestion du mousemove (optimisée)
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         dot.style.left = mouseX + 'px';
         dot.style.top = mouseY + 'px';
-
-        // Vérifier si on est dans la tier list
-        const nowInside = checkIfInsideTierList(e);
+        
+        // Vérification de zone avec cache
+        const nowInside = checkIfInsideTierList(mouseX, mouseY);
         if (nowInside !== isInsideTierList) {
             isInsideTierList = nowInside;
-            // Optionnel : changer l'apparence du curseur à l'intérieur
+            // Ajustement visuel du curseur
             if (isInsideTierList) {
                 dot.style.width = '8px';
                 dot.style.height = '8px';
-                dot.style.background = 'radial-gradient(circle, #FFD966, #C9A84C)';
             } else {
                 dot.style.width = '12px';
                 dot.style.height = '12px';
             }
         }
-
-        // Ajouter un point à la traînée uniquement si on est EN DEHORS de la tier list
-        if (!isInsideTierList) {
-            // Limiter la fréquence d'ajout pour éviter trop de points (toutes les 8ms environ)
-            const now = performance.now();
-            if (now - lastTimestamp > 8) {
-                addTrailPoint(mouseX, mouseY);
-                lastTimestamp = now;
-            }
-        } else {
-            // Si on est à l'intérieur, on vide la traînée progressivement
-            trailPositions = [];
+        
+        // Ajout d'un point pour la traînée (throttle)
+        const now = Date.now();
+        if (!isInsideTierList && (now - lastTrailAdd) >= TRAIL_INTERVAL_MS) {
+            addTrailPoint(mouseX, mouseY);
+            lastTrailAdd = now;
+        } else if (isInsideTierList) {
+            // Vider la traînée immédiatement si on rentre dans la zone
+            if (trailPositions.length > 0) trailPositions = [];
         }
     });
-
-    // Gérer la sortie de la fenêtre
+    
     document.addEventListener('mouseleave', () => {
         dot.style.opacity = '0';
         trailElements.forEach(t => t.style.opacity = '0');
@@ -156,14 +162,15 @@ function initCustomCursor() {
     document.addEventListener('mouseenter', () => {
         dot.style.opacity = '1';
     });
-
-    // Animation de pulsation légère (optionnel)
+    
+    // Pulsation douce (pas de setInterval, trop lourd, on utilise une animation CSS)
+    dot.style.transition = 'transform 0.15s ease-out';
     setInterval(() => {
         if (!isInsideTierList) {
-            dot.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            dot.style.transform = 'translate(-50%, -50%) scale(1.15)';
             setTimeout(() => { dot.style.transform = 'translate(-50%, -50%) scale(1)'; }, 150);
         }
-    }, 2000);
+    }, 2500);
 }
 
 // ── Révélation editoriale du titre ──
@@ -380,7 +387,7 @@ function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    initGrain();
+    //initGrain();
     initGoldLine();
     initCustomCursor();
     initCoverTilt();          

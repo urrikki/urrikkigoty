@@ -1149,6 +1149,10 @@ body::after {
 /* =====================================================
    CUSTOM CURSOR
    ===================================================== */
+html, body, * {
+    cursor: none !important;
+}
+
 body.has-custom-cursor,
 body.has-custom-cursor button,
 body.has-custom-cursor .game-item,
