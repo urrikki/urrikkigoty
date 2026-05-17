@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 
 /* =====================================================
-   GOTY — DESIGN SYSTEM
-   Identité : Dark editorial / Award ceremony premium
+   GOTY — DESIGN SYSTEM (clair/sombre natif)
    ===================================================== */
 
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: auto; }
 
-/* ── Tokens ── */
+/* ── Thème par défaut : DARK ── */
 :root {
     /* Couleurs */
     --black:       #0A0A0A;
@@ -25,7 +24,7 @@ html { scroll-behavior: auto; }
     --gold-dark:   #8A6A20;
     --red:         #C0392B;
 
-    /* Mapping sémantique */
+    /* Mapping sémantique (sombre) */
     --bg-body:     var(--black);
     --bg-surface:  var(--black-2);
     --bg-raised:   var(--black-3);
@@ -37,12 +36,18 @@ html { scroll-behavior: auto; }
     --border:      #262626;
     --border-gold: rgba(201,168,76,0.3);
 
+    /* Ombres (sombre) */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.8);
+    --glow-gold: 0 0 24px rgba(201,168,76,0.2);
+
     /* Typographie */
     --font-display: 'Bebas Neue', 'Impact', sans-serif;
     --font-serif:   'DM Serif Display', Georgia, serif;
     --font-body:    'Inter', system-ui, sans-serif;
 
-    /* Tiers — couleur unique, l'accent or */
+    /* Tiers (même or pour S, autres couleurs adaptables) */
     --tier-s:  var(--gold);
     --tier-a:  var(--white);
     --tier-b:  var(--white-dim);
@@ -51,12 +56,6 @@ html { scroll-behavior: auto; }
     --tier-e:  var(--white-muted);
     --tier-f:  var(--white-muted);
     --tier-np: var(--white-muted);
-
-    /* Ombres */
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
-    --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
-    --shadow-lg: 0 20px 60px rgba(0,0,0,0.8);
-    --glow-gold: 0 0 24px rgba(201,168,76,0.2);
 
     /* Transitions */
     --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -67,7 +66,37 @@ html { scroll-behavior: auto; }
     --t-slow: 0.4s;
 }
 
-/* ── Base ── */
+/* ── THÈME CLAIR (classe .dark-theme sur le body) ── */
+body.dark-theme {
+    --bg-body:     #F4F1EC;
+    --bg-surface:  #FFFFFF;
+    --bg-raised:   #FAF8F5;
+    --bg-hover:    #F0EDE8;
+    --text-primary:   #1A1814;
+    --text-secondary: #5A5248;
+    --text-muted:     #8A8278;
+    --border:      #E0DDD8;
+    --border-gold: rgba(201,168,76,0.5);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.12);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
+    --glow-gold: 0 0 24px rgba(201,168,76,0.3);
+
+    /* Ajustement de la couleur du tier A pour rester lisible */
+    --tier-a:  #2C2C2C;
+}
+
+/* Transition fluide pour tout changement de thème */
+body, body * {
+    transition: background-color var(--t-base) var(--ease),
+                color var(--t-base) var(--ease),
+                border-color var(--t-base) var(--ease),
+                box-shadow var(--t-base) var(--ease);
+}
+
+/* =====================================================
+   BASE & TEXTURES (inchangé)
+   ===================================================== */
 body {
     background: var(--bg-body);
     color: var(--text-primary);
@@ -75,11 +104,9 @@ body {
     font-size: 14px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
 }
 
-/* Texture de fond subtile */
 body::after {
     content: '';
     position: fixed;
@@ -100,15 +127,13 @@ body::after {
 }
 
 /* =====================================================
-   HEADER
+   HEADER (inchangé)
    ===================================================== */
 .main-header {
     padding: 2rem 0 0;
     margin-bottom: 3rem;
     position: relative;
 }
-
-/* Ligne dorée en haut */
 .main-header::before {
     content: '';
     position: absolute;
@@ -116,7 +141,6 @@ body::after {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
-
 .header-inner {
     display: flex;
     justify-content: space-between;
@@ -126,9 +150,7 @@ body::after {
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
 }
-
 .logo-area { flex: 1; overflow: hidden; }
-
 .site-title {
     font-family: var(--font-display);
     font-size: clamp(4rem, 8vw, 8rem);
@@ -138,18 +160,11 @@ body::after {
     line-height: 0.9;
     user-select: none;
 }
-
-.title-accent {
-    color: var(--gold);
-    display: inline-block;
-    animation: pulseGold 4s ease-in-out infinite;
-}
-
+.title-accent { color: var(--gold); display: inline-block; animation: pulseGold 4s ease-in-out infinite; }
 @keyframes pulseGold {
     0%, 100% { opacity: 1; }
     50%       { opacity: 0.6; }
 }
-
 .site-subtitle {
     font-size: 0.65rem;
     color: var(--text-muted);
@@ -158,15 +173,12 @@ body::after {
     letter-spacing: 0.4em;
     font-weight: 500;
 }
-
-/* Boutons header */
 .action-buttons {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
     align-items: center;
 }
-
 .icon-btn {
     width: 2.25rem;
     height: 2.25rem;
@@ -181,20 +193,13 @@ body::after {
     justify-content: center;
     transition: all var(--t-base) var(--ease);
 }
-
 .icon-btn:hover {
     border-color: var(--gold);
     color: var(--gold);
     background: rgba(201,168,76,0.08);
     box-shadow: var(--glow-gold);
 }
-
-.icon-btn.active {
-    background: var(--gold);
-    color: var(--black);
-    border-color: var(--gold);
-}
-
+.icon-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
 .admin-badge {
     display: inline-flex;
     align-items: center;
@@ -211,7 +216,7 @@ body::after {
 }
 
 /* =====================================================
-   VIEW TOGGLE
+   VIEW TOGGLE (inchangé)
    ===================================================== */
 .view-toggle-bar {
     display: flex;
@@ -221,13 +226,11 @@ body::after {
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .view-toggle-group {
     display: flex;
     border: 1px solid var(--border);
     overflow: hidden;
 }
-
 .view-btn {
     padding: 0.45rem 1rem;
     font-size: 0.65rem;
@@ -245,11 +248,9 @@ body::after {
     align-items: center;
     gap: 0.4rem;
 }
-
 .view-btn:last-child { border-right: none; }
 .view-btn:hover { color: var(--text-primary); background: var(--bg-raised); }
 .view-btn.active { background: var(--gold); color: var(--black); }
-
 .game-count {
     font-size: 0.65rem;
     color: var(--text-muted);
@@ -267,12 +268,10 @@ body::after {
     margin-bottom: 2rem;
     animation: panelIn 0.2s var(--ease-out);
 }
-
 @keyframes panelIn {
     from { opacity: 0; transform: translateY(-12px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-
 .panel-header {
     display: flex;
     justify-content: space-between;
@@ -281,15 +280,12 @@ body::after {
     border-bottom: 1px solid var(--border);
     background: var(--bg-raised);
 }
-
 .panel-header h3 {
     font-family: var(--font-display);
     font-size: 1rem;
     letter-spacing: 0.08em;
-    color: var(--text-primary);
     font-weight: 400;
 }
-
 .panel-close {
     background: none;
     border: none;
@@ -304,21 +300,15 @@ body::after {
     justify-content: center;
     border: 1px solid transparent;
 }
-
 .panel-close:hover { color: var(--text-primary); border-color: var(--border); }
-
 .panel-body { padding: 1.25rem; }
-
-/* Filtres */
 .filter-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
     margin-bottom: 1rem;
 }
-
 .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
-
 .filter-group label {
     font-size: 0.6rem;
     font-weight: 600;
@@ -329,7 +319,6 @@ body::after {
     align-items: center;
     gap: 0.4rem;
 }
-
 .filter-group input,
 .filter-group select {
     padding: 0.5rem 0.75rem;
@@ -340,21 +329,15 @@ body::after {
     font-family: var(--font-body);
     font-size: 0.85rem;
     transition: border-color var(--t-base);
-    appearance: none;
-    -webkit-appearance: none;
 }
-
 .filter-group input:focus,
 .filter-group select:focus {
     outline: none;
     border-bottom-color: var(--gold);
     background: var(--bg-hover);
 }
-
-.filter-group select option { background: var(--black-3); }
-
+.filter-group select option { background: var(--bg-raised); }
 .filter-actions { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
-
 .btn-secondary {
     padding: 0.4rem 1rem;
     font-size: 0.65rem;
@@ -370,7 +353,6 @@ body::after {
     gap: 0.4rem;
     transition: all var(--t-base);
 }
-
 .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
 
 /* Stats */
@@ -381,7 +363,6 @@ body::after {
     margin-bottom: 1.5rem;
     overflow: hidden;
 }
-
 .stat-card {
     padding: 1.25rem 1rem;
     text-align: center;
@@ -389,7 +370,6 @@ body::after {
     background: var(--bg-raised);
     position: relative;
 }
-
 .stat-card::before {
     content: '';
     position: absolute;
@@ -399,10 +379,8 @@ body::after {
     opacity: 0;
     transition: opacity var(--t-base);
 }
-
 .stat-card:hover::before { opacity: 1; }
 .stat-card:last-child { border-right: none; }
-
 .stat-value {
     font-family: var(--font-display);
     font-size: 2.5rem;
@@ -411,7 +389,6 @@ body::after {
     margin-bottom: 0.4rem;
     color: var(--gold);
 }
-
 .stat-label {
     font-size: 0.6rem;
     color: var(--text-muted);
@@ -422,20 +399,15 @@ body::after {
     justify-content: center;
     gap: 0.3rem;
 }
-
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-
 .chart-container h4 {
     font-family: var(--font-display);
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     margin-bottom: 0.75rem;
-    color: var(--text-secondary);
     font-weight: 400;
 }
-
 .tier-chart { display: flex; flex-direction: column; gap: 0.6rem; }
-
 .chart-bar-row { display: flex; align-items: center; gap: 0.75rem; }
 .chart-bar-label { width: 2rem; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.05em; color: var(--text-secondary); }
 .chart-bar-bg { flex: 1; height: 2px; background: var(--border); overflow: hidden; }
@@ -455,7 +427,6 @@ body::after {
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
 }
-
 .admin-btn {
     padding: 0.45rem 1.25rem;
     font-size: 0.65rem;
@@ -471,13 +442,12 @@ body::after {
     gap: 0.5rem;
     transition: all var(--t-base);
 }
-
 .admin-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
 .admin-btn.danger { border-color: var(--red); color: var(--red); }
 .admin-btn.danger:hover { background: var(--red); color: var(--white); }
 
 /* =====================================================
-   TIER LIST — Le cœur du site
+   TIER LIST
    ===================================================== */
 .tier-list {
     display: flex;
@@ -485,20 +455,14 @@ body::after {
     border: 1px solid var(--border);
     overflow: hidden;
 }
-
 .tier-row {
     display: flex;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
     transition: background var(--t-base);
-    will-change: transform, opacity;
-    position: relative;
 }
-
 .tier-row:last-child { border-bottom: none; }
 .tier-row:hover { background: var(--bg-raised); }
-
-/* Label tier — typographie monumentale */
 .tier-label {
     width: 80px;
     min-width: 80px;
@@ -509,11 +473,8 @@ body::after {
     justify-content: center;
     padding: 1rem 0;
     position: relative;
-    transition: background var(--t-base);
     overflow: hidden;
 }
-
-/* Accent bar gauche colorée par tier */
 .tier-label::before {
     content: '';
     position: absolute;
@@ -522,26 +483,17 @@ body::after {
     background: var(--tier-color, var(--gold));
     transition: width var(--t-base);
 }
-
 .tier-row:hover .tier-label::before { width: 5px; }
-
 .tier-label span {
     font-family: var(--font-display);
     font-size: 2.5rem;
     letter-spacing: 0.04em;
     line-height: 1;
     color: var(--tier-color, var(--white));
-    will-change: transform, opacity;
     display: block;
     text-align: center;
 }
-
-/* Tier S — spécial, effet doré */
-.tier-row:has([style*="--tier-color: var(--tier-s)"]) .tier-label {
-    background: rgba(201,168,76,0.05);
-}
-
-/* Zone des jeux */
+.tier-row:has([style*="--tier-color: var(--tier-s)"]) .tier-label { background: rgba(201,168,76,0.05); }
 .tier-games {
     flex: 1;
     display: flex;
@@ -552,8 +504,6 @@ body::after {
     align-content: flex-start;
     transition: background var(--t-base), outline var(--t-base);
 }
-
-/* ── Game Items ── */
 .game-item {
     width: 98px;
     height: 98px;
@@ -568,30 +518,23 @@ body::after {
     transform-style: preserve-3d;
     animation: itemIn 0.3s var(--ease-out) both;
 }
-
 @keyframes itemIn {
     from { opacity: 0; scale: 0.85; }
     to   { opacity: 1; scale: 1; }
 }
-
 .game-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     transition: transform var(--t-slow) var(--ease);
-    will-change: transform;
 }
-
 .game-item:hover {
     border-color: var(--gold);
     box-shadow: 0 0 0 1px var(--gold), var(--glow-gold);
     z-index: 2;
 }
-
 .game-item:hover img { transform: scale(1.08); }
-
-/* Overlay au hover — titre du jeu */
 .game-item::after {
     content: attr(data-name);
     position: absolute;
@@ -609,16 +552,11 @@ body::after {
     line-height: 1.3;
     text-align: center;
 }
-
 .game-item:hover::after { opacity: 1; transform: translateY(0); }
-
-/* État sélection comparaison */
 .game-item.compare-selected {
     border-color: var(--gold);
     box-shadow: 0 0 0 2px var(--gold), var(--glow-gold);
 }
-
-/* Mode comparaison — shimmer sur les non-sélectionnés */
 .compare-mode .game-item:not(.compare-selected)::before {
     content: '';
     position: absolute;
@@ -628,13 +566,10 @@ body::after {
     animation: shimmerGold 2.5s ease-in-out infinite;
     z-index: 1;
 }
-
 @keyframes shimmerGold {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
-
-/* Stagger animation */
 .game-item:nth-child(1)  { animation-delay: 0.00s; }
 .game-item:nth-child(2)  { animation-delay: 0.03s; }
 .game-item:nth-child(3)  { animation-delay: 0.06s; }
@@ -651,10 +586,8 @@ body::after {
    ===================================================== */
 .admin-drag-active .game-item { cursor: grab; }
 .admin-drag-active .game-item:active { cursor: grabbing; }
-
 .sortable-ghost   { opacity: 0.15; }
 .sortable-chosen  { opacity: 0.6; }
-
 .drag-dragging {
     opacity: 1 !important;
     transform: scale(1.1) rotate(2deg) !important;
@@ -662,24 +595,21 @@ body::after {
     z-index: 9999;
     cursor: grabbing !important;
 }
-
 .tier-games.sortable-over {
     background: rgba(201,168,76,0.05);
     outline: 1px dashed rgba(201,168,76,0.4);
     outline-offset: -4px;
 }
-
 .is-dragging .game-item { pointer-events: none; }
 .is-dragging .drag-dragging { pointer-events: all; }
 
 /* =====================================================
-   TIMELINE
+   TIMELINE & GALLERY (inchangés)
    ===================================================== */
 .timeline-container {
     position: relative;
     padding-left: 5rem;
 }
-
 .timeline-container::before {
     content: '';
     position: absolute;
@@ -688,18 +618,15 @@ body::after {
     width: 1px;
     background: linear-gradient(to bottom, var(--gold), transparent);
 }
-
 .timeline-year {
     position: relative;
     margin-bottom: 3rem;
     animation: slideInLeft 0.35s var(--ease-out) both;
 }
-
 @keyframes slideInLeft {
     from { opacity: 0; transform: translateX(-24px); }
     to   { opacity: 1; transform: translateX(0); }
 }
-
 .timeline-marker {
     position: absolute;
     left: -5rem;
@@ -716,7 +643,6 @@ body::after {
     letter-spacing: 0.05em;
     color: var(--gold);
 }
-
 .timeline-connector {
     position: absolute;
     left: -0.5rem;
@@ -725,19 +651,16 @@ body::after {
     height: 1px;
     background: var(--border-gold);
 }
-
 .timeline-content {
     border: 1px solid var(--border);
     background: var(--bg-surface);
     overflow: hidden;
 }
-
 .timeline-header {
     padding: 0.5rem 0.75rem;
     border-bottom: 1px solid var(--border);
     background: var(--bg-raised);
 }
-
 .timeline-header span {
     font-size: 0.6rem;
     color: var(--text-muted);
@@ -745,21 +668,18 @@ body::after {
     letter-spacing: 0.2em;
     font-weight: 600;
 }
-
 .timeline-games {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
     padding: 0.75rem;
 }
-
 .timeline-game-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
 }
-
 .tier-tag {
     font-size: 0.55rem;
     color: var(--text-muted);
@@ -767,19 +687,13 @@ body::after {
     letter-spacing: 0.15em;
     font-weight: 600;
 }
-
-/* =====================================================
-   GALLERY
-   ===================================================== */
 #galleryView { width: 100%; }
-
 .gallery-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1.25rem;
     width: 100%;
 }
-
 .gallery-card {
     width: 220px;
     flex-shrink: 0;
@@ -789,31 +703,25 @@ body::after {
     transition: border-color var(--t-base), box-shadow var(--t-base);
     animation: itemIn 0.35s var(--ease-out) both;
 }
-
 .gallery-card:hover {
     border-color: var(--gold);
     box-shadow: var(--glow-gold);
 }
-
 .gallery-card-img {
     aspect-ratio: 3 / 4;
     overflow: hidden;
 }
-
 .gallery-card-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform var(--t-slow) var(--ease);
 }
-
 .gallery-card:hover .gallery-card-img img { transform: scale(1.06); }
-
 .gallery-card-info {
     padding: 0.75rem;
     border-top: 1px solid var(--border);
 }
-
 .gallery-card-info h3 {
     font-family: var(--font-serif);
     font-style: italic;
@@ -822,9 +730,7 @@ body::after {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 0.3rem;
-    color: var(--text-primary);
 }
-
 .gallery-card-meta {
     font-size: 0.6rem;
     color: var(--text-muted);
@@ -848,9 +754,7 @@ body::after {
     align-items: center;
     animation: backdropIn 0.2s ease;
 }
-
 @keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
-
 .modal-content {
     background: var(--bg-surface);
     max-width: 840px;
@@ -863,14 +767,11 @@ body::after {
     border-top: 2px solid var(--gold);
     box-shadow: var(--shadow-lg);
     animation: modalIn 0.25s var(--ease-out);
-    will-change: transform, opacity;
 }
-
 @keyframes modalIn {
     from { opacity: 0; transform: translateY(20px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 .modal-close {
     position: absolute;
     top: 1rem; right: 1rem;
@@ -885,16 +786,13 @@ body::after {
     justify-content: center;
     transition: all var(--t-base);
 }
-
 .modal-close:hover { border-color: var(--gold); color: var(--gold); }
-
 .modal-body {
     display: flex;
     gap: 2rem;
     flex-wrap: wrap;
     margin-top: 0.5rem;
 }
-
 .modal-image {
     width: 180px;
     height: 260px;
@@ -902,7 +800,6 @@ body::after {
     border: 1px solid var(--border);
     flex-shrink: 0;
 }
-
 .modal-info {
     flex: 1;
     display: flex;
@@ -910,19 +807,15 @@ body::after {
     gap: 0.75rem;
     min-width: 200px;
 }
-
 .modal-title {
     font-family: var(--font-serif);
     font-size: 1.8rem;
     font-style: italic;
     line-height: 1.15;
-    color: var(--text-primary);
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
 }
-
 .modal-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
 .modal-tag {
     border: 1px solid var(--border);
     padding: 0.2rem 0.6rem;
@@ -934,7 +827,6 @@ body::after {
     align-items: center;
     gap: 0.35rem;
 }
-
 .modal-review-wrapper {
     background: var(--bg-raised);
     border-left: 2px solid var(--gold);
@@ -942,21 +834,18 @@ body::after {
     max-height: 260px;
     overflow-y: auto;
 }
-
 .modal-review {
     white-space: pre-wrap;
     line-height: 1.8;
     font-size: 0.85rem;
     color: var(--text-secondary);
 }
-
 .modal-actions {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
     margin-top: 0.25rem;
 }
-
 .fav-btn, .modal-edit-btn {
     padding: 0.45rem 0.9rem;
     border: 1px solid var(--border);
@@ -972,12 +861,9 @@ body::after {
     background: transparent;
     color: var(--text-secondary);
 }
-
 .fav-btn:hover, .fav-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
 .modal-edit-btn { background: var(--gold); border-color: var(--gold); color: var(--black); }
 .modal-edit-btn:hover { opacity: 0.85; }
-
-/* Comparison */
 .comparison-modal { max-width: 920px; }
 .comparison-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem; }
 .comparison-game { border: 1px solid var(--border); padding: 1rem; display: flex; gap: 0.75rem; background: var(--bg-raised); }
@@ -987,13 +873,12 @@ body::after {
 .comparison-game-info .review { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
 
 /* =====================================================
-   FORMS
+   FORMULAIRE ADMIN
    ===================================================== */
 .add-game-modal { max-width: 640px; }
 .add-game-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-
 .form-group label {
     font-size: 0.6rem;
     font-weight: 600;
@@ -1001,13 +886,11 @@ body::after {
     letter-spacing: 0.15em;
     color: var(--text-muted);
 }
-
 .form-group small {
     font-size: 0.65rem;
     color: var(--text-muted);
     margin-top: 0.2rem;
 }
-
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -1019,9 +902,7 @@ body::after {
     font-family: var(--font-body);
     font-size: 0.85rem;
     transition: border-color var(--t-base), background var(--t-base);
-    appearance: none;
 }
-
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
@@ -1029,11 +910,9 @@ body::after {
     border-bottom-color: var(--gold);
     background: var(--bg-hover);
 }
-
-.form-group select option { background: var(--black-3); }
+.form-group select option { background: var(--bg-raised); }
 .form-error { font-size: 0.75rem; color: var(--red); margin-top: 0.2rem; }
 .login-hint { margin-top: 0.75rem; font-size: 0.7rem; color: var(--text-muted); font-style: italic; }
-
 .form-actions {
     display: flex;
     gap: 0.5rem;
@@ -1041,7 +920,6 @@ body::after {
     flex-wrap: wrap;
     margin-top: 0.25rem;
 }
-
 .btn-submit {
     padding: 0.55rem 1.5rem;
     background: var(--gold);
@@ -1057,9 +935,7 @@ body::after {
     gap: 0.4rem;
     transition: all var(--t-base);
 }
-
 .btn-submit:hover { background: var(--gold-light); border-color: var(--gold-light); }
-
 .btn-cancel {
     padding: 0.55rem 1rem;
     background: transparent;
@@ -1075,9 +951,7 @@ body::after {
     gap: 0.4rem;
     transition: all var(--t-base);
 }
-
 .btn-cancel:hover { border-color: var(--text-primary); color: var(--text-primary); }
-
 .btn-delete {
     padding: 0.55rem 1rem;
     background: transparent;
@@ -1093,10 +967,7 @@ body::after {
     gap: 0.4rem;
     transition: all var(--t-base);
 }
-
 .btn-delete:hover { background: var(--red); color: var(--white); }
-
-/* Login modal */
 .login-modal { max-width: 380px; }
 .login-modal h2 {
     font-family: var(--font-display);
@@ -1107,7 +978,7 @@ body::after {
 }
 
 /* =====================================================
-   NOTIFICATIONS
+   NOTIFICATIONS & INDICATEURS
    ===================================================== */
 .notification {
     position: fixed;
@@ -1121,21 +992,15 @@ body::after {
     box-shadow: var(--shadow-lg);
     letter-spacing: 0.05em;
 }
-
-/* =====================================================
-   SKELETON LOADERS
-   ===================================================== */
 @keyframes shimmer {
     0%   { background-position: -600px 0; }
     100% { background-position:  600px 0; }
 }
-
 .skeleton {
     background: linear-gradient(90deg, var(--bg-raised) 25%, var(--bg-hover) 50%, var(--bg-raised) 75%);
     background-size: 600px 100%;
     animation: shimmer 1.4s ease-in-out infinite;
 }
-
 .skeleton-row { display: flex; background: var(--bg-surface); border-bottom: 1px solid var(--border); }
 .skeleton-label { width: 80px; min-width: 80px; height: 118px; border-right: 1px solid var(--border); }
 .skeleton-games { flex: 1; display: flex; gap: 8px; padding: 10px; flex-wrap: wrap; align-content: flex-start; }
@@ -1147,12 +1012,8 @@ body::after {
 .skeleton-game:nth-child(5) { animation-delay: 0.32s; }
 
 /* =====================================================
-   CUSTOM CURSOR
+   CURSEUR PERSONNALISÉ (doré avec traînée)
    ===================================================== */
-html, body, * {
-    cursor: none !important;
-}
-
 body.has-custom-cursor,
 body.has-custom-cursor button,
 body.has-custom-cursor .game-item,
@@ -1160,20 +1021,20 @@ body.has-custom-cursor .icon-btn,
 body.has-custom-cursor .view-btn,
 body.has-custom-cursor .gallery-card,
 body.has-custom-cursor .admin-btn {
-    cursor: none;  
+    cursor: none;
 }
-
+#cursor-dot,
+#cursor-ring,
 #cursor-trail-container,
 .cursor-trail {
     pointer-events: none !important;
 }
-
 #cursor-dot {
     transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
 }
 
 /* =====================================================
-   SAVE INDICATOR
+   SCROLL TOP & SAVE INDICATOR
    ===================================================== */
 #saveIndicator {
     position: fixed;
@@ -1192,12 +1053,7 @@ body.has-custom-cursor .admin-btn {
     transition: opacity 0.25s, transform 0.25s;
     pointer-events: none;
 }
-
 #saveIndicator.visible { opacity: 1; transform: translateY(0); }
-
-/* =====================================================
-   SCROLL TO TOP
-   ===================================================== */
 #scrollTopBtn {
     position: fixed;
     bottom: 1.5rem; right: 1.5rem;
@@ -1217,22 +1073,8 @@ body.has-custom-cursor .admin-btn {
     transition: opacity 0.25s, transform 0.25s;
     transform: translateY(8px);
 }
-
 #scrollTopBtn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 #scrollTopBtn:hover { background: var(--gold-light); }
-
-/* =====================================================
-   PREMIUM EXTRAS (GSAP targets)
-   ===================================================== */
-.char-wrapper { display: inline-block; overflow: hidden; line-height: 1.1; }
-.char { display: inline-block; will-change: transform; }
-
-.tier-list-container,
-.timeline-container,
-.gallery-container {
-    will-change: opacity, transform;
-    backface-visibility: hidden;
-}
 
 /* =====================================================
    RESPONSIVE
@@ -1255,27 +1097,21 @@ body.has-custom-cursor .admin-btn {
     #scrollTopBtn { bottom: 1rem; right: 1rem; }
 }
 
-/* ===== FIXES CRITIQUES ===== */
-
-/* Panels au dessus du grain overlay */
+/* =====================================================
+   FIXES GÉNÉRAUX
+   ===================================================== */
 .panel, .filter-panel, .stats-panel {
     position: relative;
     z-index: 10;
     pointer-events: all;
 }
-
-/* Grain ne bloque pas les clics */
 #grain-overlay {
     pointer-events: none !important;
 }
-
-/* body::after (texture) ne bloque pas */
 body::after {
     pointer-events: none !important;
     z-index: 0;
 }
-
-/* Les inputs dans les panels sont toujours cliquables */
 .panel input,
 .panel select,
 .panel button,
@@ -1284,25 +1120,19 @@ body::after {
     z-index: 11;
     pointer-events: all;
 }
-
-/* Modales au dessus de tout */
 .modal {
     z-index: 1000;
     pointer-events: all;
 }
-
-/* Admin controls */
 .admin-controls {
     position: relative;
     z-index: 10;
 }
-
-#grain-overlay,
-#cursor-dot,
-#cursor-ring {
-    pointer-events: none !important;
-}
-
-body, .app-wrapper, .tier-list-container, .game-item, button, .icon-btn {
-    pointer-events: auto !important;
+.char-wrapper { display: inline-block; overflow: hidden; line-height: 1.1; }
+.char { display: inline-block; will-change: transform; }
+.tier-list-container,
+.timeline-container,
+.gallery-container {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
 }

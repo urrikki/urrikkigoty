@@ -20,6 +20,9 @@ function initTheme() {
     if (saved === 'dark') {
         document.body.classList.add('dark-theme');
         document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        document.body.classList.remove('dark-theme');
+        document.getElementById('themeToggle').innerHTML = '<i class="fas fa-moon"></i>';
     }
 }
 
