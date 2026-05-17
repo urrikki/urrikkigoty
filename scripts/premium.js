@@ -273,7 +273,6 @@ function initViewToggleReveal() {
     });
 }
 
-// ── Init global ──
 function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
@@ -281,9 +280,7 @@ function initPremium() {
     initGrain();
     initGoldLine();
     initCustomCursor();
-    initEditorialTitle();
-    initViewToggleReveal();
-    initCoverTilt();
+    initCoverTilt();          
     initTierLabelsReveal();
     initTierRowsReveal();
     initCinematicTransitions();

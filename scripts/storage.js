@@ -48,23 +48,24 @@ function loadFromLocalStorage() {
     }
 }
 
-// ===== CHARGEMENT INITIAL =====
 async function loadGames() {
-    // Charger depuis Railway (qui lit GitHub) — toujours frais
     try {
         const res = await fetch(`${AUTH_API}/api/games`);
         const data = await res.json();
-        if (data.ok) {
-            AppState.games = data.games || [];
+        if (data.ok && Array.isArray(data.games)) {
+            AppState.games = data.games;
             return;
         }
-    } catch {
-        // Fallback : lire games.json directement si Railway injoignable
-        console.warn('[STORAGE] Railway injoignable, fallback sur games.json');
+        // Si l'API répond mais avec data.ok === false, on loggue et on continue vers fallback
+        console.warn('[STORAGE] API renvoyé ok=false, fallback sur games.json', data.error);
+    } catch (err) {
+        console.warn('[STORAGE] Railway injoignable, fallback sur games.json', err);
     }
+    // Fallback : fichier local
     const res = await fetch(DATA_PATH + '?v=' + Date.now());
     const data = await res.json();
     AppState.games = data.games || [];
+    console.log(`[STORAGE] Chargé ${AppState.games.length} jeux depuis fallback local`);
 }
 
 // ===== EXPORT JSON =====

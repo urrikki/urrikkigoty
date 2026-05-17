@@ -14,6 +14,10 @@ async function initializeApp() {
     try {
         showSkeletonLoader();
         await loadGames();
+        console.log('Jeux chargés :', AppState.games.length);
+        if (AppState.games.length === 0) {
+            showNotification('Aucun jeu chargé – vérifiez la console', 'error');
+        }
         AppState.filteredGames = [...AppState.games];
         renderCurrentView();
         updateStats();
