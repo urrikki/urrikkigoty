@@ -226,21 +226,21 @@
       "position": 3
     },
     {
-      "name": "Freedom Fighters",
-      "year": 2003,
-      "rank": "C",
-      "postion": "",
-      "picture": "freedomfighters.jpg",
-      "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 4
-    },
-    {
       "name": "Gears of war",
       "year": 2006,
       "rank": "C",
       "postion": "",
       "picture": "gearofwar.jpg",
       "review": "Une véritable démonstration technique et cinématographique : chaque mise en scène donnait l’impression de plonger dans un film d’action. Ses mécaniques de TPS, désormais reconnues comme novatrices, et ses graphismes largement en avance sur leur temps en font un jalon incontournable. Pourtant, la campagne m’a paru terriblement courte, probablement la plus brève que j’aie jamais terminée. Le manque de diversité des armes et une galerie de personnages trop stéréotypés, prisonniers de clichés militaires, ternissent un peu l’ensemble.",
+      "position": 4
+    },
+    {
+      "name": "Freedom Fighters",
+      "year": 2003,
+      "rank": "C",
+      "postion": "",
+      "picture": "freedomfighters.jpg",
+      "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
       "position": 5
     },
     {
