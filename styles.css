@@ -1143,8 +1143,7 @@ html, body, * {
     backface-visibility: hidden;
 }
 .panel, .filter-panel, .stats-panel,
-.panel input, .panel select, .panel button, .panel label,
-.modal, .admin-controls {
+.panel input, .panel select, .panel button, .panel label, .admin-controls {
     position: relative;
     z-index: 10;
     pointer-events: auto;
