@@ -208,13 +208,22 @@
       "position": 1
     },
     {
+      "name": "Call od duty: Modern Warfare 2",
+      "year": 2009,
+      "rank": "C",
+      "postion": "",
+      "picture": "mw2.jpg",
+      "review": "La campagne solo de Modern Warfare 2 se distingue par une mise en scène extrêmement cinématographique et un enchaînement de missions devenues cultes. Toutefois, cette efficacité visuelle masque une faiblesse structurelle évidente : l’histoire, d’une durée d’environ trois heures, reste superficielle et peu engageante sur le fond. Le scénario ne marque pas par la qualité de son écriture, mais par l’accumulation de moments chocs. Ces séquences, conçues pour provoquer une réaction immédiate, prennent le pas sur toute tentative de construction narrative solide. L’intrigue avance vite, trop vite, et sacrifie la cohérence ainsi que la profondeur émotionnelle. Le choix de multiplier les personnages jouables est intéressant sur le principe, mais se révèle contre-productif dans un format aussi court. Faute de temps, aucune relation ne se développe réellement. Les personnages qui accompagnent le joueur manquent de présence, de personnalité et d’impact, au point de devenir largement oubliables. Cette absence de lien affaiblit l’attachement et nuit directement à l’investissement narratif. Il serait toutefois injuste de juger Modern Warfare 2 uniquement à travers sa campagne. Le cœur du jeu résidait clairement dans son multijoueur, véritable pilier de l’expérience. À l’époque, son rythme rapide, sa lisibilité immédiate et sa progression gratifiante en faisaient un terrain de jeu redoutablement efficace. Chaque partie s’enchaînait avec une fluidité exemplaire, maintenant une tension constante et un sentiment de maîtrise très valorisant pour le joueur. Le multijoueur de Modern Warfare 2 a posé des bases solides devenues des standards du FPS moderne : progression persistante, déblocages réguliers, sensations de tir directes et structure pensée pour retenir durablement l’attention. C’est en cela qu’il demeure l’élément le plus abouti du jeu, et la principale raison pour laquelle il a marqué toute une génération de joueurs.",
+      "position": 2
+    },
+    {
       "name": "Freedom Fighters",
       "year": 2003,
       "rank": "C",
       "postion": "",
       "picture": "freedomfighters.jpg",
       "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "GTA: Vice City",
@@ -223,7 +232,7 @@
       "postion": "",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Gears of war",
@@ -232,7 +241,7 @@
       "postion": "",
       "picture": "gearofwar.jpg",
       "review": "Une véritable démonstration technique et cinématographique : chaque mise en scène donnait l’impression de plonger dans un film d’action. Ses mécaniques de TPS, désormais reconnues comme novatrices, et ses graphismes largement en avance sur leur temps en font un jalon incontournable. Pourtant, la campagne m’a paru terriblement courte, probablement la plus brève que j’aie jamais terminée. Le manque de diversité des armes et une galerie de personnages trop stéréotypés, prisonniers de clichés militaires, ternissent un peu l’ensemble.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "The Orange Box",
@@ -241,15 +250,6 @@
       "postion": "",
       "picture": "orangebox.jpg",
       "review": "L’idée d’une compilation vidéoludique était séduisante pour l’époque : cinq expériences dans un seul coffret. Mais là où le bât blesse, c’est dans la prétention de voir The Orange Box nommé au titre de jeu de l’année. Ce n’est pas une œuvre unifiée, mais un assemblage disparate. À mes yeux, seule une création singulière devrait être jugée digne d’une telle reconnaissance. Au cœur du coffret se trouve Half-Life 2: Episode Two, censé être la pièce de résistance. Pourtant, son contenu trop court laisse un goût amer. Après l’équilibre quasi parfait du rythme et du gameplay de Half-Life 2, cette suite mise presque exclusivement sur la narration et sur l’attachement à Alyx. Le problème est qu’en fermant son récit sur un cliffhanger resté sans suite, Valve transforme une expérience correcte en frustration durable. On ne retient plus l’épisode pour ses qualités ludiques, mais pour le vide laissé par l’absence d’un Episode Three. Portal, quant à lui, s’impose comme une agréable curiosité. Oui, le concept est génial et GLaDOS donne une identité mémorable à l’expérience. Mais soyons honnêtes : il ne s’agit pas d’un “grand jeu” mais d’un projet secondaire, un “mode bonus” comme on aurait pu en trouver dans Half-Life. Trop court, trop facile, il amuse une heure, surprend par son idée, puis s’éteint presque aussitôt. En définitive, The Orange Box est une excellente affaire pour le joueur de l’époque, mais certainement pas une œuvre capable de rivaliser avec les véritables prétendants au trône. Une boîte pleine de promesses, certes, mais sans monument capable d’en faire un Game of the Year.",
-      "position": 5
-    },
-    {
-      "name": "Call od duty: Modern Warfare 2",
-      "year": 2009,
-      "rank": "C",
-      "postion": "",
-      "picture": "mw2.jpg",
-      "review": "La campagne solo de Modern Warfare 2 se distingue par une mise en scène extrêmement cinématographique et un enchaînement de missions devenues cultes. Toutefois, cette efficacité visuelle masque une faiblesse structurelle évidente : l’histoire, d’une durée d’environ trois heures, reste superficielle et peu engageante sur le fond. Le scénario ne marque pas par la qualité de son écriture, mais par l’accumulation de moments chocs. Ces séquences, conçues pour provoquer une réaction immédiate, prennent le pas sur toute tentative de construction narrative solide. L’intrigue avance vite, trop vite, et sacrifie la cohérence ainsi que la profondeur émotionnelle. Le choix de multiplier les personnages jouables est intéressant sur le principe, mais se révèle contre-productif dans un format aussi court. Faute de temps, aucune relation ne se développe réellement. Les personnages qui accompagnent le joueur manquent de présence, de personnalité et d’impact, au point de devenir largement oubliables. Cette absence de lien affaiblit l’attachement et nuit directement à l’investissement narratif. Il serait toutefois injuste de juger Modern Warfare 2 uniquement à travers sa campagne. Le cœur du jeu résidait clairement dans son multijoueur, véritable pilier de l’expérience. À l’époque, son rythme rapide, sa lisibilité immédiate et sa progression gratifiante en faisaient un terrain de jeu redoutablement efficace. Chaque partie s’enchaînait avec une fluidité exemplaire, maintenant une tension constante et un sentiment de maîtrise très valorisant pour le joueur. Le multijoueur de Modern Warfare 2 a posé des bases solides devenues des standards du FPS moderne : progression persistante, déblocages réguliers, sensations de tir directes et structure pensée pour retenir durablement l’attention. C’est en cela qu’il demeure l’élément le plus abouti du jeu, et la principale raison pour laquelle il a marqué toute une génération de joueurs.",
       "position": 6
     },
     {
