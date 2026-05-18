@@ -298,22 +298,13 @@
       "position": 2
     },
     {
-      "name": "Call of duty 2",
-      "year": 2005,
-      "rank": "D",
-      "postion": "",
-      "picture": "callofduty2.jpg",
-      "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
-      "position": 3
-    },
-    {
       "name": "Mass Effect",
       "year": 2007,
       "rank": "D",
       "postion": "",
       "picture": "masseffect.jpg",
       "review": "Mass Effect m’a laissé un sentiment de faux-semblant. Le jeu cherche à donner l’illusion d’un univers galactique infini, constellé de planètes à explorer, mais en dehors des missions principales, ces mondes n’offrent que peu de véritable contenu. De la même manière, il se veut maître du choix moral, mais comme dans KOTOR (qui le faisait d’ailleurs avec plus de finesse), peu importe la voie empruntée, l’histoire suit son rail. L’exemple le plus flagrant fut mon affrontement avec un de mes compagnons où, malgré mon accord avec lui, le jeu ne me laissa pas lui exprimer, ce qui le condamna inutilement. J’ai également croisé quelques soucis d’IA, autant du côté allié qu’ennemi, qui ont terni légèrement le dynamisme des combats. Cependant, là où le jeu a réellement su m’accrocher, c’est dans la création physique de mon Shepard. Pour la première fois, j’ai eu l’impression de façonner un protagoniste qui m’appartenait, différent de celui de tout autre joueur. Cet attachement personnel donne au jeu une profondeur unique, même si ses mécaniques ne sont pas toujours à la hauteur de ses ambitions. Pour être honnête, je n’ai pas encore trouvé ce qui fait de Mass Effect un monument du jeu vidéo. Peut-être cela se révélera-t-il dans ses suites, puisque beaucoup parlent de son évolution spectaculaire. Pour l’heure, ce premier opus reste un bon jeu, solide, mais qui n’excelle dans aucun domaine précis. Il pose des fondations prometteuses, sans pour autant se hisser plus haut que cela.",
-      "position": 4
+      "position": 3
     },
     {
       "name": "LittleBigPlanet",
@@ -322,6 +313,15 @@
       "postion": "",
       "picture": "littlebigplanet.jpg",
       "review": "L’originalité du titre réside dans la création de niveaux, un concept qui, avec le recul, aura été poussé à son paroxysme. L’univers possède un charme indéniable, presque enfantin, renforcé par une bande-son enchanteresse qui contribue à cette atmosphère chaleureuse. Certains niveaux officiels se distinguent par leur construction ingénieuse et leur plaisir immédiat. Toutefois, l’histoire se révèle bien trop courte, et les contrôles manquent parfois de précision, ce qui gâche la fluidité des séquences de plate-forme.",
+      "position": 4
+    },
+    {
+      "name": "Call of duty 2",
+      "year": 2005,
+      "rank": "D",
+      "postion": "",
+      "picture": "callofduty2.jpg",
+      "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
       "position": 5
     },
     {
