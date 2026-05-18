@@ -63,6 +63,7 @@ async function loadGames() {
     const res = await fetch(DATA_PATH + '?v=' + Date.now());
     const data = await res.json();
     AppState.games = data.games || [];
+    AppState.games = initPositions(data.games);
     console.log(`[STORAGE] Chargé ${AppState.games.length} jeux depuis fallback local`);
 }
 
@@ -75,4 +76,18 @@ function exportData() {
     a.click();
     URL.revokeObjectURL(a.href);
     showNotification('Export réussi', 'success');
+}
+
+function initPositions(games) {
+    const groups = {};
+    for (const g of games) {
+        if (!groups[g.rank]) groups[g.rank] = [];
+        groups[g.rank].push(g);
+    }
+    for (const rank in groups) {
+        groups[rank].forEach((game, idx) => {
+            game.position = idx;
+        });
+    }
+    return games;
 }

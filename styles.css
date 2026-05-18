@@ -1140,3 +1140,7 @@ body::after {
     will-change: opacity, transform;
     backface-visibility: hidden;
 }
+
+.game-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}

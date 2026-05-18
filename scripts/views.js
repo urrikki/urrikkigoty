@@ -26,9 +26,11 @@ function renderCurrentView() {
 }
 
 // ===== TIER LIST =====
-function renderTierList() {
+async function renderTierList() {
     destroyDragDrop();
     const container = document.getElementById('tierList');
+    
+    // 1. Construire la structure des tiers (labels + conteneurs vides)
     container.innerHTML = '';
     TIERS.forEach(tier => {
         const row = document.createElement('div');
@@ -40,18 +42,74 @@ function renderTierList() {
             <div class="tier-games" id="tier-${tier.toLowerCase()}"></div>`;
         container.appendChild(row);
     });
-    AppState.filteredGames.forEach((game, i) => {
-        const el = createGameElement(game, i);
-        const target = document.getElementById(`tier-${game.rank.toLowerCase()}`);
-        if (target) target.appendChild(el);
+
+    // 2. Remplir chaque tier avec les jeux dans l'ORDRE D'AJOUT (pas trié par position)
+    //    -> on utilise l'ordre de AppState.filteredGames (qui respecte l'ordre original)
+    const groupedByRank = {};
+    AppState.filteredGames.forEach(game => {
+        if (!groupedByRank[game.rank]) groupedByRank[game.rank] = [];
+        groupedByRank[game.rank].push(game);
     });
 
-    // Activer drag & drop si admin
+    for (const tier of TIERS) {
+        const games = groupedByRank[tier] || [];
+        // Ordre actuel = ordre du tableau (ordre d'ajout)
+        const tierContainer = document.getElementById(`tier-${tier.toLowerCase()}`);
+        games.forEach((game, idx) => {
+            const el = createGameElement(game, idx);
+            tierContainer.appendChild(el);
+        });
+    }
+
+    // 3. Capturer les positions actuelles (FLIP: First)
+    const items = document.querySelectorAll('.game-item');
+    const firstRects = Array.from(items).map(el => el.getBoundingClientRect());
+
+    // 4. Réorganiser le DOM selon l'ordre des positions (trier par game.position)
+    for (const tier of TIERS) {
+        const games = groupedByRank[tier] || [];
+        // Trier selon game.position (valeurs numériques)
+        games.sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+        const tierContainer = document.getElementById(`tier-${tier.toLowerCase()}`);
+        // Vider le conteneur et réinjecter dans le nouvel ordre
+        tierContainer.innerHTML = '';
+        games.forEach((game, idx) => {
+            // On récupère l'élément existant (grâce à son data-name)
+            const existingEl = Array.from(document.querySelectorAll('.game-item')).find(
+                el => el.dataset.name === game.name
+            );
+            if (existingEl) {
+                tierContainer.appendChild(existingEl);
+            } else {
+                // Sécurité : recréer l'élément
+                const newEl = createGameElement(game, idx);
+                tierContainer.appendChild(newEl);
+            }
+        });
+    }
+
+    // 5. Capturer les positions finales (Last)
+    const lastRects = Array.from(document.querySelectorAll('.game-item')).map(el => el.getBoundingClientRect());
+
+    // 6. Animer (Invert & Play)
+    items.forEach((el, i) => {
+        const first = firstRects[i];
+        const last = lastRects[i];
+        const deltaX = first.left - last.left;
+        const deltaY = first.top - last.top;
+        if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
+            gsap.fromTo(el, 
+                { x: deltaX, y: deltaY, opacity: 1 },
+                { x: 0, y: 0, duration: 0.6, ease: 'back.out(0.6)' }
+            );
+        }
+    });
+
+    // Réactiver drag & drop si admin
     if (AppState.isAdminMode && typeof enableDragDrop === 'function') {
         enableDragDrop();
     }
 }
-
 function createGameElement(game, index = 0) {
     const div = document.createElement('div');
     div.className = 'game-item';
