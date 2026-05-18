@@ -316,21 +316,21 @@
       "position": 4
     },
     {
-      "name": "Call of duty 2",
-      "year": 2005,
-      "rank": "D",
-      "postion": "",
-      "picture": "callofduty2.jpg",
-      "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
-      "position": 5
-    },
-    {
       "name": "Call of Duty: Black Ops",
       "year": 2010,
       "rank": "D",
       "postion": "",
       "picture": "codbo.jpg",
       "review": "Le mode Zombies constitue le principal point fort du jeu. Le mode propose une expérience coopérative efficace et devient rapidement l’élément le plus marquant du titre. Les cartes, la progression par manches et les nombreux secrets encouragent la rejouabilité. Pour beaucoup de joueurs, ce mode représente la raison principale de revenir au jeu.\n\nLe multijoueur reste solide mais n’apporte pas de véritable évolution à la formule. Les bases de la série sont conservées sans transformation notable. Le gunplay fonctionne correctement, mais il ne se distingue pas particulièrement face aux autres épisodes de la franchise.\n\nLa campagne solo souffre surtout de sa brièveté. L’aventure se termine rapidement et donne parfois l’impression de suivre une formule déjà établie par les épisodes développés par Infinity Ward. L’influence est perceptible, mais le jeu n’atteint pas le même niveau de maîtrise.\n\nLe jeu tente toutefois une approche narrative différente en racontant l’histoire à travers les souvenirs du protagoniste, interrogé et torturé. L’idée apporte une certaine singularité au récit, mais l’écriture reste trop légère pour réellement approfondir cette structure.\n\nEnfin, le rythme de la campagne ne convainc pas toujours. Certaines missions manquent d’intensité et l’ensemble peut donner une impression de répétition, ce qui conduit à plusieurs moments d’ennui au cours de l’aventure.\n\nAu final, Black Ops laisse une impression contrastée. Le mode Zombies marque durablement le jeu, tandis que la campagne et le multijoueur apparaissent plus classiques et peinent à se distinguer dans une série déjà bien installée.",
+      "position": 5
+    },
+    {
+      "name": "Call of duty 2",
+      "year": 2005,
+      "rank": "D",
+      "postion": "",
+      "picture": "callofduty2.jpg",
+      "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
       "position": 6
     },
     {
