@@ -494,16 +494,16 @@ body::after {
     text-align: center;
 }
 .tier-row:has([style*="--tier-color: var(--tier-s)"]) .tier-label { background: rgba(201,168,76,0.05); }
-
 .tier-games {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 98px);
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     padding: 10px;
     min-height: 118px;
     align-content: flex-start;
+    transition: background var(--t-base), outline var(--t-base);
 }
-
 .game-item {
     width: 98px;
     height: 98px;
@@ -619,11 +619,13 @@ body::after {
 }
 
 /* Conteneur en flex-wrap : important pour que Sortable calcule bien les positions */
-.tier-games {
-    display: flex;
-    flex-wrap: wrap;
+.tier-game {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 98px);
     gap: 8px;
-    align-items: flex-start;
+    padding: 10px;
+    min-height: 118px;
+    align-content: flex-start;
 }
 
 /* Évite les interférences avec d'autres animations pendant le drag */
