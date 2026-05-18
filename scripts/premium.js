@@ -24,7 +24,6 @@ function initCustomCursor() {
         box-shadow: 0 0 12px rgba(201,168,76,0.8), 0 0 4px #FFE6A3;
         pointer-events: none;
         z-index: 10000;
-        transform: translate(-50%, -50%);
         will-change: left, top;
     `;
     document.body.appendChild(dot);
