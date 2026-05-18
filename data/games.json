@@ -334,13 +334,22 @@
       "position": 6
     },
     {
+      "name": "Halo Reach",
+      "year": 2010,
+      "rank": "E",
+      "postion": "",
+      "picture": "haloreach.jpg",
+      "review": "La campagne adopte un ton plus sombre que les épisodes précédents, ce qui constitue l’un de ses aspects les plus appréciables. Le récit autour de la chute de Reach apporte une dimension tragique à l’aventure et donne au conflit une gravité rarement présente dans la série. Le jeu conserve également un rythme assez dynamique, les missions s’enchaînant rapidement avec une alternance entre combats, déplacements et séquences plus spectaculaires.\n\nMalgré cette ambiance réussie, l’histoire reste trop courte pour réellement s’installer. Le jeu laisse l’impression d’une campagne qui se termine avant d’avoir pleinement développé ses idées ou ses personnages.\n\nLe multijoueur, de son côté, n’apporte pas de transformation majeure à la formule Halo. Les modifications d’armure constituent la principale nouveauté, mais leur intégration apparaît mal équilibrée. Certaines capacités prennent clairement l’avantage sur d’autres, ce qui crée un déséquilibre dans certaines situations.\n\nLa conduite de véhicules représente également un point faible notable. Bien qu’elle soit censée diversifier le gameplay, les sensations de conduite manquent de précision et rendent ces séquences souvent peu agréables à jouer.\n\nEnfin, l’intelligence artificielle montre ses limites. Les ennemis adoptent parfois des comportements simplistes et certains bugs viennent occasionnellement perturber les affrontements.\n\nAu final, Halo: Reach laisse une impression mitigée. L’ambiance plus sombre et le rythme global fonctionnent, mais plusieurs éléments de gameplay et une campagne trop courte empêchent le jeu de pleinement convaincre.",
+      "position": 0
+    },
+    {
       "name": "Madden NFL 2004",
       "year": 2003,
       "rank": "E",
       "postion": "",
       "picture": "madden2004.jpg",
       "review": "Simulation sportive de référence pour les amateurs de football américain, mais hermétique pour un novice. Mon expérience a été courte, freinée par un manque de compréhension des règles, bien que la technique et la profondeur stratégique soient indéniables.",
-      "position": 0
+      "position": 1
     },
     {
       "name": "SSX 3",
@@ -349,7 +358,7 @@
       "postion": "",
       "picture": "ssx3.jpg",
       "review": "Jeu de snowboard arcade au style flashy et à la bande-son dynamique. Pourtant, le fun immédiat attendu n’a pas opéré, me rappelant un Mario Kart en moins engageant. Les critiques l’adoraient, mais pour moi, la descente fut courte.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "Halo 2",
@@ -358,7 +367,7 @@
       "postion": "",
       "picture": "halo2.png",
       "review": "N’ayant pas profité de son mode en ligne, je n’ai subi que la campagne, que j’ai trouvée particulièrement lente, courte et désagréable. Le rythme est poussif, les contrôles frustrants, avec une sensibilité impossible à régler correctement. L’aim assist, beaucoup trop prononcé, donne constamment l’impression d’être pris par la main, ce qui nuit à tout sentiment de maîtrise. Seule la bande-son, magistrale, parvient réellement à sauver l’expérience.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Tom Clancy’s Ghost Recon Advanced Warfighter",
@@ -367,7 +376,7 @@
       "postion": "",
       "picture": "graw.jpg",
       "review": "Le jeu propose une approche punitive et tactique du FPS, servie par des graphismes remarquables pour son époque. Hélas, l’expérience est minée par l’IA alliée, totalement défaillante. Les soldats ignorent les ordres, empruntent des trajets absurdes, refusent de se mettre à couvert, et s’acharnent à tirer sur des ennemis qu’ils ne peuvent pas atteindre allant jusqu’à répéter inlassablement leur impuissance. Résultat : j’ai passé l’essentiel de ma campagne à agir seul, multipliant les tirs précis pour économiser mes balles, ce qui annihile totalement l’intérêt tactique du titre.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Left 4 Dead 2",
@@ -376,15 +385,6 @@
       "postion": "",
       "picture": "left4dead2.jpg",
       "review": "Rejoué plus de seize ans après sa sortie, Left 4 Dead 2 peine à convaincre. Sans sa communauté d’origine, le jeu perd l’essence de ce qui faisait son intérêt : la coopération en ligne. Aujourd’hui, l’expérience paraît creuse et datée. L’histoire, déjà secondaire à l’époque, ne retient guère l’attention. Quelques armes et ennemis variés maintiennent un semblant de rythme, mais la mécanique a mal vieilli : la formule est rigide, répétitive, et n’offre plus la tension d’autrefois. Left 4 Dead 2 reste un souvenir respectable du jeu coopératif, mais n’a plus grand-chose à offrir à ceux qui le découvrent ou le rejouent aujourd’hui.",
-      "position": 4
-    },
-    {
-      "name": "Halo Reach",
-      "year": 2010,
-      "rank": "E",
-      "postion": "",
-      "picture": "haloreach.jpg",
-      "review": "La campagne adopte un ton plus sombre que les épisodes précédents, ce qui constitue l’un de ses aspects les plus appréciables. Le récit autour de la chute de Reach apporte une dimension tragique à l’aventure et donne au conflit une gravité rarement présente dans la série. Le jeu conserve également un rythme assez dynamique, les missions s’enchaînant rapidement avec une alternance entre combats, déplacements et séquences plus spectaculaires.\n\nMalgré cette ambiance réussie, l’histoire reste trop courte pour réellement s’installer. Le jeu laisse l’impression d’une campagne qui se termine avant d’avoir pleinement développé ses idées ou ses personnages.\n\nLe multijoueur, de son côté, n’apporte pas de transformation majeure à la formule Halo. Les modifications d’armure constituent la principale nouveauté, mais leur intégration apparaît mal équilibrée. Certaines capacités prennent clairement l’avantage sur d’autres, ce qui crée un déséquilibre dans certaines situations.\n\nLa conduite de véhicules représente également un point faible notable. Bien qu’elle soit censée diversifier le gameplay, les sensations de conduite manquent de précision et rendent ces séquences souvent peu agréables à jouer.\n\nEnfin, l’intelligence artificielle montre ses limites. Les ennemis adoptent parfois des comportements simplistes et certains bugs viennent occasionnellement perturber les affrontements.\n\nAu final, Halo: Reach laisse une impression mitigée. L’ambiance plus sombre et le rythme global fonctionnent, mais plusieurs éléments de gameplay et une campagne trop courte empêchent le jeu de pleinement convaincre.",
       "position": 5
     },
     {
