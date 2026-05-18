@@ -199,13 +199,22 @@
       "position": 0
     },
     {
+      "name": "Metal Gear Solid 4: Guns of the Patriots",
+      "year": 2008,
+      "rank": "C",
+      "postion": "",
+      "picture": "mgs4.jpg",
+      "review": "Agréablement surpris après le troisième opus, j’ai trouvé cet épisode bien plus plaisant à jouer. Pour une fois, on a réellement l’impression de participer, et non de simplement observer des cinématiques interminables. Les contrôles ont enfin été modernisés, offrant une maniabilité fluide et intuitive. J’ai particulièrement apprécié la diversité des missions alternant entre action nerveuse, filature et infiltration pure qui maintiennent un rythme soutenu et varié. Le système de camouflage adaptatif, qui ajuste automatiquement la tenue à l’environnement, est une idée brillante : il supprime les interruptions incessantes du passé et fluidifie l’expérience. En revanche, le jeu regorge de références et de rappels à d’anciens personnages, ce qui, pour ma part, m’a parfois sorti de l’immersion. Je comprends la volonté de conclure la saga, mais cette nostalgie forcée alourdit le propos. Enfin, l’histoire, bien que cohérente et ambitieuse, m’a semblé moins captivante et émotionnelle que celle du troisième volet.",
+      "position": 1
+    },
+    {
       "name": "Freedom Fighters",
       "year": 2003,
       "rank": "C",
       "postion": "",
       "picture": "freedomfighters.jpg",
       "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "GTA: Vice City",
@@ -214,7 +223,7 @@
       "postion": "",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Gears of war",
@@ -223,7 +232,7 @@
       "postion": "",
       "picture": "gearofwar.jpg",
       "review": "Une véritable démonstration technique et cinématographique : chaque mise en scène donnait l’impression de plonger dans un film d’action. Ses mécaniques de TPS, désormais reconnues comme novatrices, et ses graphismes largement en avance sur leur temps en font un jalon incontournable. Pourtant, la campagne m’a paru terriblement courte, probablement la plus brève que j’aie jamais terminée. Le manque de diversité des armes et une galerie de personnages trop stéréotypés, prisonniers de clichés militaires, ternissent un peu l’ensemble.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "The Orange Box",
@@ -232,15 +241,6 @@
       "postion": "",
       "picture": "orangebox.jpg",
       "review": "L’idée d’une compilation vidéoludique était séduisante pour l’époque : cinq expériences dans un seul coffret. Mais là où le bât blesse, c’est dans la prétention de voir The Orange Box nommé au titre de jeu de l’année. Ce n’est pas une œuvre unifiée, mais un assemblage disparate. À mes yeux, seule une création singulière devrait être jugée digne d’une telle reconnaissance. Au cœur du coffret se trouve Half-Life 2: Episode Two, censé être la pièce de résistance. Pourtant, son contenu trop court laisse un goût amer. Après l’équilibre quasi parfait du rythme et du gameplay de Half-Life 2, cette suite mise presque exclusivement sur la narration et sur l’attachement à Alyx. Le problème est qu’en fermant son récit sur un cliffhanger resté sans suite, Valve transforme une expérience correcte en frustration durable. On ne retient plus l’épisode pour ses qualités ludiques, mais pour le vide laissé par l’absence d’un Episode Three. Portal, quant à lui, s’impose comme une agréable curiosité. Oui, le concept est génial et GLaDOS donne une identité mémorable à l’expérience. Mais soyons honnêtes : il ne s’agit pas d’un “grand jeu” mais d’un projet secondaire, un “mode bonus” comme on aurait pu en trouver dans Half-Life. Trop court, trop facile, il amuse une heure, surprend par son idée, puis s’éteint presque aussitôt. En définitive, The Orange Box est une excellente affaire pour le joueur de l’époque, mais certainement pas une œuvre capable de rivaliser avec les véritables prétendants au trône. Une boîte pleine de promesses, certes, mais sans monument capable d’en faire un Game of the Year.",
-      "position": 4
-    },
-    {
-      "name": "Metal Gear Solid 4: Guns of the Patriots",
-      "year": 2008,
-      "rank": "C",
-      "postion": "",
-      "picture": "mgs4.jpg",
-      "review": "Agréablement surpris après le troisième opus, j’ai trouvé cet épisode bien plus plaisant à jouer. Pour une fois, on a réellement l’impression de participer, et non de simplement observer des cinématiques interminables. Les contrôles ont enfin été modernisés, offrant une maniabilité fluide et intuitive. J’ai particulièrement apprécié la diversité des missions alternant entre action nerveuse, filature et infiltration pure qui maintiennent un rythme soutenu et varié. Le système de camouflage adaptatif, qui ajuste automatiquement la tenue à l’environnement, est une idée brillante : il supprime les interruptions incessantes du passé et fluidifie l’expérience. En revanche, le jeu regorge de références et de rappels à d’anciens personnages, ce qui, pour ma part, m’a parfois sorti de l’immersion. Je comprends la volonté de conclure la saga, mais cette nostalgie forcée alourdit le propos. Enfin, l’histoire, bien que cohérente et ambitieuse, m’a semblé moins captivante et émotionnelle que celle du troisième volet.",
       "position": 5
     },
     {
