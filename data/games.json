@@ -379,15 +379,6 @@
       "position": 4
     },
     {
-      "name": "Tom Clancy’s Ghost Recon Advanced Warfighter",
-      "year": 2006,
-      "rank": "E",
-      "postion": "",
-      "picture": "graw.jpg",
-      "review": "Le jeu propose une approche punitive et tactique du FPS, servie par des graphismes remarquables pour son époque. Hélas, l’expérience est minée par l’IA alliée, totalement défaillante. Les soldats ignorent les ordres, empruntent des trajets absurdes, refusent de se mettre à couvert, et s’acharnent à tirer sur des ennemis qu’ils ne peuvent pas atteindre allant jusqu’à répéter inlassablement leur impuissance. Résultat : j’ai passé l’essentiel de ma campagne à agir seul, multipliant les tirs précis pour économiser mes balles, ce qui annihile totalement l’intérêt tactique du titre.",
-      "position": 5
-    },
-    {
       "name": "SOCOM II: U.S. Navy SEALs",
       "year": 2003,
       "rank": "F",
@@ -395,6 +386,15 @@
       "picture": "socom2.jpg",
       "review": "Un titre qui se voulait réaliste et tactique, mais dont la lenteur excessive et les IA défectueuses m’ont rapidement découragé. Voir ses alliés agir de manière incohérente brise toute immersion. Le multijoueur était salué, mais en solo, l’expérience est frustrante.",
       "position": 0
+    },
+    {
+      "name": "Tom Clancy’s Ghost Recon Advanced Warfighter",
+      "year": 2006,
+      "rank": "F",
+      "postion": "",
+      "picture": "graw.jpg",
+      "review": "Le jeu propose une approche punitive et tactique du FPS, servie par des graphismes remarquables pour son époque. Hélas, l’expérience est minée par l’IA alliée, totalement défaillante. Les soldats ignorent les ordres, empruntent des trajets absurdes, refusent de se mettre à couvert, et s’acharnent à tirer sur des ennemis qu’ils ne peuvent pas atteindre allant jusqu’à répéter inlassablement leur impuissance. Résultat : j’ai passé l’essentiel de ma campagne à agir seul, multipliant les tirs précis pour économiser mes balles, ce qui annihile totalement l’intérêt tactique du titre.",
+      "position": 1
     },
     {
       "name": "Star Wars Galaxies",
