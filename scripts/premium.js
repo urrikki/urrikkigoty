@@ -24,6 +24,7 @@ function initCustomCursor() {
         box-shadow: 0 0 12px rgba(201,168,76,0.8), 0 0 4px #FFE6A3;
         pointer-events: none;
         z-index: 10000;
+        transform: translate(-50%, -50%);
         will-change: left, top;
     `;
     document.body.appendChild(dot);
@@ -107,7 +108,8 @@ function initCustomCursor() {
             const pos = trailPositions[i];
             if (pos && !isInsideTierList) {
                 const el = trailElements[i];
-                el.style.transform = `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`;
+                el.style.left = pos.x + 'px';
+                el.style.top = pos.y + 'px';
                 const scale = Math.pow(TRAIL_DECAY, i);
                 const size = 8 * scale;
                 el.style.width = size + 'px';
@@ -125,7 +127,8 @@ function initCustomCursor() {
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
         
         // Vérification de zone avec cache
         const nowInside = checkIfInsideTierList(mouseX, mouseY);
@@ -317,49 +320,42 @@ function initCinematicTransitions() {
 }
 
 // ── Grain overlay premium ──
-// ── Grain overlay premium (Version ultra-optimisée) ──
 function initGrain() {
-    const grain = document.createElement('div');
-    grain.id = 'grain-overlay';
-    
-    // Un motif de bruit SVG généré statiquement (très léger)
-    const noiseSVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
-
-    grain.style.cssText = `
-        position: fixed;
-        inset: -150%; /* Plus grand que l'écran pour l'animation de tremblement */
-        width: 300vw;
-        height: 300vh;
+    const canvas = document.createElement('canvas');
+    canvas.id = 'grain-overlay';
+    canvas.style.cssText = `
+        position: fixed; inset: 0;
+        width: 100vw; height: 100vh;
         pointer-events: none;
         z-index: 9998;
-        opacity: 0.06; /* Ajuste cette valeur si tu veux un grain plus ou moins fort */
-        background-image: ${noiseSVG};
-        background-repeat: repeat;
-        mix-blend-mode: overlay;
+        mix-blend-mode: normal;
+        opacity: 0.15;
     `;
+    document.body.appendChild(canvas);
 
-    document.body.appendChild(grain);
+    const ctx = canvas.getContext('2d');
 
-    // Animation CSS pour faire bouger le grain sans utiliser de JavaScript
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes grain-jitter {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -10%); }
-            20% { transform: translate(-15%, 5%); }
-            30% { transform: translate(7%, -25%); }
-            40% { transform: translate(-5%, 25%); }
-            50% { transform: translate(-15%, 10%); }
-            60% { transform: translate(15%, 0%); }
-            70% { transform: translate(0%, 15%); }
-            80% { transform: translate(3%, 35%); }
-            90% { transform: translate(-10%, 10%); }
+    function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function render() {
+        const { width: w, height: h } = canvas;
+        const img  = ctx.createImageData(w, h);
+        const data = img.data;
+        for (let i = 0; i < data.length; i += 4) {
+            const v = Math.random() * 255;
+            data[i] = data[i+1] = data[i+2] = v;
+            data[i+3] = 22;
         }
-        #grain-overlay {
-            animation: grain-jitter 8s steps(10) infinite;
-        }
-    `;
-    document.head.appendChild(style);
+        ctx.putImageData(img, 0, 0);
+        requestAnimationFrame(render);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    render();
 }
 
 // ── Ligne lumineuse décorative au top ──
