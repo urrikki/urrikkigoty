@@ -21,53 +21,59 @@ function enableDragDrop() {
     tierContainers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',
-            animation: 200,
+            animation: 150,
             ghostClass: 'sortable-ghost',
             chosenClass: 'sortable-chosen',
             dragClass: 'drag-dragging',
-            forceFallback: true,      // essentiel pour éviter les conflits avec les transformations
-            delay: 0,
-            touchStartThreshold: 2,
-            swapThreshold: 0.5,
-            invertSwap: true,
+            // forceFallback retiré : le drag natif est bien plus précis pour insérer entre deux éléments
+            delay: 80,                  // légère attente pour ne pas déclencher par accident
+            delayOnTouchOnly: true,     // délai uniquement sur mobile
+            touchStartThreshold: 4,
+            swapThreshold: 0.35,        // zone de swap plus petite → plus précis
+            invertSwap: false,          // désactivé : sinon on ne peut pas insérer à gauche
             direction: 'horizontal',
-            
+            emptyInsertThreshold: 10,   // facilite le drop dans un tier vide
+
+            onChoose(evt) {
+                // Killer les transformations GSAP avant que SortableJS prenne la main
+                gsap.killTweensOf(evt.item);
+                gsap.set(evt.item, { clearProps: 'all' });
+            },
+
             onStart(evt) {
                 document.body.classList.add('is-dragging');
                 if (window.__lenis) window.__lenis.stop();
-                // Supprimer toutes les transformations GSAP en cours
-                gsap.set(evt.item, { clearProps: "transform,transition" });
-                evt.item.style.transition = 'none';
+                // Indiquer visuellement que le tier source est actif
+                evt.from.classList.add('drag-source');
+            },
+
+            onMove(evt) {
+                // Highlight du conteneur cible
+                document.querySelectorAll('.tier-games').forEach(c => c.classList.remove('drag-over'));
+                if (evt.to) evt.to.classList.add('drag-over');
             },
 
             onEnd(evt) {
                 document.body.classList.remove('is-dragging');
                 if (window.__lenis) window.__lenis.start();
 
-                // Animation de retour (optionnelle)
-                gsap.fromTo(evt.item, 
-                    { scale: 1.1, borderColor: '#C9A84C', boxShadow: '0 0 0 3px gold' },
-                    { scale: 1, borderColor: 'var(--border)', boxShadow: 'none', duration: 0.4, ease: 'back.out(1.2)', clearProps: 'transform,boxShadow' }
+                // Nettoyage des classes visuelles
+                document.querySelectorAll('.tier-games').forEach(c => {
+                    c.classList.remove('drag-over', 'drag-source');
+                });
+
+                // Petit flash de confirmation sur l'élément déposé
+                gsap.fromTo(evt.item,
+                    { outlineColor: 'rgba(201,168,76,0.9)', outlineWidth: '2px', outlineStyle: 'solid', outlineOffset: '2px' },
+                    { outlineColor: 'rgba(201,168,76,0)', duration: 0.6, ease: 'power2.out', clearProps: 'outline,outlineColor,outlineWidth,outlineStyle,outlineOffset' }
                 );
 
-                // Animation des voisins
-                const parent = evt.item.parentNode;
-                if (parent) {
-                    Array.from(parent.children).filter(child => child !== evt.item).forEach(sib => {
-                        gsap.fromTo(sib, { scale: 1.02 }, { scale: 1, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.out' });
-                    });
-                }
-
-                // Animation changement de tier
+                // Flash du container de destination si changement de tier
                 if (evt.from !== evt.to) {
-                    [evt.from, evt.to].forEach(container => {
-                        if (container) {
-                            gsap.fromTo(container, 
-                                { backgroundColor: 'rgba(201,168,76,0.2)' },
-                                { backgroundColor: 'transparent', duration: 0.5, clearProps: 'backgroundColor' }
-                            );
-                        }
-                    });
+                    gsap.fromTo(evt.to,
+                        { backgroundColor: 'rgba(201,168,76,0.15)' },
+                        { backgroundColor: 'transparent', duration: 0.5, clearProps: 'backgroundColor' }
+                    );
                 }
 
                 const newGames = buildGamesOrderFromDOM();
@@ -111,26 +117,78 @@ function buildGamesOrderFromDOM() {
 }
 
 // Sauvegarder le nouvel ordre sur GitHub via Railway
+// Retry automatique x2 en cas d'échec réseau (Railway en veille)
 async function saveOrderToGitHub(games) {
     const token = localStorage.getItem('adminToken');
     if (!token) return;
 
     showSaveIndicator('saving');
 
-    try {
-        const res = await fetch(`${AUTH_API}/api/games/reorder`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ games, token })
-        });
-        const data = await res.json();
-        if (!data.ok) throw new Error(data.error);
-        AppState.games = data.games;
-        showSaveIndicator('saved');
-    } catch (err) {
-        console.error('[DRAGDROP] Erreur sauvegarde:', err);
-        showSaveIndicator('error');
-        showNotification('Erreur sauvegarde ordre', 'error');
+    const MAX_RETRIES = 2;
+    let lastErr;
+
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+            const res = await fetch(`${AUTH_API}/api/games/reorder`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ games, token })
+            });
+
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            if (!data.ok) throw new Error(data.error || 'Erreur serveur');
+
+            AppState.games = data.games;
+            showSaveIndicator('saved');
+            return; // succès
+
+        } catch (err) {
+            lastErr = err;
+            const isNetworkError = err instanceof TypeError; // Failed to fetch
+            if (isNetworkError && attempt < MAX_RETRIES) {
+                // Railway peut être en train de démarrer (cold start ~3s) → on attend et on retente
+                showSaveIndicator('saving');
+                await new Promise(r => setTimeout(r, 3000));
+                continue;
+            }
+            break;
+        }
+    }
+
+    // Échec définitif
+    console.error('[DRAGDROP] Erreur sauvegarde après retries:', lastErr);
+    const isNetwork = lastErr instanceof TypeError;
+    showSaveIndicator('error');
+    showNotification(
+        isNetwork
+            ? 'Railway injoignable — ordre sauvegardé localement, relance dans 30s'
+            : `Erreur: ${lastErr.message}`,
+        'error'
+    );
+
+    // En cas d'erreur réseau : on planifie une dernière tentative silencieuse dans 30s
+    if (lastErr instanceof TypeError) {
+        setTimeout(async () => {
+            try {
+                const res = await fetch(`${AUTH_API}/api/games/reorder`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ games, token: localStorage.getItem('adminToken') })
+                });
+                const data = await res.json();
+                if (data.ok) {
+                    AppState.games = data.games;
+                    showNotification('Ordre synchronisé ✓', 'success');
+                }
+            } catch {
+                // silencieux
+            }
+        }, 30000);
     }
 }
 
