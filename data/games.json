@@ -136,21 +136,21 @@
       "position": 0
     },
     {
-      "name": "Tony Hawk's Underground",
-      "year": 2003,
-      "rank": "B",
-      "postion": "",
-      "picture": "thug.jpg",
-      "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate.",
-      "position": 1
-    },
-    {
       "name": "The Legend of Zelda : Wind Waker",
       "year": 2003,
       "rank": "B",
       "postion": "",
       "picture": "windwaker.jpg",
       "review": "La direction artistique est absolument incroyable, intemporelle même, et pour la première fois Link donne l’impression d’avoir de véritables sentiments grâce à des expressions faciales d’une justesse remarquable. Nintendo a pris un risque insensé en proposant à l’époque un Zelda centré sur la navigation en mer. Le pari est audacieux, et si la sensation d’exploration est plaisante au début, elle finit par s’essouffler : les traversées deviennent monotones, faute de contenu suffisant pour alimenter l’aventure. L’ingéniosité se retrouve plutôt dans les énigmes : le jeu oblige à exploiter l’ensemble de l’équipement, ce qui incite à réfléchir et évite la facilité. En revanche, je regrette profondément le traitement de Tetra : introduite comme une figure maline, arrogante et pleine de caractère, elle est réduite après le cliffhanger à un rôle passif, presque décoratif. Une vraie occasion manquée. Comme souvent avec la saga, j’ai ressenti un certain étirement artificiel de la durée de vie. L’impression de rallonge inutile s’installe, ternissant parfois le rythme d’une aventure qui aurait gagné à être plus resserrée. En parlant de rythme ça ma pris 10h pour comprendre que la baguette n'etait pas un jeu de rythme... De nombreuses minutes que j'aurais pu éviter de perdre. Wind Waker est un jeu audacieux et marquant, mais qui illustre parfaitement le paradoxe de Nintendo : une créativité débordante, parfois étouffée par des choix de rythme et de structure discutables.",
+      "position": 1
+    },
+    {
+      "name": "Tony Hawk's Underground",
+      "year": 2003,
+      "rank": "B",
+      "postion": "",
+      "picture": "thug.jpg",
+      "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate.",
       "position": 2
     },
     {
