@@ -3,7 +3,6 @@
 
 // ===== CURSEUR DORÉ + TRAÎNÉE LUMINEUSE (hors tier list) =====
 // ===== CURSEUR DORÉ OPTIMISÉ (sans lag) =====
-
 function measurePerformance(name, fn) {
     const start = performance.now();
     fn();
@@ -413,5 +412,7 @@ function initPremium() {
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
 
-    startFPSMonitor();
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof startFPSMonitor === 'function') startFPSMonitor();
+    });
 }
