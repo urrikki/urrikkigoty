@@ -190,13 +190,22 @@
       "position": 6
     },
     {
+      "name": "Okami",
+      "year": 2006,
+      "rank": "C",
+      "postion": "",
+      "picture": "okami.jpg",
+      "review": "Une direction artistique splendide, portée par une mécanique du pinceau céleste à la fois originale et plaisante. Malheureusement, l’expérience souffre de quelques problèmes techniques, comme des bugs où le personnage se retrouve bloqué. La difficulté trop faible enlève une grande part de tension, et la seconde partie rallonge artificiellement l’aventure sans apporter grand-chose de neuf, reprenant trop souvent les mêmes éléments déjà vus.",
+      "position": 0
+    },
+    {
       "name": "Freedom Fighters",
       "year": 2003,
       "rank": "C",
       "postion": "",
       "picture": "freedomfighters.jpg",
       "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 0
+      "position": 1
     },
     {
       "name": "GTA: Vice City",
@@ -205,15 +214,6 @@
       "postion": "",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant.",
-      "position": 1
-    },
-    {
-      "name": "Okami",
-      "year": 2006,
-      "rank": "C",
-      "postion": "",
-      "picture": "okami.jpg",
-      "review": "Une direction artistique splendide, portée par une mécanique du pinceau céleste à la fois originale et plaisante. Malheureusement, l’expérience souffre de quelques problèmes techniques, comme des bugs où le personnage se retrouve bloqué. La difficulté trop faible enlève une grande part de tension, et la seconde partie rallonge artificiellement l’aventure sans apporter grand-chose de neuf, reprenant trop souvent les mêmes éléments déjà vus.",
       "position": 2
     },
     {
