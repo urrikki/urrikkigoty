@@ -634,16 +634,28 @@ body::after {
     transition: none !important;
 }
 
+/* Supprime tout surlignage bleu pendant le drag */
 .is-dragging,
-.is-dragging * {
+.is-dragging *,
+:active,
+:active * {
     user-select: none !important;
     -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
 }
 
+/* Empêche l'image d'être prise comme élément draggable */
 .game-item img {
-    user-drag: none;
     -webkit-user-drag: none;
-    pointer-events: none; /* évite que l'image soit prise pour le drag */
+    user-drag: none;
+    pointer-events: none;  /* déjà suggéré, mais important */
+}
+
+/* Supprime le surlignage des liens et autres éléments */
+a:active, button:active, .game-item:active {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* =====================================================
