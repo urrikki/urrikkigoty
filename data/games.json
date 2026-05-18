@@ -64,21 +64,21 @@
       "position": 2
     },
     {
-      "name": "Burnout 3: Takedown",
-      "year": 2004,
-      "rank": "A",
-      "postion": "",
-      "picture": "burnout3.jpg",
-      "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre.",
-      "position": 3
-    },
-    {
       "name": "Residental Evil 4",
       "year": 2005,
       "rank": "A",
       "postion": "",
       "picture": "re4.jpg",
       "review": "Une histoire originale et une immersion incroyable, le jeu sait placer le joueur sous tension et multiplier les moments marquants. Malheureusement, ses commandes rigides limitent l’expérience : tout est ralenti, cassant une partie de la nervosité et de l’intensité que l’action voudrait offrir. De plus, le peu de développement dans les relations entre les personnages rend leurs rencontres ou disparitions assez fades, sans l’impact émotionnel attendu. Mais ce qui rend Resident Evil 4 véritablement légendaire, c’est qu’il a littéralement inventé le TPS moderne. Cette caméra par-dessus l’épaule, aujourd’hui évidente, était une révolution à l’époque et a défini tout un pan du jeu vidéo.",
+      "position": 3
+    },
+    {
+      "name": "Burnout 3: Takedown",
+      "year": 2004,
+      "rank": "A",
+      "postion": "",
+      "picture": "burnout3.jpg",
+      "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre.",
       "position": 4
     },
     {
