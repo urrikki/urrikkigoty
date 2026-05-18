@@ -4,78 +4,40 @@ let _sortableInstances = [];
 
 // Active le drag & drop sur tous les tier-games containers
 function enableDragDrop() {
-    if (typeof Sortable === 'undefined') {
-        console.error('❌ SortableJS non chargé');
-        return;
-    }
+    if (typeof Sortable === 'undefined') return console.error('SortableJS manquant');
     destroyDragDrop();
 
-    const tierContainers = document.querySelectorAll('.tier-games');
-    if (!tierContainers.length) {
-        console.warn('⚠️ Aucun conteneur .tier-games trouvé');
-        return;
-    }
+    const containers = document.querySelectorAll('.tier-games');
+    if (!containers.length) return console.warn('Aucun .tier-games');
 
-    console.log('✅ Drag & drop activé sur', tierContainers.length, 'conteneurs');
-
-    tierContainers.forEach(container => {
+    containers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            chosenClass: 'sortable-chosen',
-            dragClass: 'drag-dragging',
-            // forceFallback retiré : le drag natif est bien plus précis pour insérer entre deux éléments
-            delay: 80,                  // légère attente pour ne pas déclencher par accident
-            delayOnTouchOnly: true,     // délai uniquement sur mobile
-            touchStartThreshold: 4,
-            swapThreshold: 0.35,        // zone de swap plus petite → plus précis
-            invertSwap: false,          // désactivé : sinon on ne peut pas insérer à gauche
+            animation: 200,                // durée de l'animation de déplacement
+            ghostClass: 'sortable-ghost',  // classe pour l'élément fantôme (placeholder)
+            chosenClass: 'sortable-chosen',// classe pour l'élément en cours de drag
+            dragClass: 'sortable-drag',    // classe pour le clone qui suit la souris
+            forceFallback: false,          // utilise le drag & drop natif (meilleur suivi)
+            delay: 0,
+            touchStartThreshold: 2,
+            swapThreshold: 0.5,
+            invertSwap: true,
             direction: 'horizontal',
-            emptyInsertThreshold: 10,   // facilite le drop dans un tier vide
-
-            onChoose(evt) {
-                // Killer les transformations GSAP avant que SortableJS prenne la main
-                gsap.killTweensOf(evt.item);
-                gsap.set(evt.item, { clearProps: 'all' });
-            },
-
+            easing: "cubic-bezier(0.4, 0.0, 0.2, 1)",
+            // Optionnel : personnaliser le clone qui suit la souris
             onStart(evt) {
                 document.body.classList.add('is-dragging');
-                if (window.__lenis) window.__lenis.stop();
-                // Indiquer visuellement que le tier source est actif
-                evt.from.classList.add('drag-source');
+                window.__lenis?.stop();
+                // Supprimer toutes les transformations GSAP sur l'élément dragué
+                gsap.set(evt.item, { clearProps: "transform,transition" });
+                // Masquer l'élément original (optionnel, mais le ghost le remplace)
+                evt.item.style.opacity = '0.3';
             },
-
-            onMove(evt) {
-                // Highlight du conteneur cible
-                document.querySelectorAll('.tier-games').forEach(c => c.classList.remove('drag-over'));
-                if (evt.to) evt.to.classList.add('drag-over');
-            },
-
             onEnd(evt) {
                 document.body.classList.remove('is-dragging');
-                if (window.__lenis) window.__lenis.start();
-
-                // Nettoyage des classes visuelles
-                document.querySelectorAll('.tier-games').forEach(c => {
-                    c.classList.remove('drag-over', 'drag-source');
-                });
-
-                // Petit flash de confirmation sur l'élément déposé
-                gsap.fromTo(evt.item,
-                    { outlineColor: 'rgba(201,168,76,0.9)', outlineWidth: '2px', outlineStyle: 'solid', outlineOffset: '2px' },
-                    { outlineColor: 'rgba(201,168,76,0)', duration: 0.6, ease: 'power2.out', clearProps: 'outline,outlineColor,outlineWidth,outlineStyle,outlineOffset' }
-                );
-
-                // Flash du container de destination si changement de tier
-                if (evt.from !== evt.to) {
-                    gsap.fromTo(evt.to,
-                        { backgroundColor: 'rgba(201,168,76,0.15)' },
-                        { backgroundColor: 'transparent', duration: 0.5, clearProps: 'backgroundColor' }
-                    );
-                }
-
+                window.__lenis?.start();
+                evt.item.style.opacity = '';
+                // Sauvegarder le nouvel ordre
                 const newGames = buildGamesOrderFromDOM();
                 AppState.games = newGames;
                 saveOrderToGitHub(newGames);

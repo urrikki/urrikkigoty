@@ -590,65 +590,56 @@ body::after {
 }
 .admin-drag-active .game-item:active { cursor: grabbing; }
 
-/* Ghost = placeholder qui reste à la position d'origine pendant le drag */
 .sortable-ghost {
-    opacity: 0;
-    position: relative;
-}
-/* Indicateur d'insertion doré à la place du ghost */
-.sortable-ghost::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 2px dashed var(--gold);
-    background: rgba(201,168,76,0.08);
-    border-radius: inherit;
-    opacity: 1;
-    animation: ghostPulse 0.8s ease-in-out infinite alternate;
-}
-@keyframes ghostPulse {
-    from { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.05); }
-    to   { border-color: rgba(201,168,76,1);   background: rgba(201,168,76,0.15); }
+    opacity: 0.5;
+    background: rgba(201,168,76,0.15);
+    border: 1px dashed var(--gold);
+    transform: scale(0.98);
+    transition: none;
 }
 
-/* Élément en cours de sélection (avant drag) */
 .sortable-chosen {
-    cursor: grabbing !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 2px var(--gold) !important;
-    transform: scale(1.04) !important;
-    z-index: 10;
+    opacity: 0.5 !important;
+    transform: scale(0.96) !important;
     transition: none !important;
+    cursor: grabbing !important;
 }
 
-/* L'élément qu'on déplace (clone flottant) */
-.drag-dragging {
-    opacity: 1 !important;
-    transform: scale(1.08) rotate(1.5deg) !important;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 2px var(--gold), 0 0 20px rgba(201,168,76,0.3) !important;
+.sortable-drag {   
+    opacity: 0.9 !important;
+    transform: scale(1) rotate(0deg) !important;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 2px var(--gold) !important;
+    cursor: grabbing;
     z-index: 9999;
-    cursor: grabbing !important;
-    transition: none !important;
+    transition: none;
 }
 
-/* Container cible qui reçoit le drop */
+.drag-dragging {
+    /* identique à .sortable-drag */
+    opacity: 0.9 !important;
+    transform: scale(1) rotate(0deg) !important;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 2px var(--gold) !important;
+    cursor: grabbing;
+    z-index: 9999;
+}
+
+/* Surbrillance des conteneurs cible et source */
 .tier-games.drag-over {
     background: rgba(201,168,76,0.06);
     outline: 1.5px dashed rgba(201,168,76,0.5);
     outline-offset: -3px;
-    transition: background 0.15s ease, outline 0.15s ease;
 }
-
-/* Container source */
 .tier-games.drag-source {
     background: rgba(100,100,100,0.04);
 }
 
-/* Pendant le drag : bloquer les hovers parasites */
 .is-dragging .game-item:not(.sortable-chosen):not(.sortable-ghost) {
     pointer-events: none;
     transition: none !important;
 }
-.is-dragging .drag-dragging { pointer-events: all; }
+.is-dragging .sortable-drag, .is-dragging .drag-dragging {
+    pointer-events: all;
+}
 
 /* =====================================================
    TIMELINE & GALLERY (inchangés)
