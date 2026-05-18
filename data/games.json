@@ -343,13 +343,22 @@
       "position": 0
     },
     {
+      "name": "Halo 2",
+      "year": 2004,
+      "rank": "E",
+      "postion": "",
+      "picture": "halo2.png",
+      "review": "N’ayant pas profité de son mode en ligne, je n’ai subi que la campagne, que j’ai trouvée particulièrement lente, courte et désagréable. Le rythme est poussif, les contrôles frustrants, avec une sensibilité impossible à régler correctement. L’aim assist, beaucoup trop prononcé, donne constamment l’impression d’être pris par la main, ce qui nuit à tout sentiment de maîtrise. Seule la bande-son, magistrale, parvient réellement à sauver l’expérience.",
+      "position": 1
+    },
+    {
       "name": "Madden NFL 2004",
       "year": 2003,
       "rank": "E",
       "postion": "",
       "picture": "madden2004.jpg",
       "review": "Simulation sportive de référence pour les amateurs de football américain, mais hermétique pour un novice. Mon expérience a été courte, freinée par un manque de compréhension des règles, bien que la technique et la profondeur stratégique soient indéniables.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "SSX 3",
@@ -358,15 +367,6 @@
       "postion": "",
       "picture": "ssx3.jpg",
       "review": "Jeu de snowboard arcade au style flashy et à la bande-son dynamique. Pourtant, le fun immédiat attendu n’a pas opéré, me rappelant un Mario Kart en moins engageant. Les critiques l’adoraient, mais pour moi, la descente fut courte.",
-      "position": 2
-    },
-    {
-      "name": "Halo 2",
-      "year": 2004,
-      "rank": "E",
-      "postion": "",
-      "picture": "halo2.png",
-      "review": "N’ayant pas profité de son mode en ligne, je n’ai subi que la campagne, que j’ai trouvée particulièrement lente, courte et désagréable. Le rythme est poussif, les contrôles frustrants, avec une sensibilité impossible à régler correctement. L’aim assist, beaucoup trop prononcé, donne constamment l’impression d’être pris par la main, ce qui nuit à tout sentiment de maîtrise. Seule la bande-son, magistrale, parvient réellement à sauver l’expérience.",
       "position": 3
     },
     {
