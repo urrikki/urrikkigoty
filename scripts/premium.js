@@ -3,6 +3,14 @@
 
 // ===== CURSEUR DORÉ + TRAÎNÉE LUMINEUSE (hors tier list) =====
 // ===== CURSEUR DORÉ OPTIMISÉ (sans lag) =====
+
+function measurePerformance(name, fn) {
+    const start = performance.now();
+    fn();
+    const end = performance.now();
+    console.log(`🕒 ${name} : ${(end - start).toFixed(2)} ms`);
+}
+
 function initCustomCursor() {
     if (window.matchMedia('(hover: none)').matches) return;
 
@@ -396,15 +404,12 @@ function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    initGrain();
-    initGoldLine();
-    initCustomCursor();
-    
-    // === ANIMATIONS===
-    initEditorialTitle();       // titre décomposé + cascade
-    initTierLabelsReveal();     // labels des tiers qui s'affichent avec scale
-    initTierRowsReveal();       // rangées qui viennent de gauche/droite
-    initCoverTilt();            // effet 3D sur les covers
-    initCinematicTransitions(); // transitions entre vues
-    // initViewToggleReveal();  // déjà géré par animations.js 
+    measurePerformance('initGrain', () => initGrain());
+    measurePerformance('initGoldLine', () => initGoldLine());
+    measurePerformance('initCustomCursor', () => initCustomCursor());
+    measurePerformance('initEditorialTitle', () => initEditorialTitle());
+    measurePerformance('initTierLabelsReveal', () => initTierLabelsReveal());
+    measurePerformance('initTierRowsReveal', () => initTierRowsReveal());
+    measurePerformance('initCoverTilt', () => initCoverTilt());
+    measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
 }
