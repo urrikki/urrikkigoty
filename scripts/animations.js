@@ -49,7 +49,7 @@ function animateNotification(el) {
 
 function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
-    //initLenis();              
+    initLenis();              
     initHeaderParallax();
     
     document.addEventListener('viewRendered', () => {
