@@ -10,16 +10,18 @@ function enableDragDrop() {
     tierContainers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',
-            animation: 300,               // augmenté pour la fluidité
+            animation: 200,
             ghostClass: 'sortable-ghost',
             chosenClass: 'sortable-chosen',
             dragClass: 'drag-dragging',
-            forceFallback: false,
-            delay: 120,
-            delayOnTouchOnly: false,
-            swapThreshold: 0.65,
-            emptyInsertThreshold: 20,
-
+            forceFallback: true,          // ← force fallback pour un meilleur contrôle
+            delay: 0,                     // ← aucun délai
+            touchStartThreshold: 2,
+            swapThreshold: 0.5,           // ← 0.5 = insérer quand la souris dépasse la moitié de l’élément voisin
+            invertSwap: true,             // ← permet d’insérer entre les éléments
+            direction: 'horizontal',      // ou 'vertical' selon votre layout (votre tier-games est en flex-wrap → 'horizontal' si wrap? mieux vaut 'vertical')
+            // Si vos conteneurs sont en flex-wrap, utilisez 'vertical' pour un déplacement naturel
+            
             onStart(evt) {
                 document.body.classList.add('is-dragging');
                 if (window.__lenis) window.__lenis.stop();
