@@ -49,16 +49,12 @@ function animateNotification(el) {
 
 function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
-    initLenis();               // smooth scroll (si vous voulez le garder)
-    // animateHeroTitle();     // ← À SUPPRIMER (remplacé par initEditorialTitle de premium.js)
-    // animateViewToggle();    // ← À SUPPRIMER (car premium.js gère aussi)
-    // initTiltEffect();       // ← À SUPPRIMER (remplacé par initCoverTilt de premium.js)
+    //initLenis();              
     initHeaderParallax();
     
     document.addEventListener('viewRendered', () => {
         ScrollTrigger.refresh();
-        // On relance les animations ScrollTrigger sur les nouveaux éléments
-        initTierLabelsReveal();   // si besoin de réattacher après rendu
+        initTierLabelsReveal();   
         initTierRowsReveal();
     });
 }
