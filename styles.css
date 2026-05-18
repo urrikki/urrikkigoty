@@ -1,16 +1,12 @@
+/* #region Imports & Reset */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 
-/* =====================================================
-   GOTY — DESIGN SYSTEM (clair/sombre natif)
-   ===================================================== */
-
-/* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: auto; }
+/* #endregion */
 
-/* ── Thème par défaut : DARK ── */
+/* #region Variables (thème sombre par défaut) */
 :root {
-    /* Couleurs */
     --black:       #0A0A0A;
     --black-2:     #111111;
     --black-3:     #1A1A1A;
@@ -24,7 +20,6 @@ html { scroll-behavior: auto; }
     --gold-dark:   #8A6A20;
     --red:         #C0392B;
 
-    /* Mapping sémantique (sombre) */
     --bg-body:     var(--black);
     --bg-surface:  var(--black-2);
     --bg-raised:   var(--black-3);
@@ -36,18 +31,15 @@ html { scroll-behavior: auto; }
     --border:      #262626;
     --border-gold: rgba(201,168,76,0.3);
 
-    /* Ombres (sombre) */
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
     --shadow-md: 0 8px 32px rgba(0,0,0,0.6);
     --shadow-lg: 0 20px 60px rgba(0,0,0,0.8);
     --glow-gold: 0 0 24px rgba(201,168,76,0.2);
 
-    /* Typographie */
     --font-display: 'Bebas Neue', 'Impact', sans-serif;
     --font-serif:   'DM Serif Display', Georgia, serif;
     --font-body:    'Inter', system-ui, sans-serif;
 
-    /* Tiers (même or pour S, autres couleurs adaptables) */
     --tier-s:  var(--gold);
     --tier-a:  var(--white);
     --tier-b:  var(--white-dim);
@@ -57,16 +49,14 @@ html { scroll-behavior: auto; }
     --tier-f:  var(--white-muted);
     --tier-np: var(--white-muted);
 
-    /* Transitions */
     --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --t-fast: 0.15s;
     --t-base: 0.25s;
     --t-slow: 0.4s;
 }
 
-/* ── THÈME CLAIR (classe .dark-theme sur le body) ── */
+/* #region Thème clair */
 body.dark-theme {
     --bg-body:     #F4F1EC;
     --bg-surface:  #FFFFFF;
@@ -81,22 +71,18 @@ body.dark-theme {
     --shadow-md: 0 8px 32px rgba(0,0,0,0.12);
     --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
     --glow-gold: 0 0 24px rgba(201,168,76,0.3);
-
-    /* Ajustement de la couleur du tier A pour rester lisible */
     --tier-a:  #2C2C2C;
 }
 
-/* Transition fluide pour tout changement de thème */
 body, body * {
     transition: background-color var(--t-base) var(--ease),
                 color var(--t-base) var(--ease),
                 border-color var(--t-base) var(--ease),
                 box-shadow var(--t-base) var(--ease);
 }
+/* #endregion */
 
-/* =====================================================
-   BASE & TEXTURES (inchangé)
-   ===================================================== */
+/* #region Base & Layout */
 body {
     background: var(--bg-body);
     color: var(--text-primary);
@@ -125,10 +111,9 @@ body::after {
     margin: 0 auto;
     padding: 0 2rem 6rem;
 }
+/* #endregion */
 
-/* =====================================================
-   HEADER (inchangé)
-   ===================================================== */
+/* #region Header */
 .main-header {
     padding: 2rem 0 0;
     margin-bottom: 3rem;
@@ -214,10 +199,9 @@ body::after {
     letter-spacing: 0.2em;
     font-weight: 600;
 }
+/* #endregion */
 
-/* =====================================================
-   VIEW TOGGLE (inchangé)
-   ===================================================== */
+/* #region View Toggle & Panels */
 .view-toggle-bar {
     display: flex;
     align-items: center;
@@ -258,9 +242,7 @@ body::after {
     letter-spacing: 0.2em;
 }
 
-/* =====================================================
-   PANELS (FILTER / STATS)
-   ===================================================== */
+/* Panels (Filtres & Stats) */
 .panel {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -298,10 +280,11 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid transparent;
 }
-.panel-close:hover { color: var(--text-primary); border-color: var(--border); }
+.panel-close:hover { color: var(--text-primary); border: 1px solid var(--border); }
 .panel-body { padding: 1.25rem; }
+
+/* Filtres */
 .filter-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -413,10 +396,9 @@ body::after {
 .chart-bar-bg { flex: 1; height: 2px; background: var(--border); overflow: hidden; }
 .chart-bar { height: 100%; transition: width 0.8s var(--ease); }
 .chart-bar-value { width: 4rem; text-align: right; font-size: 0.65rem; color: var(--text-muted); }
+/* #endregion */
 
-/* =====================================================
-   ADMIN CONTROLS
-   ===================================================== */
+/* #region Admin Controls */
 .admin-controls {
     display: flex;
     gap: 0.75rem;
@@ -445,10 +427,9 @@ body::after {
 .admin-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
 .admin-btn.danger { border-color: var(--red); color: var(--red); }
 .admin-btn.danger:hover { background: var(--red); color: var(--white); }
+/* #endregion */
 
-/* =====================================================
-   TIER LIST
-   ===================================================== */
+/* #region Tier List */
 .tier-list {
     display: flex;
     flex-direction: column;
@@ -493,11 +474,10 @@ body::after {
     display: block;
     text-align: center;
 }
-.tier-row:has([style*="--tier-color: var(--tier-s)"]) .tier-label { background: rgba(201,168,76,0.05); }
 .tier-games {
     flex: 1;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 98px);
     gap: 8px;
     padding: 10px;
     min-height: 118px;
@@ -528,6 +508,9 @@ body::after {
     object-fit: cover;
     display: block;
     transition: transform var(--t-slow) var(--ease);
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
 }
 .game-item:hover {
     border-color: var(--gold);
@@ -570,20 +553,9 @@ body::after {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
-.game-item:nth-child(1)  { animation-delay: 0.00s; }
-.game-item:nth-child(2)  { animation-delay: 0.03s; }
-.game-item:nth-child(3)  { animation-delay: 0.06s; }
-.game-item:nth-child(4)  { animation-delay: 0.09s; }
-.game-item:nth-child(5)  { animation-delay: 0.12s; }
-.game-item:nth-child(6)  { animation-delay: 0.15s; }
-.game-item:nth-child(7)  { animation-delay: 0.18s; }
-.game-item:nth-child(8)  { animation-delay: 0.21s; }
-.game-item:nth-child(9)  { animation-delay: 0.24s; }
-.game-item:nth-child(10) { animation-delay: 0.27s; }
+/* #endregion */
 
-/* =====================================================
-   DRAG & DROP ADMIN
-   ===================================================== */
+/* #region Drag & Drop (Sortable) */
 .admin-drag-active .game-item {
     cursor: grab;
     transition: box-shadow 0.15s ease, transform 0.15s ease;
@@ -599,15 +571,11 @@ body::after {
     border: none;
     transform: scale(0.98);
 }
-
-/* L'élément original pendant le drag – on le rend transparent */
 .sortable-chosen {
     opacity: 0.3 !important;
     transform: scale(0.95) !important;
     transition: none !important;
 }
-
-/* Le clone qui suit la souris – taille normale */
 .drag-dragging {
     opacity: 0.9 !important;
     transform: scale(1) rotate(0deg) !important;
@@ -616,51 +584,33 @@ body::after {
     z-index: 9999;
     width: 98px;
     height: 98px;
-    position: fixed; /* force fallback le gère */
+    position: fixed;
 }
-
-/* Conteneur en flex-wrap : important pour que Sortable calcule bien les positions */
-.tier-game {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 98px);
-    gap: 8px;
-    padding: 10px;
-    min-height: 118px;
-    align-content: flex-start;
+.tier-games.drag-over {
+    background: rgba(201,168,76,0.06);
+    outline: 1.5px dashed rgba(201,168,76,0.5);
+    outline-offset: -3px;
 }
-
-/* Évite les interférences avec d'autres animations pendant le drag */
+.tier-games.drag-source {
+    background: rgba(100,100,100,0.04);
+}
 .is-dragging .game-item {
     transition: none !important;
 }
-
-/* Supprime tout surlignage bleu pendant le drag */
 .is-dragging,
 .is-dragging *,
 :active,
 :active * {
     user-select: none !important;
     -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
 }
-
-/* Empêche l'image d'être prise comme élément draggable */
-.game-item img {
-    -webkit-user-drag: none;
-    user-drag: none;
-    pointer-events: none;  /* déjà suggéré, mais important */
-}
-
-/* Supprime le surlignage des liens et autres éléments */
 a:active, button:active, .game-item:active {
     outline: none;
     -webkit-tap-highlight-color: transparent;
 }
+/* #endregion */
 
-/* =====================================================
-   TIMELINE & GALLERY (inchangés)
-   ===================================================== */
+/* #region Timeline & Gallery */
 .timeline-container {
     position: relative;
     padding-left: 5rem;
@@ -742,7 +692,6 @@ a:active, button:active, .game-item:active {
     letter-spacing: 0.15em;
     font-weight: 600;
 }
-#galleryView { width: 100%; }
 .gallery-container {
     display: flex;
     flex-wrap: wrap;
@@ -794,10 +743,9 @@ a:active, button:active, .game-item:active {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
+/* #endregion */
 
-/* =====================================================
-   MODALS
-   ===================================================== */
+/* #region Modals */
 .modal {
     display: none;
     position: fixed;
@@ -921,15 +869,41 @@ a:active, button:active, .game-item:active {
 .modal-edit-btn:hover { opacity: 0.85; }
 .comparison-modal { max-width: 920px; }
 .comparison-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem; }
-.comparison-game { border: 1px solid var(--border); padding: 1rem; display: flex; gap: 0.75rem; background: var(--bg-raised); }
-.comparison-game img { width: 100px; height: 145px; object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; }
-.comparison-game-info h3 { font-family: var(--font-serif); font-style: italic; font-size: 1.1rem; margin-bottom: 0.4rem; }
-.comparison-game-info .meta { font-size: 0.6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
-.comparison-game-info .review { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+.comparison-game {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    background: var(--bg-raised);
+}
+.comparison-game img {
+    width: 100px;
+    height: 145px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.comparison-game-info h3 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+}
+.comparison-game-info .meta {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+}
+.comparison-game-info .review {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+/* #endregion */
 
-/* =====================================================
-   FORMULAIRE ADMIN
-   ===================================================== */
+/* #region Forms (Admin, Login) */
 .add-game-modal { max-width: 640px; }
 .add-game-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -1031,10 +1005,9 @@ a:active, button:active, .game-item:active {
     margin-bottom: 1.25rem;
     color: var(--gold);
 }
+/* #endregion */
 
-/* =====================================================
-   NOTIFICATIONS & INDICATEURS
-   ===================================================== */
+/* #region Notifications & Indicators */
 .notification {
     position: fixed;
     bottom: 1.5rem;
@@ -1060,41 +1033,7 @@ a:active, button:active, .game-item:active {
 .skeleton-label { width: 80px; min-width: 80px; height: 118px; border-right: 1px solid var(--border); }
 .skeleton-games { flex: 1; display: flex; gap: 8px; padding: 10px; flex-wrap: wrap; align-content: flex-start; }
 .skeleton-game { width: 98px; height: 98px; border: 1px solid var(--border); flex-shrink: 0; }
-.skeleton-game:nth-child(1) { animation-delay: 0s; }
-.skeleton-game:nth-child(2) { animation-delay: 0.08s; }
-.skeleton-game:nth-child(3) { animation-delay: 0.16s; }
-.skeleton-game:nth-child(4) { animation-delay: 0.24s; }
-.skeleton-game:nth-child(5) { animation-delay: 0.32s; }
 
-/* =====================================================
-   CURSEUR PERSONNALISÉ (doré avec traînée)
-   ===================================================== */
-html, body, * {
-    cursor: none !important;
-}
-
-body.has-custom-cursor,
-body.has-custom-cursor button,
-body.has-custom-cursor .game-item,
-body.has-custom-cursor .icon-btn,
-body.has-custom-cursor .view-btn,
-body.has-custom-cursor .gallery-card,
-body.has-custom-cursor .admin-btn {
-    cursor: none;
-}
-#cursor-dot,
-#cursor-ring,
-#cursor-trail-container,
-.cursor-trail {
-    pointer-events: none !important;
-}
-#cursor-dot {
-    transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
-}
-
-/* =====================================================
-   SCROLL TOP & SAVE INDICATOR
-   ===================================================== */
 #saveIndicator {
     position: fixed;
     bottom: 5rem; right: 1.5rem;
@@ -1134,10 +1073,45 @@ body.has-custom-cursor .admin-btn {
 }
 #scrollTopBtn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 #scrollTopBtn:hover { background: var(--gold-light); }
+/* #endregion */
 
-/* =====================================================
-   RESPONSIVE
-   ===================================================== */
+/* #region Custom Cursor (Gold) */
+html, body, * {
+    cursor: none !important;
+}
+#cursor-dot,
+#cursor-trail-container,
+.cursor-trail {
+    pointer-events: none !important;
+}
+#cursor-dot {
+    transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
+}
+/* #endregion */
+
+/* #region Utilities & Fixes */
+.char-wrapper { display: inline-block; overflow: hidden; line-height: 1.1; }
+.char { display: inline-block; will-change: transform; }
+.tier-list-container,
+.timeline-container,
+.gallery-container {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+}
+.panel, .filter-panel, .stats-panel,
+.panel input, .panel select, .panel button, .panel label,
+.modal, .admin-controls {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+}
+#grain-overlay, body::after {
+    pointer-events: none !important;
+    z-index: 0;
+}
+/* #endregion */
+
+/* #region Responsive */
 @media (max-width: 768px) {
     .app-wrapper { padding: 0 1rem 4rem; }
     .site-title { font-size: clamp(3rem, 10vw, 5rem); }
@@ -1155,47 +1129,4 @@ body.has-custom-cursor .admin-btn {
     .timeline-container { padding-left: 3.5rem; }
     #scrollTopBtn { bottom: 1rem; right: 1rem; }
 }
-
-/* =====================================================
-   FIXES GÉNÉRAUX
-   ===================================================== */
-.panel, .filter-panel, .stats-panel {
-    position: relative;
-    z-index: 10;
-    pointer-events: all;
-}
-#grain-overlay {
-    pointer-events: none !important;
-}
-body::after {
-    pointer-events: none !important;
-    z-index: 0;
-}
-.panel input,
-.panel select,
-.panel button,
-.panel label {
-    position: relative;
-    z-index: 11;
-    pointer-events: all;
-}
-.modal {
-    z-index: 1000;
-    pointer-events: all;
-}
-.admin-controls {
-    position: relative;
-    z-index: 10;
-}
-.char-wrapper { display: inline-block; overflow: hidden; line-height: 1.1; }
-.char { display: inline-block; will-change: transform; }
-.tier-list-container,
-.timeline-container,
-.gallery-container {
-    will-change: opacity, transform;
-    backface-visibility: hidden;
-}
-
-.game-item {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+/* #endregion */
