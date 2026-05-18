@@ -4,9 +4,20 @@ let _sortableInstances = [];
 
 // Active le drag & drop sur tous les tier-games containers
 function enableDragDrop() {
+    if (typeof Sortable === 'undefined') {
+        console.error('❌ SortableJS non chargé');
+        return;
+    }
     destroyDragDrop();
 
     const tierContainers = document.querySelectorAll('.tier-games');
+    if (!tierContainers.length) {
+        console.warn('⚠️ Aucun conteneur .tier-games trouvé');
+        return;
+    }
+
+    console.log('✅ Drag & drop activé sur', tierContainers.length, 'conteneurs');
+
     tierContainers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',
@@ -14,18 +25,18 @@ function enableDragDrop() {
             ghostClass: 'sortable-ghost',
             chosenClass: 'sortable-chosen',
             dragClass: 'drag-dragging',
-            forceFallback: true,          // ← force fallback pour un meilleur contrôle
-            delay: 0,                     // ← aucun délai
+            forceFallback: true,      // essentiel pour éviter les conflits avec les transformations
+            delay: 0,
             touchStartThreshold: 2,
-            swapThreshold: 0.5,           // ← 0.5 = insérer quand la souris dépasse la moitié de l’élément voisin
-            invertSwap: true,             // ← permet d’insérer entre les éléments
-            direction: 'horizontal',      // ou 'vertical' selon votre layout (votre tier-games est en flex-wrap → 'horizontal' si wrap? mieux vaut 'vertical')
-            // Si vos conteneurs sont en flex-wrap, utilisez 'vertical' pour un déplacement naturel
+            swapThreshold: 0.5,
+            invertSwap: true,
+            direction: 'horizontal',
             
             onStart(evt) {
                 document.body.classList.add('is-dragging');
                 if (window.__lenis) window.__lenis.stop();
-                // Optionnel : ajouter une classe pour l'élément en cours
+                // Supprimer toutes les transformations GSAP en cours
+                gsap.set(evt.item, { clearProps: "transform,transition" });
                 evt.item.style.transition = 'none';
             },
 
@@ -33,29 +44,23 @@ function enableDragDrop() {
                 document.body.classList.remove('is-dragging');
                 if (window.__lenis) window.__lenis.start();
 
-                // 1. Animation sur l'élément déplacé (retombée élastique)
+                // Animation de retour (optionnelle)
                 gsap.fromTo(evt.item, 
                     { scale: 1.1, borderColor: '#C9A84C', boxShadow: '0 0 0 3px gold' },
                     { scale: 1, borderColor: 'var(--border)', boxShadow: 'none', duration: 0.4, ease: 'back.out(1.2)', clearProps: 'transform,boxShadow' }
                 );
 
-                // 2. Animation sur les voisins directs (effet de "poussée")
+                // Animation des voisins
                 const parent = evt.item.parentNode;
                 if (parent) {
-                    const siblings = Array.from(parent.children).filter(child => child !== evt.item);
-                    siblings.forEach(sib => {
-                        gsap.fromTo(sib, 
-                            { scale: 1.02 },
-                            { scale: 1, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.out' }
-                        );
+                    Array.from(parent.children).filter(child => child !== evt.item).forEach(sib => {
+                        gsap.fromTo(sib, { scale: 1.02 }, { scale: 1, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.out' });
                     });
                 }
 
-                // 3. Si changement de tier, ajouter un effet lumineux sur l'ancien et nouveau conteneur
-                const oldContainer = evt.from;
-                const newContainer = evt.to;
-                if (oldContainer !== newContainer) {
-                    [oldContainer, newContainer].forEach(container => {
+                // Animation changement de tier
+                if (evt.from !== evt.to) {
+                    [evt.from, evt.to].forEach(container => {
                         if (container) {
                             gsap.fromTo(container, 
                                 { backgroundColor: 'rgba(201,168,76,0.2)' },
@@ -65,11 +70,8 @@ function enableDragDrop() {
                     });
                 }
 
-                // 4. Reconstruire l'ordre complet depuis le DOM
                 const newGames = buildGamesOrderFromDOM();
                 AppState.games = newGames;
-
-                // 5. Sauvegarder sur GitHub via Railway
                 saveOrderToGitHub(newGames);
             }
         });

@@ -262,6 +262,7 @@ function initTierRowsReveal() {
 // ── Hover 3D avancé sur les covers ──
 function initCoverTilt() {
     document.addEventListener('mousemove', e => {
+        if (document.body.classList.contains('is-dragging')) return; // 👈 ajoutez cette ligne
         if (!(e.target instanceof Element)) return;
         const item = e.target.closest('.game-item');
         if (!item) return;
@@ -283,6 +284,7 @@ function initCoverTilt() {
     }, true);
 
     document.addEventListener('mouseleave', e => {
+        if (document.body.classList.contains('is-dragging')) return; // 👈 ajoutez cette ligne
         if (!(e.target instanceof Element)) return;
         const item = e.target.closest('.game-item');
         if (!item) return;
