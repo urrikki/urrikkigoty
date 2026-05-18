@@ -591,12 +591,12 @@ body::after {
 .admin-drag-active .game-item:active { cursor: grabbing; }
 
 .sortable-ghost {
-    opacity: 0;
-    visibility: visible;
+    opacity: 0 !important;
+    visibility: visible !important;
     width: 98px;
     height: 98px;
     background: transparent;
-    border: 1px dashed var(--gold);
+    border: none;
     transform: scale(0.98);
 }
 
@@ -604,6 +604,7 @@ body::after {
 .sortable-chosen {
     opacity: 0.3 !important;
     transform: scale(0.95) !important;
+    transition: none !important;
 }
 
 /* Le clone qui suit la souris – taille normale */
@@ -631,6 +632,18 @@ body::after {
 /* Évite les interférences avec d'autres animations pendant le drag */
 .is-dragging .game-item {
     transition: none !important;
+}
+
+.is-dragging,
+.is-dragging * {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.game-item img {
+    user-drag: none;
+    -webkit-user-drag: none;
+    pointer-events: none; /* évite que l'image soit prise pour le drag */
 }
 
 /* =====================================================
