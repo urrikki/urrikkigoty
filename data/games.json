@@ -217,21 +217,21 @@
       "position": 2
     },
     {
-      "name": "Freedom Fighters",
-      "year": 2003,
-      "rank": "C",
-      "postion": "",
-      "picture": "freedomfighters.jpg",
-      "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 3
-    },
-    {
       "name": "GTA: Vice City",
       "year": 2003,
       "rank": "C",
       "postion": "",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant.",
+      "position": 3
+    },
+    {
+      "name": "Freedom Fighters",
+      "year": 2003,
+      "rank": "C",
+      "postion": "",
+      "picture": "freedomfighters.jpg",
+      "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
       "position": 4
     },
     {
