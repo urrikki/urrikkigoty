@@ -73,31 +73,22 @@
       "position": 3
     },
     {
+      "name": "God of War III",
+      "year": 2010,
+      "rank": "A",
+      "postion": "",
+      "picture": "gow3.jpg",
+      "review": "Le troisième épisode s’impose comme une conclusion cohérente, assumant pleinement sa logique d’escalade. La progression, tendue vers son dénouement, s’appuie sur une succession d’affrontements d’une ampleur rarement égalée à l’époque, où la démesure visuelle sert directement la sensation de puissance. Les combats, à la fois lisibles et nerveux, procurent un sentiment d’impact immédiat, renforcé par une mise en scène constamment surenchérie.\n\nSur le plan technique, le titre affiche une maîtrise indéniable. Les environnements, vastes et détaillés, s’inscrivent dans une direction artistique spectaculaire, multipliant les panoramas marquants et les compositions monumentales. Cette richesse visuelle participe directement à l’immersion et confère à l’ensemble une identité forte.\n\nEn revanche, le doublage français constitue un point de friction notable. En décalage avec l’intensité générale du jeu, l’interprétation manque de justesse et tend à affaiblir certaines séquences, là où la version originale conserve une cohérence plus marquée.",
+      "position": 4
+    },
+    {
       "name": "BioShock",
       "year": 2007,
       "rank": "A",
       "postion": "",
       "picture": "bioshock.jpg",
       "review": "BioShock est un jeu incroyable. L’immersion est totale, l’univers de Rapture est fascinant et l’originalité de l’histoire frappe immédiatement, notamment par le risque narratif d’impliquer des enfants dans l’intrigue, ce qui rend certaines séquences particulièrement marquantes. La diversité du gameplay grâce aux pouvoirs biologiques apporte une réelle variété dans les combats et la progression, et le twist final, bien que prévisible, bénéficie d’une mise en scène puissante qui le rend mémorable. La direction artistique est tout simplement époustouflante, donnant vie à un monde à la fois oppressant et sublime. Cependant, le jeu souffre de sérieux problèmes techniques. La gestion de la souris est mauvaise, et j’ai dû chercher comment la désactiver correctement. Les nombreux crashs interrompaient régulièrement ma partie et forçaient à reconfigurer les paramètres à chaque fois. Pire encore, le fichier que je modifiais pour corriger la souris était réécrit après chaque crash, obligeant un va-et-vient constant qui a considérablement freiné mon expérience. De plus, l’audio du jeu présente plusieurs problèmes. Certains sons sont trop faibles, d’autres se coupent de manière aléatoire, ce qui nuit à l’immersion. Ces défauts techniques sont trop importants pour être ignorés, même si le reste du jeu est exceptionnel.",
-      "position": 4
-    },
-    {
-      "name": "Burnout 3: Takedown",
-      "year": 2004,
-      "rank": "A",
-      "postion": "",
-      "picture": "burnout3.jpg",
-      "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre.",
       "position": 5
-    },
-    {
-      "name": "Gears of war 2",
-      "year": 2008,
-      "rank": "A",
-      "postion": "",
-      "picture": "gearsofwar2.jpg",
-      "review": "L’introduction est particulièrement intelligente, puisqu’elle permet d’apprendre à jouer en entraînant un jeune soldat sans jamais entrer en contradiction avec l’histoire. Les missions, variées et bien rythmées, s’enchaînent avec plaisir. Le mode Horde, nouveauté marquante, est une réussite qui est devenu depuis un classique du genre. Le jeu parvient à se renouveler avec de nouvelles armes et de nouveaux ennemis, et conserve cette mise en scène cinématographique que j’apprécie tant. Techniquement, il est superbe. Cependant, malgré une tentative de donner plus de relief à Dom, les personnages restent assez fades, tout comme l’intrigue. L’IA, qu’il s’agisse des alliés ou des ennemis, manque toujours de finesse, ce qui est regrettable.",
-      "position": 6
     },
     {
       "name": "Assassin's Creed II",
@@ -106,6 +97,15 @@
       "postion": "",
       "picture": "ac2.png",
       "review": "Assassin’s Creed II séduit avant tout par la qualité de ses personnages, nettement plus marquants que son intrigue principale, laquelle demeure relativement convenue. L’univers, en revanche, force le respect : la reconstitution de l’Italie de la Renaissance est soignée, crédible, et particulièrement vivante. Certaines séquences, notamment en ville lors des festivals, renforcent efficacement le sentiment d’immersion. Le jeu brille également dans sa philosophie de l’assassinat. La préparation, l’observation et la patience sont encouragées, ce qui donne du poids à chaque cible et valorise une approche méthodique. Le parcours urbain, fluide et agréable, participe pleinement à cette sensation de maîtrise et reste l’un des grands plaisirs de l’expérience. En revanche, les combats à l’épée souffrent d’un manque de dynamisme et deviennent rapidement répétitifs. Le défaut le plus pénalisant reste toutefois la caméra, fréquemment instable et imprécise, au point de nuire au confort de jeu et à la lisibilité de l’action.",
+      "position": 6
+    },
+    {
+      "name": "Burnout 3: Takedown",
+      "year": 2004,
+      "rank": "A",
+      "postion": "",
+      "picture": "burnout3.jpg",
+      "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre.",
       "position": 7
     },
     {
@@ -118,12 +118,12 @@
       "position": 8
     },
     {
-      "name": "God of War III",
-      "year": 2010,
+      "name": "Gears of war 2",
+      "year": 2008,
       "rank": "A",
       "postion": "",
-      "picture": "gow3.jpg",
-      "review": "Le troisième épisode s’impose comme une conclusion cohérente, assumant pleinement sa logique d’escalade. La progression, tendue vers son dénouement, s’appuie sur une succession d’affrontements d’une ampleur rarement égalée à l’époque, où la démesure visuelle sert directement la sensation de puissance. Les combats, à la fois lisibles et nerveux, procurent un sentiment d’impact immédiat, renforcé par une mise en scène constamment surenchérie.\n\nSur le plan technique, le titre affiche une maîtrise indéniable. Les environnements, vastes et détaillés, s’inscrivent dans une direction artistique spectaculaire, multipliant les panoramas marquants et les compositions monumentales. Cette richesse visuelle participe directement à l’immersion et confère à l’ensemble une identité forte.\n\nEn revanche, le doublage français constitue un point de friction notable. En décalage avec l’intensité générale du jeu, l’interprétation manque de justesse et tend à affaiblir certaines séquences, là où la version originale conserve une cohérence plus marquée.",
+      "picture": "gearsofwar2.jpg",
+      "review": "L’introduction est particulièrement intelligente, puisqu’elle permet d’apprendre à jouer en entraînant un jeune soldat sans jamais entrer en contradiction avec l’histoire. Les missions, variées et bien rythmées, s’enchaînent avec plaisir. Le mode Horde, nouveauté marquante, est une réussite qui est devenu depuis un classique du genre. Le jeu parvient à se renouveler avec de nouvelles armes et de nouveaux ennemis, et conserve cette mise en scène cinématographique que j’apprécie tant. Techniquement, il est superbe. Cependant, malgré une tentative de donner plus de relief à Dom, les personnages restent assez fades, tout comme l’intrigue. L’IA, qu’il s’agisse des alliés ou des ennemis, manque toujours de finesse, ce qui est regrettable.",
       "position": 9
     },
     {
