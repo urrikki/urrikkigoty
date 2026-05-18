@@ -494,16 +494,16 @@ body::after {
     text-align: center;
 }
 .tier-row:has([style*="--tier-color: var(--tier-s)"]) .tier-label { background: rgba(201,168,76,0.05); }
+
 .tier-games {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 98px);
     gap: 8px;
     padding: 10px;
     min-height: 118px;
     align-content: flex-start;
-    transition: background var(--t-base), outline var(--t-base);
 }
+
 .game-item {
     width: 98px;
     height: 98px;
@@ -591,54 +591,44 @@ body::after {
 .admin-drag-active .game-item:active { cursor: grabbing; }
 
 .sortable-ghost {
-    opacity: 0.5;
-    background: rgba(201,168,76,0.15);
+    opacity: 0;
+    visibility: visible;
+    width: 98px;
+    height: 98px;
+    background: transparent;
     border: 1px dashed var(--gold);
     transform: scale(0.98);
-    transition: none;
 }
 
+/* L'élément original pendant le drag – on le rend transparent */
 .sortable-chosen {
-    opacity: 0.5 !important;
-    transform: scale(0.96) !important;
-    transition: none !important;
-    cursor: grabbing !important;
+    opacity: 0.3 !important;
+    transform: scale(0.95) !important;
 }
 
-.sortable-drag {   
-    opacity: 0.9 !important;
-    transform: scale(1) rotate(0deg) !important;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 2px var(--gold) !important;
-    cursor: grabbing;
-    z-index: 9999;
-    transition: none;
-}
-
+/* Le clone qui suit la souris – taille normale */
 .drag-dragging {
-    /* identique à .sortable-drag */
     opacity: 0.9 !important;
     transform: scale(1) rotate(0deg) !important;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 2px var(--gold) !important;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3), 0 0 0 2px var(--gold);
     cursor: grabbing;
     z-index: 9999;
+    width: 98px;
+    height: 98px;
+    position: fixed; /* force fallback le gère */
 }
 
-/* Surbrillance des conteneurs cible et source */
-.tier-games.drag-over {
-    background: rgba(201,168,76,0.06);
-    outline: 1.5px dashed rgba(201,168,76,0.5);
-    outline-offset: -3px;
-}
-.tier-games.drag-source {
-    background: rgba(100,100,100,0.04);
+/* Conteneur en flex-wrap : important pour que Sortable calcule bien les positions */
+.tier-games {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
 }
 
-.is-dragging .game-item:not(.sortable-chosen):not(.sortable-ghost) {
-    pointer-events: none;
+/* Évite les interférences avec d'autres animations pendant le drag */
+.is-dragging .game-item {
     transition: none !important;
-}
-.is-dragging .sortable-drag, .is-dragging .drag-dragging {
-    pointer-events: all;
 }
 
 /* =====================================================
