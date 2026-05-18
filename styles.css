@@ -55,6 +55,7 @@ html { scroll-behavior: auto; }
     --t-base: 0.25s;
     --t-slow: 0.4s;
 }
+/* #endregion */
 
 /* #region Thème clair */
 body.dark-theme {
@@ -750,14 +751,19 @@ a:active, button:active, .game-item:active {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(8px);
-    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 10000;
     justify-content: center;
     align-items: center;
     animation: backdropIn 0.2s ease;
 }
-@keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes backdropIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .modal-content {
     background: var(--bg-surface);
     max-width: 840px;
@@ -771,14 +777,19 @@ a:active, button:active, .game-item:active {
     box-shadow: var(--shadow-lg);
     animation: modalIn 0.25s var(--ease-out);
 }
+
 @keyframes modalIn {
     from { opacity: 0; transform: translateY(20px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* Fermeture */
 .modal-close {
     position: absolute;
-    top: 1rem; right: 1rem;
-    width: 2rem; height: 2rem;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
     background: none;
     border: 1px solid var(--border);
     color: var(--text-muted);
@@ -789,7 +800,12 @@ a:active, button:active, .game-item:active {
     justify-content: center;
     transition: all var(--t-base);
 }
-.modal-close:hover { border-color: var(--gold); color: var(--gold); }
+.modal-close:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* Corps de la modale (jeu) */
 .modal-body {
     display: flex;
     gap: 2rem;
@@ -818,7 +834,11 @@ a:active, button:active, .game-item:active {
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
 }
-.modal-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.modal-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
 .modal-tag {
     border: 1px solid var(--border);
     padding: 0.2rem 0.6rem;
@@ -864,11 +884,30 @@ a:active, button:active, .game-item:active {
     background: transparent;
     color: var(--text-secondary);
 }
-.fav-btn:hover, .fav-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
-.modal-edit-btn { background: var(--gold); border-color: var(--gold); color: var(--black); }
-.modal-edit-btn:hover { opacity: 0.85; }
-.comparison-modal { max-width: 920px; }
-.comparison-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1rem; }
+.fav-btn:hover, .fav-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+}
+.modal-edit-btn {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+}
+.modal-edit-btn:hover {
+    opacity: 0.85;
+}
+
+/* Modale de comparaison */
+.comparison-modal {
+    max-width: 920px;
+}
+.comparison-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
 .comparison-game {
     border: 1px solid var(--border);
     padding: 1rem;
@@ -900,6 +939,11 @@ a:active, button:active, .game-item:active {
     font-size: 0.8rem;
     color: var(--text-secondary);
     line-height: 1.65;
+}
+
+.app-wrapper, .tier-list-container, .timeline-container, .gallery-container {
+    transform: none !important;
+    will-change: auto !important;
 }
 /* #endregion */
 
