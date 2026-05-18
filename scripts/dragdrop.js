@@ -2,7 +2,6 @@
 
 let _sortableInstances = [];
 
-// Active le drag & drop sur tous les tier-games containers
 function enableDragDrop() {
     if (typeof Sortable === 'undefined') return console.error('SortableJS manquant');
     destroyDragDrop();
@@ -13,31 +12,26 @@ function enableDragDrop() {
     containers.forEach(container => {
         const instance = Sortable.create(container, {
             group: 'games',
-            animation: 200,                // durée de l'animation de déplacement
-            ghostClass: 'sortable-ghost',  // classe pour l'élément fantôme (placeholder)
-            chosenClass: 'sortable-chosen',// classe pour l'élément en cours de drag
-            dragClass: 'sortable-drag',    // classe pour le clone qui suit la souris
-            forceFallback: false,          // utilise le drag & drop natif (meilleur suivi)
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'drag-dragging',
+            forceFallback: true,          // ← CRUCIAL : force le mode fallback
+            fallbackClass: 'sortable-fallback',
+            fallbackOnBody: false,
             delay: 0,
             touchStartThreshold: 2,
-            swapThreshold: 0.5,
-            invertSwap: true,
-            direction: 'horizontal',
-            easing: "cubic-bezier(0.4, 0.0, 0.2, 1)",
-            // Optionnel : personnaliser le clone qui suit la souris
+            swapThreshold: 0.5,           // ← 0.5 = insérer quand la souris dépasse la moitié de l'élément voisin
+            invertSwap: true,             // ← permet l'insertion entre les éléments
+            direction: 'horizontal',      // ← important pour flex-wrap
             onStart(evt) {
                 document.body.classList.add('is-dragging');
                 window.__lenis?.stop();
-                // Supprimer toutes les transformations GSAP sur l'élément dragué
                 gsap.set(evt.item, { clearProps: "transform,transition" });
-                // Masquer l'élément original (optionnel, mais le ghost le remplace)
-                evt.item.style.opacity = '0.3';
             },
             onEnd(evt) {
                 document.body.classList.remove('is-dragging');
                 window.__lenis?.start();
-                evt.item.style.opacity = '';
-                // Sauvegarder le nouvel ordre
                 const newGames = buildGamesOrderFromDOM();
                 AppState.games = newGames;
                 saveOrderToGitHub(newGames);
