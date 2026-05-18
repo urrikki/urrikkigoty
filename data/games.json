@@ -271,13 +271,22 @@
       "position": 8
     },
     {
+      "name": "Fallout 3",
+      "year": 2008,
+      "rank": "D",
+      "postion": "",
+      "picture": "fallout3.png",
+      "review": "Le prologue dans l’Abri 101 est une excellente idée : il introduit naturellement l’univers, le gameplay et l’identité de notre personnage, rendant les premières heures particulièrement agréables et immersives. L’immensité de la carte impressionne d’emblée, mais c’est aussi son défaut : à force de vouloir montrer un monde gigantesque, le jeu finit par donner le sentiment d’être étiré, et l’exploration peut paraître fastidieuse. L’ambiance post-apocalyptique fonctionne à merveille, soutenue par une direction artistique marquante et surtout par le S.V.A.V., un système de visée révolutionnaire qui ralentit le temps et permet de cibler précisément les ennemis. Ce mode de combat, unique en son genre, apporte une dimension tactique bienvenue et participe énormément au charme du jeu. Cependant, l’histoire principale est décevante : peu captivante, elle manque de profondeur et n’atteint jamais le niveau des choix moraux ou des récits environnementaux qui font la force de l’univers. Pire encore, les bugs techniques récurrents viennent régulièrement gâcher l’expérience. Fichiers de sauvegarde qui ce supprime, crash, alt tab qui shut down le jeu. Je sais pas si c'est parce que j'ai pas accroché à l'histoire ou parce que les défauts sont trop voyant mais j'ai pas plus aimé que ça.",
+      "position": 0
+    },
+    {
       "name": "Tom Clancy's Splinter Cell",
       "year": 2003,
       "rank": "D",
       "postion": "",
       "picture": "splintercell.jpg",
       "review": "Splinter Cell propose une infiltration réaliste et exigeante. L’utilisation de l’ombre pour se dissimuler et des différents modes de vision nocturne, thermique et infrarouge est une idée brillante qui ajoute une profondeur stratégique rare pour l’époque. L’ambiance est saisissante : la tension permanente, les décors sombres et les séquences cinématographiques contribuent à un véritable sentiment d’immersion dans le rôle d’un espion moderne. Pourtant, malgré ces innovations, je n’ai pas réussi à accrocher pleinement au jeu. La lenteur du rythme et la linéarité des missions limitent la liberté et la variété des approches, rendant chaque niveau parfois frustrant. De plus, j’ai été confronté à une avalanche de bugs qui ont gâché plusieurs tentatives, avec des problèmes de collisions ou de comportements ennemis qui brisaient la furtivité et l’immersion. Ces défauts techniques m’ont empêché de profiter pleinement des mécaniques ingénieuses, et m’ont fait ressentir une certaine frustration, même si l’originalité du concept reste indéniable.",
-      "position": 0
+      "position": 1
     },
     {
       "name": "Metal Gear Solid 3: Snake Eater",
@@ -286,7 +295,7 @@
       "postion": "",
       "picture": "mgs3.jpg",
       "review": "Porté par une histoire et des cinématiques remarquables, mais le gameplay s’efface face aux longues cutscenes et contrôles peu fluides. Un scénario d’exception enfermé dans une expérience ludique déséquilibrée.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "Call of duty 2",
@@ -295,7 +304,7 @@
       "postion": "",
       "picture": "callofduty2.jpg",
       "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Mass Effect",
@@ -304,7 +313,7 @@
       "postion": "",
       "picture": "masseffect.jpg",
       "review": "Mass Effect m’a laissé un sentiment de faux-semblant. Le jeu cherche à donner l’illusion d’un univers galactique infini, constellé de planètes à explorer, mais en dehors des missions principales, ces mondes n’offrent que peu de véritable contenu. De la même manière, il se veut maître du choix moral, mais comme dans KOTOR (qui le faisait d’ailleurs avec plus de finesse), peu importe la voie empruntée, l’histoire suit son rail. L’exemple le plus flagrant fut mon affrontement avec un de mes compagnons où, malgré mon accord avec lui, le jeu ne me laissa pas lui exprimer, ce qui le condamna inutilement. J’ai également croisé quelques soucis d’IA, autant du côté allié qu’ennemi, qui ont terni légèrement le dynamisme des combats. Cependant, là où le jeu a réellement su m’accrocher, c’est dans la création physique de mon Shepard. Pour la première fois, j’ai eu l’impression de façonner un protagoniste qui m’appartenait, différent de celui de tout autre joueur. Cet attachement personnel donne au jeu une profondeur unique, même si ses mécaniques ne sont pas toujours à la hauteur de ses ambitions. Pour être honnête, je n’ai pas encore trouvé ce qui fait de Mass Effect un monument du jeu vidéo. Peut-être cela se révélera-t-il dans ses suites, puisque beaucoup parlent de son évolution spectaculaire. Pour l’heure, ce premier opus reste un bon jeu, solide, mais qui n’excelle dans aucun domaine précis. Il pose des fondations prometteuses, sans pour autant se hisser plus haut que cela.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "LittleBigPlanet",
@@ -313,15 +322,6 @@
       "postion": "",
       "picture": "littlebigplanet.jpg",
       "review": "L’originalité du titre réside dans la création de niveaux, un concept qui, avec le recul, aura été poussé à son paroxysme. L’univers possède un charme indéniable, presque enfantin, renforcé par une bande-son enchanteresse qui contribue à cette atmosphère chaleureuse. Certains niveaux officiels se distinguent par leur construction ingénieuse et leur plaisir immédiat. Toutefois, l’histoire se révèle bien trop courte, et les contrôles manquent parfois de précision, ce qui gâche la fluidité des séquences de plate-forme.",
-      "position": 4
-    },
-    {
-      "name": "Fallout 3",
-      "year": 2008,
-      "rank": "D",
-      "postion": "",
-      "picture": "fallout3.png",
-      "review": "Le prologue dans l’Abri 101 est une excellente idée : il introduit naturellement l’univers, le gameplay et l’identité de notre personnage, rendant les premières heures particulièrement agréables et immersives. L’immensité de la carte impressionne d’emblée, mais c’est aussi son défaut : à force de vouloir montrer un monde gigantesque, le jeu finit par donner le sentiment d’être étiré, et l’exploration peut paraître fastidieuse. L’ambiance post-apocalyptique fonctionne à merveille, soutenue par une direction artistique marquante et surtout par le S.V.A.V., un système de visée révolutionnaire qui ralentit le temps et permet de cibler précisément les ennemis. Ce mode de combat, unique en son genre, apporte une dimension tactique bienvenue et participe énormément au charme du jeu. Cependant, l’histoire principale est décevante : peu captivante, elle manque de profondeur et n’atteint jamais le niveau des choix moraux ou des récits environnementaux qui font la force de l’univers. Pire encore, les bugs techniques récurrents viennent régulièrement gâcher l’expérience. Fichiers de sauvegarde qui ce supprime, crash, alt tab qui shut down le jeu. Je sais pas si c'est parce que j'ai pas accroché à l'histoire ou parce que les défauts sont trop voyant mais j'ai pas plus aimé que ça.",
       "position": 5
     },
     {
