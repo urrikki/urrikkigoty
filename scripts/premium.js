@@ -412,4 +412,6 @@ function initPremium() {
     measurePerformance('initTierRowsReveal', () => initTierRowsReveal());
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
+
+    startFPSMonitor();
 }
