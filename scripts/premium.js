@@ -19,7 +19,7 @@ function initCustomCursor() {
     if (oldDot) oldDot.remove();
     if (oldContainer) oldContainer.remove();
 
-    // Boule principale
+    // === Curseur principal ===
     const dot = document.createElement('div');
     dot.id = 'cursor-dot';
     dot.style.cssText = `
@@ -28,15 +28,16 @@ function initCustomCursor() {
         height: 12px;
         background: radial-gradient(circle, #FFD966, #C9A84C);
         border-radius: 50%;
-        box-shadow: 0 0 12px rgba(201,168,76,0.8), 0 0 4px #FFE6A3;
+        box-shadow: 0 0 12px rgba(201,168,76,0.8);
         pointer-events: none;
         z-index: 10000;
         transform: translate(-50%, -50%);
         will-change: left, top;
+        transition: width 0.2s, height 0.2s;
     `;
     document.body.appendChild(dot);
 
-    // Conteneur pour la traînée
+    // === Traînée légère (optionnelle, 3 éléments max) ===
     const trailContainer = document.createElement('div');
     trailContainer.id = 'cursor-trail-container';
     trailContainer.style.cssText = `
@@ -48,136 +49,73 @@ function initCustomCursor() {
     `;
     document.body.appendChild(trailContainer);
 
-    const TRAIL_LENGTH = 10;      // légèrement réduit pour les perfs
-    const TRAIL_DECAY = 0.85;
-    let trailPositions = [];       // stocke {x, y}
-    let lastTrailAdd = 0;
-    const TRAIL_INTERVAL_MS = 16;  // ~60 fps max (au lieu de 125)
-    
+    const TRAIL_LENGTH = 3; // réduit à 3 pour plus de fluidité
     let trailElements = [];
     for (let i = 0; i < TRAIL_LENGTH; i++) {
         const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
         trail.style.cssText = `
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: radial-gradient(circle, #E2C47A, #B8860B);
             border-radius: 50%;
             opacity: 0;
-            transition: opacity 0.1s linear;
-            filter: blur(0.5px);
             pointer-events: none;
-            box-shadow: 0 0 6px rgba(201,168,76,0.6);
-            will-change: left, top, width, height, opacity;
+            will-change: left, top;
         `;
         trailContainer.appendChild(trail);
         trailElements.push(trail);
     }
 
     let mouseX = 0, mouseY = 0;
-    let isInsideTierList = false;
-    
-    // Mise en cache des dimensions de la tier list (mise à jour seulement au resize ou scroll)
-    let tierListRect = { left: 0, right: 0, top: 0, bottom: 0 };
-    let rectValid = false;
-    
-    function updateTierListRect() {
-        const tierListZone = document.querySelector('.tier-list-container');
-        if (tierListZone) {
-            const rect = tierListZone.getBoundingClientRect();
-            tierListRect = { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
-            rectValid = true;
-        } else {
-            rectValid = false;
-        }
-    }
-    
-    // Mettre à jour au démarrage et aux événements de scroll/resize
-    updateTierListRect();
-    window.addEventListener('resize', () => { updateTierListRect(); });
-    window.addEventListener('scroll', () => { updateTierListRect(); }, { passive: true });
-    
-    function checkIfInsideTierList(clientX, clientY) {
-        if (!rectValid) return false;
-        return (clientX >= tierListRect.left && clientX <= tierListRect.right &&
-                clientY >= tierListRect.top && clientY <= tierListRect.bottom);
-    }
-    
-    function addTrailPoint(x, y) {
-        trailPositions.unshift({ x, y });
-        if (trailPositions.length > TRAIL_LENGTH) trailPositions.pop();
-    }
-    
-    // Animation de la traînée (une seule RAF, sans recalcul de zone à chaque frame)
-    function updateTrailDisplay() {
-        for (let i = 0; i < trailElements.length; i++) {
-            const pos = trailPositions[i];
-            if (pos && !isInsideTierList) {
-                const el = trailElements[i];
-                el.style.left = pos.x + 'px';
-                el.style.top = pos.y + 'px';
-                const scale = Math.pow(TRAIL_DECAY, i);
-                const size = 8 * scale;
-                el.style.width = size + 'px';
-                el.style.height = size + 'px';
-                el.style.opacity = 0.6 * scale;
-            } else {
-                trailElements[i].style.opacity = '0';
+    let trailPositions = [{ x: 0, y: 0 }]; // dernier point seulement
+
+    // Mise à jour directe sans throttle, avec RAF
+    function updateCursor() {
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+
+        // Traînée : décaler les positions et mettre à jour
+        if (trailPositions.length > 0) {
+            for (let i = trailElements.length - 1; i >= 0; i--) {
+                const pos = trailPositions[i] || trailPositions[trailPositions.length - 1];
+                if (pos) {
+                    trailElements[i].style.left = pos.x + 'px';
+                    trailElements[i].style.top = pos.y + 'px';
+                    const opacity = 0.5 * (1 - i / trailElements.length);
+                    trailElements[i].style.opacity = opacity;
+                }
             }
         }
-        requestAnimationFrame(updateTrailDisplay);
+        requestAnimationFrame(updateCursor);
     }
-    updateTrailDisplay();
-    
-    // Gestion du mousemove (optimisée)
+    updateCursor();
+
+    // Événement mousemove : stocke la position et met à jour la traînée
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-        
-        // Vérification de zone avec cache
-        const nowInside = checkIfInsideTierList(mouseX, mouseY);
-        if (nowInside !== isInsideTierList) {
-            isInsideTierList = nowInside;
-            // Ajustement visuel du curseur
-            if (isInsideTierList) {
-                dot.style.width = '8px';
-                dot.style.height = '8px';
-            } else {
-                dot.style.width = '12px';
-                dot.style.height = '12px';
-            }
-        }
-        
-        // Ajout d'un point pour la traînée (throttle)
-        const now = Date.now();
-        if (!isInsideTierList && (now - lastTrailAdd) >= TRAIL_INTERVAL_MS) {
-            addTrailPoint(mouseX, mouseY);
-            lastTrailAdd = now;
-        } else if (isInsideTierList) {
-            // Vider la traînée immédiatement si on rentre dans la zone
-            if (trailPositions.length > 0) trailPositions = [];
-        }
+
+        // Ajouter un point pour la traînée (simple, sans throttle)
+        trailPositions.unshift({ x: mouseX, y: mouseY });
+        if (trailPositions.length > TRAIL_LENGTH) trailPositions.pop();
     });
-    
-    document.addEventListener('mouseleave', () => {
-        dot.style.opacity = '0';
-        trailElements.forEach(t => t.style.opacity = '0');
-    });
-    document.addEventListener('mouseenter', () => {
-        dot.style.opacity = '1';
-    });
-    
-    // Pulsation douce (pas de setInterval, trop lourd, on utilise une animation CSS)
-    dot.style.transition = 'transform 0.15s ease-out';
-    setInterval(() => {
-        if (!isInsideTierList) {
-            dot.style.transform = 'translate(-50%, -50%) scale(1.15)';
-            setTimeout(() => { dot.style.transform = 'translate(-50%, -50%) scale(1)'; }, 150);
-        }
-    }, 2500);
+
+    // Gestion des changements de taille du curseur dans la tier list
+    const tierListZone = document.querySelector('.tier-list-container');
+    if (tierListZone) {
+        tierListZone.addEventListener('mouseenter', () => {
+            dot.style.width = '8px';
+            dot.style.height = '8px';
+        });
+        tierListZone.addEventListener('mouseleave', () => {
+            dot.style.width = '12px';
+            dot.style.height = '12px';
+        });
+    }
+
+    // Cache la souris système par défaut
+    document.body.style.cursor = 'none';
 }
 
 // ── Révélation editoriale du titre ──
@@ -334,37 +272,36 @@ function initGrain() {
     canvas.id = 'grain-overlay';
     canvas.style.cssText = `
         position: fixed; inset: 0;
-        width: 100vw; height: 100vh;
+        width: 100%; height: 100%;
         pointer-events: none;
         z-index: 9998;
         mix-blend-mode: normal;
-        opacity: 0.15;
+        opacity: 0.08; /* réduire l'opacité pour moins de contraste */
     `;
     document.body.appendChild(canvas);
-
     const ctx = canvas.getContext('2d');
 
     function resize() {
-        canvas.width  = window.innerWidth;
+        canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
-
-    function render() {
-        const { width: w, height: h } = canvas;
-        const img  = ctx.createImageData(w, h);
-        const data = img.data;
-        for (let i = 0; i < data.length; i += 4) {
-            const v = Math.random() * 255;
-            data[i] = data[i+1] = data[i+2] = v;
-            data[i+3] = 22;
-        }
-        ctx.putImageData(img, 0, 0);
-        requestAnimationFrame(render);
-    }
-
-    resize();
     window.addEventListener('resize', resize);
-    render();
+    resize();
+
+    // Remplacer l'animation continue par une mise à jour toutes les 200ms
+    function renderGrain() {
+        const { width: w, height: h } = canvas;
+        const imgData = ctx.createImageData(w, h);
+        const data = imgData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            const v = Math.random() * 80; // intensité plus faible
+            data[i] = data[i+1] = data[i+2] = v;
+            data[i+3] = 20;
+        }
+        ctx.putImageData(imgData, 0, 0);
+        setTimeout(renderGrain, 100); // 10 FPS au lieu de 60
+    }
+    renderGrain();
 }
 
 // ── Ligne lumineuse décorative au top ──
