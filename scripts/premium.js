@@ -350,11 +350,13 @@ function initPremium() {
 
     measurePerformance('initGrain', () => initGrain());
     measurePerformance('initGoldLine', () => initGoldLine());
-    //measurePerformance('initCustomCursor', () => initCustomCursor());
+    measurePerformance('initCustomCursor', () => initCustomCursor());
     measurePerformance('initEditorialTitle', () => initEditorialTitle());
     measurePerformance('initTierLabelsReveal', () => initTierLabelsReveal());
     measurePerformance('initTierRowsReveal', () => initTierRowsReveal());
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
+
+    console.log("test css");
 
 }
