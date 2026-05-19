@@ -34,7 +34,7 @@ async function initializeApp() {
         console.warn('startFPSMonitor non trouvé, chargement manuel');
         // On tente de le charger à nouveau (si le script n'est pas encore exécuté)
         const script = document.createElement('script');
-        script.src = 'scripts/fps-meter.js?v=' + Date.now();
+        script.src = 'scripts/fpsmeter.js?v=' + Date.now();
         document.head.appendChild(script);
     }
 }
