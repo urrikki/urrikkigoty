@@ -1,11 +1,10 @@
-// ===== FPS METER (visible à l'écran) =====
-(function() {
-    let fps = 60;
-    let lastTime = performance.now();
-    let frames = 0;
-    
-    // Créer l'élément d'affichage
-    const fpsDiv = document.createElement('div');
+// ===== FPS METER (admin only) =====
+let fpsInterval = null;
+let fpsDiv = null;
+
+function createFPSMeter() {
+    if (fpsDiv) return; // déjà existant
+    fpsDiv = document.createElement('div');
     fpsDiv.id = 'fps-counter';
     fpsDiv.style.cssText = `
         position: fixed;
@@ -20,24 +19,36 @@
         z-index: 9999;
         pointer-events: none;
         backdrop-filter: blur(4px);
+        display: block;
     `;
     document.body.appendChild(fpsDiv);
     
-    function updateFPS() {
+    let fps = 60;
+    let lastTime = performance.now();
+    let frames = 0;
+    
+    function update() {
         frames++;
         const now = performance.now();
         if (now - lastTime >= 1000) {
             fps = frames;
             fpsDiv.textContent = `FPS: ${fps}`;
-            // Couleur selon performance
-            if (fps >= 55) fpsDiv.style.color = '#0f0';
-            else if (fps >= 30) fpsDiv.style.color = '#ff0';
-            else fpsDiv.style.color = '#f00';
+            fpsDiv.style.color = fps >= 55 ? '#0f0' : (fps >= 30 ? '#ff0' : '#f00');
             frames = 0;
             lastTime = now;
         }
-        requestAnimationFrame(updateFPS);
+        fpsInterval = requestAnimationFrame(update);
     }
-    requestAnimationFrame(updateFPS);
-    console.log('✅ FPS Meter actif (affichage en bas à gauche)');
-})();
+    update();
+}
+
+function destroyFPSMeter() {
+    if (fpsInterval) {
+        cancelAnimationFrame(fpsInterval);
+        fpsInterval = null;
+    }
+    if (fpsDiv) {
+        fpsDiv.remove();
+        fpsDiv = null;
+    }
+}

@@ -64,12 +64,14 @@ function logout(silent) {
     localStorage.removeItem('adminTokenExpiry');
     AppState.isAdminMode = false;
     updateAdminUI();
+    if (typeof destroyFPSMeter === 'function') destroyFPSMeter();
     if (!silent) showNotification('Déconnexion', 'info');
 }
 
 function activateAdminMode() {
     AppState.isAdminMode = true;
     updateAdminUI();
+    if (typeof createFPSMeter === 'function') createFPSMeter();
 }
 
 function updateAdminUI() {
