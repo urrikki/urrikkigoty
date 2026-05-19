@@ -1294,6 +1294,19 @@ html, body, * {
     pointer-events: none !important;
     z-index: 0;
 }
+
+#grain-overlay {
+    mask: linear-gradient(black, black) exclude;
+    -webkit-mask: linear-gradient(black, black) exclude;
+    mask-composite: exclude;
+    animation: grainFade 8s ease-in-out infinite alternate;
+}
+
+@keyframes grainFade {
+    0% { opacity: 0.25; }
+    100% { opacity: 0.4; }
+}
+
 /* #endregion */
 
 /* #region Responsive */

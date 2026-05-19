@@ -268,46 +268,40 @@ function initCinematicTransitions() {
 
 // ── Grain overlay premium ──
 function initGrain() {
-  const canvas = document.createElement('canvas');
-  canvas.id = 'grain-overlay';
-  canvas.style.cssText = `
-    position: fixed; inset: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 9998;
-    mix-blend-mode: overlay;
-    opacity: 0.25;
-  `;
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-
-  let width, height;
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  let frame = 0;
-  function draw() {
-    if (!width || !height) return;
-    const imageData = ctx.createImageData(width, height);
+    // Créer un canvas hors écran
+    const canvas = document.createElement('canvas');
+    const size = 512; // taille raisonnable
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    
+    // Générer une texture de bruit (une seule fois)
+    const imageData = ctx.createImageData(size, size);
     const data = imageData.data;
-    // variation plus douce
-    const intensity = 20 + Math.sin(frame * 0.02) * 5;
     for (let i = 0; i < data.length; i += 4) {
-      const v = Math.random() * intensity;
-      data[i] = data[i+1] = data[i+2] = v;
-      data[i+3] = 25;
+        const v = Math.random() * 50; // intensité
+        data[i] = data[i+1] = data[i+2] = v;
+        data[i+3] = 20; // transparence
     }
     ctx.putImageData(imageData, 0, 0);
-    frame++;
-    requestAnimationFrame(draw);
-  }
-  draw();
+    
+    // Appliquer la texture comme background d'un div fixe
+    const grainDiv = document.createElement('div');
+    grainDiv.id = 'grain-overlay';
+    grainDiv.style.cssText = `
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.3;
+        mix-blend-mode: overlay;
+        background-image: url(${canvas.toDataURL()});
+        background-repeat: repeat;
+        background-size: ${size}px ${size}px;
+    `;
+    document.body.appendChild(grainDiv);
 }
 
 // ── Ligne lumineuse décorative au top ──
@@ -348,7 +342,7 @@ function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    //measurePerformance('initGrain', () => initGrain());
+    measurePerformance('initGrain', () => initGrain());
     measurePerformance('initGoldLine', () => initGoldLine());
     measurePerformance('initCustomCursor', () => initCustomCursor());
     measurePerformance('initEditorialTitle', () => initEditorialTitle());
@@ -356,7 +350,5 @@ function initPremium() {
     measurePerformance('initTierRowsReveal', () => initTierRowsReveal());
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
-
-    console.log("test grain");
 
 }
