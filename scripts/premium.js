@@ -348,7 +348,7 @@ function initPremium() {
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    measurePerformance('initGrain', () => initGrain());
+    //measurePerformance('initGrain', () => initGrain());
     measurePerformance('initGoldLine', () => initGoldLine());
     measurePerformance('initCustomCursor', () => initCustomCursor());
     measurePerformance('initEditorialTitle', () => initEditorialTitle());
@@ -357,6 +357,6 @@ function initPremium() {
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
 
-    console.log("test css");
+    console.log("test grain");
 
 }
