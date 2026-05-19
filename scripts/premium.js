@@ -122,48 +122,48 @@ function initCustomCursor() {
 // ===== TITRE EDITORIAL (split + animation cascade) =====
 
 function initEditorialTitle() {
-    const title = document.getElementById('siteTitle');
-    const subtitle = document.querySelector('.site-subtitle');
-    if (!title) return;
+  const title = document.getElementById('siteTitle');
+  const subtitle = document.querySelector('.site-subtitle');
+  if (!title) return;
 
-    // 1. État initial : boutons invisibles mais bien positionnés (pour l'animation)
-    gsap.set('.action-buttons .icon-btn', { opacity: 0, y: -10 });
+  // Masquer les boutons d'action au départ
+  gsap.set('.action-buttons .icon-btn', { opacity: 0, y: -15 });
 
-    // 2. Split du titre en caractères (inchangé, mais on garde le wrapper)
-    const html = [...title.textContent].map(char => {
-        const cls = char === '.' ? 'char title-accent' : 'char';
-        return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
-    }).join('');
-    title.innerHTML = html;
+  // Split du titre en caractères
+  const html = [...title.textContent].map(char => {
+    const cls = char === '.' ? 'char title-accent' : 'char';
+    return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
+  }).join('');
+  title.innerHTML = html;
 
-    // 3. Timeline (titre + sous-titre + boutons)
-    const tl = gsap.timeline({ delay: 0.15 });
-
-    tl.from(title.querySelectorAll('.char'), {
-        yPercent: 110,
-        duration: 1,
-        stagger: 0.06,
-        ease: 'expo.out'
-    })
-    .from(subtitle, {
-        opacity: 0,
-        y: 12,
-        duration: 0.6,
-        ease: 'power3.out'
-    }, '-=0.5')
-    .from('.action-buttons .icon-btn', {
-        opacity: 0,
-        y: -10,
-        stagger: 0.06,
-        duration: 0.4,
-        ease: 'power2.out',
-        clearProps: 'opacity,transform'   // ← NETTOIE APRÈS L'ANIMATION
-    }, '-=0.4');
-
-    // 4. Sécurité : forcer la visibilité finale au cas où (optionnel, mais prudent)
-    tl.call(() => {
-        gsap.set('.action-buttons .icon-btn', { opacity: 1, y: 0, clearProps: 'opacity,transform' });
-    }, null, null, '+=0.1');
+  // Timeline plus théâtrale
+  const tl = gsap.timeline({ delay: 0.2 });
+  tl.from(title.querySelectorAll('.char'), {
+    yPercent: 120,
+    duration: 1.2,
+    stagger: 0.08,
+    ease: 'back.out(0.8)',  // effet ressort élégant
+  })
+  .from(subtitle, {
+    opacity: 0,
+    y: 20,
+    duration: 0.8,
+    ease: 'power3.out',
+  }, '-=0.6')
+  .from('.action-buttons .icon-btn', {
+    opacity: 0,
+    y: -20,
+    stagger: 0.07,
+    duration: 0.6,
+    ease: 'expo.out',
+  }, '-=0.4')
+  // Ajout d'un effet de brillance sur le point final
+  .to('.title-accent', {
+    textShadow: '0 0 12px rgba(229,184,60,0.8)',
+    repeat: 2,
+    yoyo: true,
+    duration: 0.3,
+  }, '-=0.2');
 }
 
 // ===== LABELS TIERS (apparition monumentale) =====
@@ -303,7 +303,6 @@ function initGrain() {
     `;
     document.body.appendChild(grainDiv);
 }
-
 // ── Ligne lumineuse décorative au top ──
 function initGoldLine() {
     const line = document.createElement('div');

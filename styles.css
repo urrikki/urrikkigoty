@@ -1,5 +1,5 @@
 /* #region Imports & Reset */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: auto; }
@@ -15,9 +15,9 @@ html { scroll-behavior: auto; }
     --white:       #F5F0E8;
     --white-dim:   #A09890;
     --white-muted: #504840;
-    --gold:        #C9A84C;
-    --gold-light:  #E2C47A;
-    --gold-dark:   #8A6A20;
+    --gold: #E5B83C;        
+    --gold-light: #F0C45A;
+    --gold-dark: #B88A1A;
     --red:         #C0392B;
 
     --bg-body:     var(--black);
@@ -99,14 +99,18 @@ body {
 }
 
 body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201,168,76,0.06) 0%, transparent 60%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
+body.dark-theme::after {
+  opacity: 0.06;
+  mix-blend-mode: overlay;
 }
 
 .app-wrapper {
@@ -1320,6 +1324,13 @@ html, body, * {
 .view-btn, .admin-btn, .icon-btn, .btn-secondary {
   letter-spacing: 0.15em;
   font-weight: 500;
+}
+
+.site-title .title-accent {
+  text-shadow: 0 0 8px rgba(229,184,60,0.3);
+}
+.admin-badge {
+  box-shadow: 0 0 6px rgba(229,184,60,0.2);
 }
 
 /* #endregion */

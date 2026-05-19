@@ -119,7 +119,7 @@ function createGameElement(game, index = 0) {
 
     const img = document.createElement('img');
     img.src = resolveImageSrc(game.picture);
-    img.alt = game.name;
+    img.alt = `${game.name} – illustration emblématique de l'expérience GOTY`;
     img.loading = 'lazy';
     img.onerror = () => img.src = PLACEHOLDER_SVG;
     div.appendChild(img);
