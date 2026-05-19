@@ -126,23 +126,24 @@ function initEditorialTitle() {
   const subtitle = document.querySelector('.site-subtitle');
   if (!title) return;
 
-  // Masquer les boutons d'action au départ
-  gsap.set('.action-buttons .icon-btn', { opacity: 0, y: -15 });
+  const buttons = document.querySelectorAll('.action-buttons .icon-btn');
+  if (buttons.length) {
+    gsap.set(buttons, { opacity: 0, y: -15 });
+  }
 
-  // Split du titre en caractères
+  // Split du titre
   const html = [...title.textContent].map(char => {
     const cls = char === '.' ? 'char title-accent' : 'char';
     return `<span class="char-wrapper"><span class="${cls}">${char}</span></span>`;
   }).join('');
   title.innerHTML = html;
 
-  // Timeline plus théâtrale
   const tl = gsap.timeline({ delay: 0.2 });
   tl.from(title.querySelectorAll('.char'), {
     yPercent: 120,
     duration: 1.2,
     stagger: 0.08,
-    ease: 'back.out(0.8)',  // effet ressort élégant
+    ease: 'back.out(0.8)',
   })
   .from(subtitle, {
     opacity: 0,
@@ -150,14 +151,14 @@ function initEditorialTitle() {
     duration: 0.8,
     ease: 'power3.out',
   }, '-=0.6')
-  .from('.action-buttons .icon-btn', {
+  .from(buttons, {
     opacity: 0,
     y: -20,
     stagger: 0.07,
     duration: 0.6,
     ease: 'expo.out',
+    clearProps: 'opacity,transform', // ← résout le problème
   }, '-=0.4')
-  // Ajout d'un effet de brillance sur le point final
   .to('.title-accent', {
     textShadow: '0 0 12px rgba(229,184,60,0.8)',
     repeat: 2,
