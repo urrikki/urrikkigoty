@@ -64,14 +64,21 @@ function logout(silent) {
     localStorage.removeItem('adminTokenExpiry');
     AppState.isAdminMode = false;
     updateAdminUI();
-    if (typeof destroyFPSMeter === 'function') destroyFPSMeter();
+    if (typeof destroyFPSMeter === 'function') {
+        destroyFPSMeter();
+    }
     if (!silent) showNotification('Déconnexion', 'info');
 }
 
 function activateAdminMode() {
     AppState.isAdminMode = true;
     updateAdminUI();
-    if (typeof createFPSMeter === 'function') createFPSMeter();
+    console.log('Activation mode admin, création FPS meter');
+    if (typeof createFPSMeter === 'function') {
+        createFPSMeter();
+    } else {
+        console.warn('createFPSMeter non trouvé');
+    }
 }
 
 function updateAdminUI() {
