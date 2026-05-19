@@ -382,7 +382,4 @@ function initPremium() {
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
 
-    document.addEventListener('DOMContentLoaded', () => {
-        if (typeof startFPSMonitor === 'function') startFPSMonitor();
-    });
 }
