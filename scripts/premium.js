@@ -350,4 +350,8 @@ function initPremium() {
     measurePerformance('initTierRowsReveal', () => initTierRowsReveal());
     measurePerformance('initCoverTilt', () => initCoverTilt());
     measurePerformance('initCinematicTransitions', () => initCinematicTransitions());
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof startFPSMonitor === 'function') startFPSMonitor();
+    });
 }

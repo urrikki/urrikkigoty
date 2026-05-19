@@ -1,4 +1,5 @@
 function startFPSMonitor() {
+    console.log('📊 FPS Monitor actif');
     let fps = 60;
     let lastTime = performance.now();
     let frames = 0;
