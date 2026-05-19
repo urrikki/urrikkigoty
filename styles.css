@@ -36,8 +36,8 @@ html { scroll-behavior: auto; }
     --shadow-lg: 0 20px 60px rgba(0,0,0,0.8);
     --glow-gold: 0 0 24px rgba(201,168,76,0.2);
 
-    --font-display: 'Bebas Neue', 'Impact', sans-serif;
-    --font-serif:   'DM Serif Display', Georgia, serif;
+    --font-display: 'Playfair Display', 'Times New Roman', serif;
+    --font-serif:   'Playfair Display', 'Times New Roman', serif;  /* pour les titres modales */
     --font-body:    'Inter', system-ui, sans-serif;
 
     --tier-s:  var(--gold);
@@ -92,8 +92,8 @@ body {
     background: var(--bg-body);
     color: var(--text-primary);
     font-family: var(--font-body);
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 16px;  
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
 }
@@ -121,7 +121,7 @@ body::after {
 /* #region Header */
 .main-header {
     padding: 2rem 0 0;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     position: relative;
 }
 .main-header::before {
@@ -143,9 +143,9 @@ body::after {
 .logo-area { flex: 1; overflow: hidden; }
 .site-title {
     font-family: var(--font-display);
-    font-size: clamp(4rem, 8vw, 8rem);
-    font-weight: 400;
-    letter-spacing: 0.04em;
+    font-weight: 600;   
+    letter-spacing: -0.01em; 
+    font-size: clamp(4rem, 10vw, 9rem);
     color: var(--text-primary);
     line-height: 0.9;
     user-select: none;
@@ -155,18 +155,22 @@ body::after {
     display: inline-block;
     animation: pulseGold 4s var(--ease-in-out) infinite;
 }
+
 @keyframes pulseGold {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.6; }
 }
+
 .site-subtitle {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    margin-top: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.4em;
-    font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--gold);
+  margin-top: 0.5rem;
 }
+
 .action-buttons {
     display: flex;
     gap: 0.5rem;
@@ -226,7 +230,7 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -497,16 +501,21 @@ body::after {
     border: 1px solid var(--border);
     overflow: hidden;
 }
+
 .tier-row {
     display: flex;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
     transition: background 0.2s var(--ease-out);
+     margin-bottom: 0;
 }
+
 .tier-row:last-child { border-bottom: none; }
+
 @media (hover: hover) and (pointer: fine) {
     .tier-row:hover { background: var(--bg-raised); }
 }
+
 .tier-label {
     width: 80px;
     min-width: 80px;
@@ -913,8 +922,9 @@ a:active, button:active, .game-item:active {
 }
 .modal-title {
     font-family: var(--font-serif);
-    font-size: 1.8rem;
     font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     line-height: 1.15;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
@@ -1305,6 +1315,11 @@ html, body, * {
 @keyframes grainFade {
     0% { opacity: 0.25; }
     100% { opacity: 0.4; }
+}
+
+.view-btn, .admin-btn, .icon-btn, .btn-secondary {
+  letter-spacing: 0.15em;
+  font-weight: 500;
 }
 
 /* #endregion */
