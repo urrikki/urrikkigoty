@@ -32,6 +32,18 @@ function enableDragDrop() {
             onEnd(evt) {
                 document.body.classList.remove('is-dragging');
                 window.__lenis?.start();
+                gsap.fromTo(evt.item,
+                    { scale: 1.02, borderColor: '#C9A84C', boxShadow: '0 0 0 2px gold' },
+                    { scale: 1, borderColor: 'var(--border)', boxShadow: 'none', duration: 0.25, ease: 'back.out(1.2)', clearProps: 'transform,boxShadow' }
+                );
+                const parent = evt.item.parentNode;
+                if (parent) {
+                    Array.from(parent.children).forEach(sib => {
+                    if (sib !== evt.item) {
+                        gsap.fromTo(sib, { scale: 1.01 }, { scale: 1, duration: 0.15, yoyo: true, repeat: 1, ease: 'power1.out' });
+                    }
+                    });
+                }
                 const newGames = buildGamesOrderFromDOM();
                 AppState.games = newGames;
                 saveOrderToGitHub(newGames);

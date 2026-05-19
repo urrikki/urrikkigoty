@@ -11,111 +11,111 @@ function measurePerformance(name, fn) {
 }
 
 function initCustomCursor() {
-    if (window.matchMedia('(hover: none)').matches) return;
+  if (window.matchMedia('(hover: none)').matches) return;
 
-    // Supprimer les anciens éléments
-    const oldDot = document.getElementById('cursor-dot');
-    const oldContainer = document.getElementById('cursor-trail-container');
-    if (oldDot) oldDot.remove();
-    if (oldContainer) oldContainer.remove();
+  // Supprimer les anciens
+  const oldDot = document.getElementById('cursor-dot');
+  const oldContainer = document.getElementById('cursor-trail-container');
+  if (oldDot) oldDot.remove();
+  if (oldContainer) oldContainer.remove();
 
-    // === Curseur principal ===
-    const dot = document.createElement('div');
-    dot.id = 'cursor-dot';
-    dot.style.cssText = `
-        position: fixed;
-        width: 12px;
-        height: 12px;
-        background: radial-gradient(circle, #FFD966, #C9A84C);
-        border-radius: 50%;
-        box-shadow: 0 0 12px rgba(201,168,76,0.8);
-        pointer-events: none;
-        z-index: 10000;
-        transform: translate(-50%, -50%);
-        will-change: left, top;
-        transition: width 0.2s, height 0.2s;
+  // Point principal (plus gros, plus brillant)
+  const dot = document.createElement('div');
+  dot.id = 'cursor-dot';
+  dot.style.cssText = `
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle, #FFE6A3, #C9A84C);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(201,168,76,0.9), 0 0 5px #FFD966;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    will-change: left, top;
+    transition: width 0.2s, height 0.2s;
+  `;
+  document.body.appendChild(dot);
+
+  // Traînée améliorée (6 points, dégradé, mouvement plus doux)
+  const trailContainer = document.createElement('div');
+  trailContainer.id = 'cursor-trail-container';
+  trailContainer.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+  `;
+  document.body.appendChild(trailContainer);
+
+  const TRAIL_LENGTH = 8;
+  const trailElements = [];
+  for (let i = 0; i < TRAIL_LENGTH; i++) {
+    const trail = document.createElement('div');
+    const size = 8 - i * 0.5; // taille décroissante
+    trail.style.cssText = `
+      position: absolute;
+      width: ${Math.max(4, size)}px;
+      height: ${Math.max(4, size)}px;
+      background: radial-gradient(circle, rgba(226,196,122,0.8), rgba(184,134,11,0.4));
+      border-radius: 50%;
+      opacity: ${0.6 - i * 0.07};
+      filter: blur(${i * 0.3}px);
+      pointer-events: none;
+      will-change: left, top;
+      transition: opacity 0.1s linear;
     `;
-    document.body.appendChild(dot);
+    trailContainer.appendChild(trail);
+    trailElements.push(trail);
+  }
 
-    // === Traînée légère (optionnelle, 3 éléments max) ===
-    const trailContainer = document.createElement('div');
-    trailContainer.id = 'cursor-trail-container';
-    trailContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
-    `;
-    document.body.appendChild(trailContainer);
+  let mouseX = 0, mouseY = 0;
+  let positions = []; // historique des positions
 
-    const TRAIL_LENGTH = 3; // réduit à 3 pour plus de fluidité
-    let trailElements = [];
-    for (let i = 0; i < TRAIL_LENGTH; i++) {
-        const trail = document.createElement('div');
-        trail.style.cssText = `
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, #E2C47A, #B8860B);
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-            will-change: left, top;
-        `;
-        trailContainer.appendChild(trail);
-        trailElements.push(trail);
+  function updateTrail() {
+    // Mettre à jour la position du point principal
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+
+    // Ajouter la position actuelle dans l'historique
+    positions.unshift({ x: mouseX, y: mouseY });
+    if (positions.length > TRAIL_LENGTH) positions.pop();
+
+    // Appliquer les positions décalées aux éléments de traînée
+    for (let i = 0; i < trailElements.length; i++) {
+      const pos = positions[i + 1] || positions[positions.length - 1];
+      if (pos) {
+        trailElements[i].style.left = pos.x + 'px';
+        trailElements[i].style.top = pos.y + 'px';
+      }
     }
+    requestAnimationFrame(updateTrail);
+  }
+  updateTrail();
 
-    let mouseX = 0, mouseY = 0;
-    let trailPositions = [{ x: 0, y: 0 }]; // dernier point seulement
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
 
-    // Mise à jour directe sans throttle, avec RAF
-    function updateCursor() {
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-
-        // Traînée : décaler les positions et mettre à jour
-        if (trailPositions.length > 0) {
-            for (let i = trailElements.length - 1; i >= 0; i--) {
-                const pos = trailPositions[i] || trailPositions[trailPositions.length - 1];
-                if (pos) {
-                    trailElements[i].style.left = pos.x + 'px';
-                    trailElements[i].style.top = pos.y + 'px';
-                    const opacity = 0.5 * (1 - i / trailElements.length);
-                    trailElements[i].style.opacity = opacity;
-                }
-            }
-        }
-        requestAnimationFrame(updateCursor);
-    }
-    updateCursor();
-
-    // Événement mousemove : stocke la position et met à jour la traînée
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-
-        // Ajouter un point pour la traînée (simple, sans throttle)
-        trailPositions.unshift({ x: mouseX, y: mouseY });
-        if (trailPositions.length > TRAIL_LENGTH) trailPositions.pop();
+  // Réduction de la taille dans la tier list (effet de précision)
+  const tierZone = document.querySelector('.tier-list-container');
+  if (tierZone) {
+    tierZone.addEventListener('mouseenter', () => {
+      dot.style.width = '8px';
+      dot.style.height = '8px';
+      dot.style.boxShadow = '0 0 8px rgba(201,168,76,0.8)';
     });
+    tierZone.addEventListener('mouseleave', () => {
+      dot.style.width = '14px';
+      dot.style.height = '14px';
+      dot.style.boxShadow = '0 0 15px rgba(201,168,76,0.9), 0 0 5px #FFD966';
+    });
+  }
 
-    // Gestion des changements de taille du curseur dans la tier list
-    const tierListZone = document.querySelector('.tier-list-container');
-    if (tierListZone) {
-        tierListZone.addEventListener('mouseenter', () => {
-            dot.style.width = '8px';
-            dot.style.height = '8px';
-        });
-        tierListZone.addEventListener('mouseleave', () => {
-            dot.style.width = '12px';
-            dot.style.height = '12px';
-        });
-    }
-
-    // Cache la souris système par défaut
-    document.body.style.cursor = 'none';
+  // Cacher le curseur système
+  document.body.style.cursor = 'none';
 }
 
 // ── Révélation editoriale du titre ──
@@ -268,40 +268,46 @@ function initCinematicTransitions() {
 
 // ── Grain overlay premium ──
 function initGrain() {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'grain-overlay';
-    canvas.style.cssText = `
-        position: fixed; inset: 0;
-        width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 9998;
-        mix-blend-mode: normal;
-        opacity: 0.08; /* réduire l'opacité pour moins de contraste */
-    `;
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
+  const canvas = document.createElement('canvas');
+  canvas.id = 'grain-overlay';
+  canvas.style.cssText = `
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    mix-blend-mode: overlay;
+    opacity: 0.25;
+  `;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+  let width, height;
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+  window.addEventListener('resize', resize);
+  resize();
 
-    // Remplacer l'animation continue par une mise à jour toutes les 200ms
-    function renderGrain() {
-        const { width: w, height: h } = canvas;
-        const imgData = ctx.createImageData(w, h);
-        const data = imgData.data;
-        for (let i = 0; i < data.length; i += 4) {
-            const v = Math.random() * 80; // intensité plus faible
-            data[i] = data[i+1] = data[i+2] = v;
-            data[i+3] = 20;
-        }
-        ctx.putImageData(imgData, 0, 0);
-        setTimeout(renderGrain, 100); // 10 FPS au lieu de 60
+  let frame = 0;
+  function draw() {
+    if (!width || !height) return;
+    const imageData = ctx.createImageData(width, height);
+    const data = imageData.data;
+    // variation plus douce
+    const intensity = 20 + Math.sin(frame * 0.02) * 5;
+    for (let i = 0; i < data.length; i += 4) {
+      const v = Math.random() * intensity;
+      data[i] = data[i+1] = data[i+2] = v;
+      data[i+3] = 25;
     }
-    renderGrain();
+    ctx.putImageData(imageData, 0, 0);
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
 }
 
 // ── Ligne lumineuse décorative au top ──
@@ -336,37 +342,6 @@ function initViewToggleReveal() {
         delay: 1,
         ease: 'power3.out'
     });
-}
-
-function initFPSMeter() {
-    let fps = 60;
-    let lastTime = performance.now();
-    let frames = 0;
-    const fpsDiv = document.createElement('div');
-    fpsDiv.id = 'fps-counter';
-    fpsDiv.style.cssText = `
-        position: fixed; bottom: 10px; left: 10px;
-        background: rgba(0,0,0,0.7); color: #0f0;
-        font-family: monospace; font-size: 12px;
-        padding: 4px 8px; border-radius: 4px;
-        z-index: 9999; pointer-events: none;
-        backdrop-filter: blur(4px);
-    `;
-    document.body.appendChild(fpsDiv);
-    
-    function update() {
-        frames++;
-        const now = performance.now();
-        if (now - lastTime >= 1000) {
-            fps = frames;
-            fpsDiv.textContent = `FPS: ${fps}`;
-            fpsDiv.style.color = fps >= 55 ? '#0f0' : (fps >= 30 ? '#ff0' : '#f00');
-            frames = 0;
-            lastTime = now;
-        }
-        requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
 }
 
 function initPremium() {
