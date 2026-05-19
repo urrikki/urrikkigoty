@@ -49,8 +49,11 @@ html { scroll-behavior: auto; }
     --tier-f:  var(--white-muted);
     --tier-np: var(--white-muted);
 
-    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    /* Courbes personnalisées (plus punchy) */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+
     --t-fast: 0.15s;
     --t-base: 0.25s;
     --t-slow: 0.4s;
@@ -75,11 +78,12 @@ body.dark-theme {
     --tier-a:  #2C2C2C;
 }
 
+/* Transitions uniquement sur les propriétés qui changent */
 body, body * {
-    transition: background-color var(--t-base) var(--ease),
-                color var(--t-base) var(--ease),
-                border-color var(--t-base) var(--ease),
-                box-shadow var(--t-base) var(--ease);
+    transition: background-color var(--t-base) var(--ease-out),
+                color var(--t-base) var(--ease-out),
+                border-color var(--t-base) var(--ease-out),
+                box-shadow var(--t-base) var(--ease-out);
 }
 /* #endregion */
 
@@ -146,10 +150,14 @@ body::after {
     line-height: 0.9;
     user-select: none;
 }
-.title-accent { color: var(--gold); display: inline-block; animation: pulseGold 4s ease-in-out infinite; }
+.title-accent {
+    color: var(--gold);
+    display: inline-block;
+    animation: pulseGold 4s var(--ease-in-out) infinite;
+}
 @keyframes pulseGold {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.6; }
+    50% { opacity: 0.6; }
 }
 .site-subtitle {
     font-size: 0.65rem;
@@ -177,7 +185,14 @@ body::after {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--t-base) var(--ease);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out),
+                background-color 0.2s var(--ease-out),
+                box-shadow 0.2s var(--ease-out);
+}
+.icon-btn:active {
+    transform: scale(0.95);
 }
 .icon-btn:hover {
     border-color: var(--gold);
@@ -185,7 +200,11 @@ body::after {
     background: rgba(201,168,76,0.08);
     box-shadow: var(--glow-gold);
 }
-.icon-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+.icon-btn.active {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+}
 .admin-badge {
     display: inline-flex;
     align-items: center;
@@ -228,14 +247,27 @@ body::after {
     border-right: 1px solid var(--border);
     color: var(--text-muted);
     cursor: pointer;
-    transition: all var(--t-base) var(--ease);
+    transition: transform 0.1s var(--ease-out),
+                color 0.2s var(--ease-out),
+                background-color 0.2s var(--ease-out);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
 }
 .view-btn:last-child { border-right: none; }
-.view-btn:hover { color: var(--text-primary); background: var(--bg-raised); }
-.view-btn.active { background: var(--gold); color: var(--black); }
+.view-btn:active {
+    transform: scale(0.96);
+}
+@media (hover: hover) and (pointer: fine) {
+    .view-btn:hover {
+        color: var(--text-primary);
+        background: var(--bg-raised);
+    }
+}
+.view-btn.active {
+    background: var(--gold);
+    color: var(--black);
+}
 .game-count {
     font-size: 0.65rem;
     color: var(--text-muted);
@@ -243,7 +275,7 @@ body::after {
     letter-spacing: 0.2em;
 }
 
-/* Panels (Filtres & Stats) */
+/* Panels */
 .panel {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -252,7 +284,7 @@ body::after {
     animation: panelIn 0.2s var(--ease-out);
 }
 @keyframes panelIn {
-    from { opacity: 0; transform: translateY(-12px); }
+    from { opacity: 0; transform: translateY(-8px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 .panel-header {
@@ -275,14 +307,18 @@ body::after {
     font-size: 0.8rem;
     cursor: pointer;
     color: var(--text-muted);
-    transition: color var(--t-fast);
+    transition: color 0.1s var(--ease-out), border-color 0.1s var(--ease-out);
     width: 1.8rem;
     height: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
 }
-.panel-close:hover { color: var(--text-primary); border: 1px solid var(--border); }
+.panel-close:hover {
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
 .panel-body { padding: 1.25rem; }
 
 /* Filtres */
@@ -312,7 +348,7 @@ body::after {
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 0.85rem;
-    transition: border-color var(--t-base);
+    transition: border-color 0.15s var(--ease-out), background-color 0.15s var(--ease-out);
 }
 .filter-group input:focus,
 .filter-group select:focus {
@@ -335,9 +371,17 @@ body::after {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out);
 }
-.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+.btn-secondary:active {
+    transform: scale(0.97);
+}
+.btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
 
 /* Stats */
 .stats-grid {
@@ -361,7 +405,7 @@ body::after {
     height: 2px;
     background: var(--gold);
     opacity: 0;
-    transition: opacity var(--t-base);
+    transition: opacity 0.2s var(--ease-out);
 }
 .stat-card:hover::before { opacity: 1; }
 .stat-card:last-child { border-right: none; }
@@ -395,7 +439,7 @@ body::after {
 .chart-bar-row { display: flex; align-items: center; gap: 0.75rem; }
 .chart-bar-label { width: 2rem; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.05em; color: var(--text-secondary); }
 .chart-bar-bg { flex: 1; height: 2px; background: var(--border); overflow: hidden; }
-.chart-bar { height: 100%; transition: width 0.8s var(--ease); }
+.chart-bar { height: 100%; transition: width 0.6s var(--ease-out); }
 .chart-bar-value { width: 4rem; text-align: right; font-size: 0.65rem; color: var(--text-muted); }
 /* #endregion */
 
@@ -423,11 +467,27 @@ body::after {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out),
+                background-color 0.2s var(--ease-out);
 }
-.admin-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
-.admin-btn.danger { border-color: var(--red); color: var(--red); }
-.admin-btn.danger:hover { background: var(--red); color: var(--white); }
+.admin-btn:active {
+    transform: scale(0.96);
+}
+.admin-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+}
+.admin-btn.danger {
+    border-color: var(--red);
+    color: var(--red);
+}
+.admin-btn.danger:hover {
+    background: var(--red);
+    color: var(--white);
+}
 /* #endregion */
 
 /* #region Tier List */
@@ -441,10 +501,12 @@ body::after {
     display: flex;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border);
-    transition: background var(--t-base);
+    transition: background 0.2s var(--ease-out);
 }
 .tier-row:last-child { border-bottom: none; }
-.tier-row:hover { background: var(--bg-raised); }
+@media (hover: hover) and (pointer: fine) {
+    .tier-row:hover { background: var(--bg-raised); }
+}
 .tier-label {
     width: 80px;
     min-width: 80px;
@@ -463,7 +525,7 @@ body::after {
     left: 0; top: 0; bottom: 0;
     width: 3px;
     background: var(--tier-color, var(--gold));
-    transition: width var(--t-base);
+    transition: width 0.15s var(--ease-out);
 }
 .tier-row:hover .tier-label::before { width: 5px; }
 .tier-label span {
@@ -483,7 +545,7 @@ body::after {
     padding: 10px;
     min-height: 118px;
     align-content: flex-start;
-    transition: background var(--t-base), outline var(--t-base);
+    transition: background 0.2s var(--ease-out), outline 0.2s var(--ease-out);
 }
 .game-item {
     width: 98px;
@@ -494,31 +556,41 @@ body::after {
     background: var(--bg-raised);
     cursor: pointer;
     flex-shrink: 0;
-    transition: border-color var(--t-base), box-shadow var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.15s var(--ease-out),
+                box-shadow 0.15s var(--ease-out);
     will-change: transform;
     transform-style: preserve-3d;
     animation: itemIn 0.3s var(--ease-out) both;
 }
 @keyframes itemIn {
-    from { opacity: 0; scale: 0.85; }
-    to   { opacity: 1; scale: 1; }
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+.game-item:active {
+    transform: scale(0.97);
 }
 .game-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform var(--t-slow) var(--ease);
+    transition: transform 0.2s var(--ease-out);
     -webkit-user-drag: none;
     user-drag: none;
     pointer-events: none;
 }
-.game-item:hover {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 1px var(--gold), var(--glow-gold);
-    z-index: 2;
+@media (hover: hover) and (pointer: fine) {
+    .game-item:hover {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 1px var(--gold), var(--glow-gold);
+        z-index: 2;
+        transform: scale(1.02);
+    }
+    .game-item:hover img {
+        transform: scale(1.05);
+    }
 }
-.game-item:hover img { transform: scale(1.08); }
 .game-item::after {
     content: attr(data-name);
     position: absolute;
@@ -532,11 +604,15 @@ body::after {
     padding: 1.5rem 0.4rem 0.4rem;
     opacity: 0;
     transform: translateY(4px);
-    transition: opacity var(--t-base), transform var(--t-base);
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
     line-height: 1.3;
     text-align: center;
+    pointer-events: none;
 }
-.game-item:hover::after { opacity: 1; transform: translateY(0); }
+.game-item:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
 .game-item.compare-selected {
     border-color: var(--gold);
     box-shadow: 0 0 0 2px var(--gold), var(--glow-gold);
@@ -547,7 +623,7 @@ body::after {
     inset: 0;
     background: linear-gradient(105deg, transparent 40%, rgba(201,168,76,0.12) 50%, transparent 60%);
     background-size: 200% 100%;
-    animation: shimmerGold 2.5s ease-in-out infinite;
+    animation: shimmerGold 2.5s var(--ease-in-out) infinite;
     z-index: 1;
 }
 @keyframes shimmerGold {
@@ -559,10 +635,10 @@ body::after {
 /* #region Drag & Drop (Sortable) */
 .admin-drag-active .game-item {
     cursor: grab;
-    transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
-.admin-drag-active .game-item:active { cursor: grabbing; }
-
+.admin-drag-active .game-item:active {
+    cursor: grabbing;
+}
 .sortable-ghost {
     opacity: 0 !important;
     visibility: visible !important;
@@ -630,7 +706,7 @@ a:active, button:active, .game-item:active {
     animation: slideInLeft 0.35s var(--ease-out) both;
 }
 @keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-24px); }
+    from { opacity: 0; transform: translateX(-20px); }
     to   { opacity: 1; transform: translateX(0); }
 }
 .timeline-marker {
@@ -705,12 +781,23 @@ a:active, button:active, .game-item:active {
     border: 1px solid var(--border);
     background: var(--bg-surface);
     cursor: pointer;
-    transition: border-color var(--t-base), box-shadow var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                box-shadow 0.2s var(--ease-out);
     animation: itemIn 0.35s var(--ease-out) both;
 }
-.gallery-card:hover {
-    border-color: var(--gold);
-    box-shadow: var(--glow-gold);
+.gallery-card:active {
+    transform: scale(0.98);
+}
+@media (hover: hover) and (pointer: fine) {
+    .gallery-card:hover {
+        border-color: var(--gold);
+        box-shadow: var(--glow-gold);
+        transform: scale(1.01);
+    }
+    .gallery-card:hover .gallery-card-img img {
+        transform: scale(1.04);
+    }
 }
 .gallery-card-img {
     aspect-ratio: 3 / 4;
@@ -720,9 +807,8 @@ a:active, button:active, .game-item:active {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--t-slow) var(--ease);
+    transition: transform 0.25s var(--ease-out);
 }
-.gallery-card:hover .gallery-card-img img { transform: scale(1.06); }
 .gallery-card-info {
     padding: 0.75rem;
     border-top: 1px solid var(--border);
@@ -756,14 +842,12 @@ a:active, button:active, .game-item:active {
     z-index: 10000;
     justify-content: center;
     align-items: center;
-    animation: backdropIn 0.2s ease;
+    animation: backdropIn 0.2s var(--ease-out);
 }
-
 @keyframes backdropIn {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
-
 .modal-content {
     background: var(--bg-surface);
     max-width: 840px;
@@ -777,13 +861,10 @@ a:active, button:active, .game-item:active {
     box-shadow: var(--shadow-lg);
     animation: modalIn 0.25s var(--ease-out);
 }
-
 @keyframes modalIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-
-/* Fermeture */
 .modal-close {
     position: absolute;
     top: 1rem;
@@ -798,14 +879,18 @@ a:active, button:active, .game-item:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out);
+    border-radius: 4px;
+}
+.modal-close:active {
+    transform: scale(0.94);
 }
 .modal-close:hover {
     border-color: var(--gold);
     color: var(--gold);
 }
-
-/* Corps de la modale (jeu) */
 .modal-body {
     display: flex;
     gap: 2rem;
@@ -880,9 +965,16 @@ a:active, button:active, .game-item:active {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out),
+                background-color 0.2s var(--ease-out);
     background: transparent;
     color: var(--text-secondary);
+    border-radius: 4px;
+}
+.fav-btn:active, .modal-edit-btn:active {
+    transform: scale(0.96);
 }
 .fav-btn:hover, .fav-btn.active {
     border-color: var(--gold);
@@ -897,8 +989,6 @@ a:active, button:active, .game-item:active {
 .modal-edit-btn:hover {
     opacity: 0.85;
 }
-
-/* Modale de comparaison */
 .comparison-modal {
     max-width: 920px;
 }
@@ -940,7 +1030,7 @@ a:active, button:active, .game-item:active {
     color: var(--text-secondary);
     line-height: 1.65;
 }
-
+/* Force modales à ne pas être piégées par un parent transform */
 .app-wrapper, .tier-list-container, .timeline-container, .gallery-container {
     transform: none !important;
     will-change: auto !important;
@@ -974,7 +1064,7 @@ a:active, button:active, .game-item:active {
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 0.85rem;
-    transition: border-color var(--t-base), background var(--t-base);
+    transition: border-color 0.15s var(--ease-out), background 0.15s var(--ease-out);
 }
 .form-group input:focus,
 .form-group select:focus,
@@ -1006,9 +1096,18 @@ a:active, button:active, .game-item:active {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                background 0.2s var(--ease-out),
+                border-color 0.2s var(--ease-out);
+    border-radius: 4px;
 }
-.btn-submit:hover { background: var(--gold-light); border-color: var(--gold-light); }
+.btn-submit:active {
+    transform: scale(0.97);
+}
+.btn-submit:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+}
 .btn-cancel {
     padding: 0.55rem 1rem;
     background: transparent;
@@ -1022,9 +1121,18 @@ a:active, button:active, .game-item:active {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                border-color 0.2s var(--ease-out),
+                color 0.2s var(--ease-out);
+    border-radius: 4px;
 }
-.btn-cancel:hover { border-color: var(--text-primary); color: var(--text-primary); }
+.btn-cancel:active {
+    transform: scale(0.97);
+}
+.btn-cancel:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
 .btn-delete {
     padding: 0.55rem 1rem;
     background: transparent;
@@ -1038,9 +1146,18 @@ a:active, button:active, .game-item:active {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    transition: all var(--t-base);
+    transition: transform 0.1s var(--ease-out),
+                background 0.2s var(--ease-out),
+                color 0.2s var(--ease-out);
+    border-radius: 4px;
 }
-.btn-delete:hover { background: var(--red); color: var(--white); }
+.btn-delete:active {
+    transform: scale(0.97);
+}
+.btn-delete:hover {
+    background: var(--red);
+    color: var(--white);
+}
 .login-modal { max-width: 380px; }
 .login-modal h2 {
     font-family: var(--font-display);
@@ -1063,6 +1180,12 @@ a:active, button:active, .game-item:active {
     z-index: 10000;
     box-shadow: var(--shadow-lg);
     letter-spacing: 0.05em;
+    border-radius: 8px;
+    animation: notificationIn 0.3s var(--ease-out);
+}
+@keyframes notificationIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes shimmer {
     0%   { background-position: -600px 0; }
@@ -1092,8 +1215,9 @@ a:active, button:active, .game-item:active {
     z-index: 600;
     opacity: 0;
     transform: translateY(8px);
-    transition: opacity 0.25s, transform 0.25s;
+    transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
     pointer-events: none;
+    border-radius: 4px;
 }
 #saveIndicator.visible { opacity: 1; transform: translateY(0); }
 #scrollTopBtn {
@@ -1112,11 +1236,21 @@ a:active, button:active, .game-item:active {
     z-index: 500;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s, transform 0.25s;
+    transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
     transform: translateY(8px);
+    border-radius: 50%;
 }
-#scrollTopBtn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-#scrollTopBtn:hover { background: var(--gold-light); }
+#scrollTopBtn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+#scrollTopBtn:active {
+    transform: scale(0.94);
+}
+#scrollTopBtn:hover {
+    background: var(--gold-light);
+}
 /* #endregion */
 
 /* #region Custom Cursor (Gold) */
@@ -1129,13 +1263,20 @@ html, body, * {
     pointer-events: none !important;
 }
 #cursor-dot {
-    transition: width 0.2s, height 0.2s, background 0.2s, transform 0.15s ease-out;
+    transition: width 0.2s var(--ease-out), height 0.2s var(--ease-out), background 0.2s var(--ease-out);
 }
 /* #endregion */
 
 /* #region Utilities & Fixes */
-.char-wrapper { display: inline-block; overflow: hidden; line-height: 1.1; }
-.char { display: inline-block; will-change: transform; }
+.char-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1.1;
+}
+.char {
+    display: inline-block;
+    will-change: transform;
+}
 .tier-list-container,
 .timeline-container,
 .gallery-container {
@@ -1143,7 +1284,8 @@ html, body, * {
     backface-visibility: hidden;
 }
 .panel, .filter-panel, .stats-panel,
-.panel input, .panel select, .panel button, .panel label, .admin-controls {
+.panel input, .panel select, .panel button, .panel label,
+.admin-controls {
     position: relative;
     z-index: 10;
     pointer-events: auto;
@@ -1171,5 +1313,21 @@ html, body, * {
     .game-item { width: 80px; height: 80px; }
     .timeline-container { padding-left: 3.5rem; }
     #scrollTopBtn { bottom: 1rem; right: 1rem; }
+}
+/* #endregion */
+
+/* #region Accessibilité : réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .game-item {
+        transform: scale(1) !important;
+    }
 }
 /* #endregion */
