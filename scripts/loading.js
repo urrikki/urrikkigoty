@@ -42,42 +42,70 @@
     }
   }
   
-  function prepareTextPoints() {
+  async function prepareTextPoints() {
+    // Attendre que la police soit chargée
+    await document.fonts.ready;
+    
     const offCanvas = document.createElement('canvas');
     const offCtx = offCanvas.getContext('2d');
     offCanvas.width = canvas.width;
     offCanvas.height = canvas.height;
-    // Taille du texte adaptative, avec une marge intérieure
-    const maxWidth = canvas.width * 0.8;
-    const fontSize = Math.min(180, maxWidth / 4.5);
+    
+    // Calculer une taille de police qui tient dans 80% de la largeur et 50% de la hauteur
+    let fontSize = Math.min(canvas.width / 4, canvas.height / 2, 160);
+    fontSize = Math.max(60, fontSize);
+    
+    offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
+    let metrics = offCtx.measureText(TARGET_TEXT);
+    let textWidth = metrics.width;
+    let textHeight = fontSize * 1.2; // approximation
+    
+    // Réduire si trop large ou trop haut
+    while ((textWidth > canvas.width * 0.8 || textHeight > canvas.height * 0.5) && fontSize > 50) {
+        fontSize -= 5;
+        offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
+        metrics = offCtx.measureText(TARGET_TEXT);
+        textWidth = metrics.width;
+        textHeight = fontSize * 1.2;
+    }
+    
     offCtx.fillStyle = 'white';
     offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
     offCtx.textAlign = 'center';
     offCtx.textBaseline = 'middle';
-    // Centrer parfaitement
-    offCtx.fillText(TARGET_TEXT, canvas.width/2, canvas.height/2);
+    // Dessiner le texte bien au centre
+    offCtx.fillText(TARGET_TEXT, canvas.width / 2, canvas.height / 2);
     
     const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
     const points = [];
-    // Échantillonnage plus fin (step 3) pour plus de points
-    const step = 3;
-    for (let y = 0; y < canvas.height; y += step) {
-      for (let x = 0; x < canvas.width; x += step) {
+    // Échantillonner plus finement (pas de stride trop grand)
+    for (let y = 0; y < canvas.height; y += 3) {
+        for (let x = 0; x < canvas.width; x += 3) {
         const idx = (y * canvas.width + x) * 4;
         if (data[idx] > 200) {
-          points.push({ x, y });
+            points.push({ x, y });
         }
-      }
+        }
     }
+    
+    // Fallback si aucun point
+    if (points.length === 0) {
+        for (let i = 0; i < 500; i++) {
+        points.push({
+            x: canvas.width/2 + (Math.random() - 0.5) * canvas.width * 0.4,
+            y: canvas.height/2 + (Math.random() - 0.5) * canvas.height * 0.2
+        });
+        }
+    }
+    
+    // Limiter le nombre de points à la taille des particules
     if (points.length > particles.length) {
-      // Réduire le nombre de points pour correspondre aux particules
-      const stepPoints = Math.floor(points.length / particles.length);
-      textPoints = points.filter((_, i) => i % stepPoints === 0);
+        const step = Math.floor(points.length / particles.length);
+        textPoints = points.filter((_, i) => i % step === 0);
     } else {
-      textPoints = points;
+        textPoints = points;
     }
-    console.log(`Text points générés : ${textPoints.length}`);
   }
   
   function assignTargetsToParticles() {
@@ -97,11 +125,15 @@
   function drawParticle(p) {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    // Couleur or très clair, étoilé
-    ctx.fillStyle = `rgba(255, 235, 180, ${p.alpha})`;
+    // Dégradé radial pour effet d'étoile
+    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+    gradient.addColorStop(0, '#FFF9C4');
+    gradient.addColorStop(0.5, '#E5B83C');
+    gradient.addColorStop(1, '#B88A1A');
+    ctx.fillStyle = gradient;
     ctx.fill();
     ctx.shadowBlur = 8;
-    ctx.shadowColor = '#FFD966';
+    ctx.shadowColor = '#FFD700';
     ctx.fill();
     ctx.shadowBlur = 0;
   }
