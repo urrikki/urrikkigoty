@@ -1,15 +1,15 @@
-// ===== LOADING SCREEN : poussière d'étoiles puis apparition du texte GOTY =====
 (function() {
   const overlay = document.getElementById('loading-overlay');
   if (!overlay) return;
 
+  // Créer le canvas
   const canvas = document.createElement('canvas');
   canvas.id = 'loading-canvas';
   canvas.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; display:block;';
   overlay.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
-  // Créer l'élément texte qui apparaîtra
+  // Créer le texte (initialement caché)
   const textDiv = document.createElement('div');
   textDiv.id = 'loading-text';
   textDiv.textContent = 'GOTY';
@@ -24,19 +24,21 @@
     color: #E5B83C;
     text-shadow: 0 0 20px rgba(229,184,60,0.5);
     opacity: 0;
-    transition: opacity 1s ease, transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: opacity 0.8s ease, transform 0.8s ease;
     pointer-events: none;
-    z-index: 10;
-    letter-spacing: 0.05em;
+    z-index: 100;
     white-space: nowrap;
   `;
   overlay.appendChild(textDiv);
 
   let particles = [];
-  let phase = 0; // 0: aléatoire, 1: disparition des particules + apparition texte
+  let phase = 0;
+  let convergenceStart = 0;
+  let textPoints = [];
   let animationId;
   
-  const PARTICLE_COUNT = 400;
+  const TARGET_TEXT = "GOTY";
+  const PARTICLE_COUNT = 500;
   
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -54,7 +56,57 @@
         vy: (Math.random() - 0.5) * 1.2,
         size: 2 + Math.random() * 4,
         alpha: 0.7 + Math.random() * 0.3,
+        targetX: 0,
+        targetY: 0,
       });
+    }
+  }
+  
+  function prepareTextPoints() {
+    const offCanvas = document.createElement('canvas');
+    const offCtx = offCanvas.getContext('2d');
+    offCanvas.width = canvas.width;
+    offCanvas.height = canvas.height;
+    let fontSize = Math.min(canvas.width / 4.5, canvas.height / 2.5, 130);
+    fontSize = Math.max(50, fontSize);
+    offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
+    offCtx.fillStyle = 'white';
+    offCtx.textAlign = 'center';
+    offCtx.textBaseline = 'middle';
+    offCtx.fillText(TARGET_TEXT, canvas.width/2, canvas.height/2);
+    
+    const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    const points = [];
+    for (let y = 0; y < canvas.height; y += 2) {
+      for (let x = 0; x < canvas.width; x += 2) {
+        const idx = (y * canvas.width + x) * 4;
+        if (data[idx] > 200) {
+          points.push({ x, y });
+        }
+      }
+    }
+    if (points.length === 0) {
+      for (let i = 0; i < 400; i++) {
+        points.push({
+          x: canvas.width/2 + (Math.random() - 0.5) * canvas.width * 0.5,
+          y: canvas.height/2 + (Math.random() - 0.5) * canvas.height * 0.3
+        });
+      }
+    }
+    if (points.length > particles.length) {
+      const step = Math.floor(points.length / particles.length);
+      textPoints = points.filter((_, i) => i % step === 0);
+    } else {
+      textPoints = points;
+    }
+  }
+  
+  function assignTargetsToParticles() {
+    for (let i = 0; i < particles.length; i++) {
+      const target = textPoints[i % textPoints.length];
+      particles[i].targetX = target ? target.x : canvas.width/2;
+      particles[i].targetY = target ? target.y : canvas.height/2;
     }
   }
   
@@ -74,13 +126,12 @@
   }
   
   function animate() {
-    if (!ctx || !overlay) return;
+    if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     if (phase === 0) {
-      // Mouvement aléatoire
       for (let p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -92,53 +143,52 @@
       }
     } 
     else if (phase === 1) {
-      // Les particules s'éloignent vers les bords
+      const now = performance.now();
+      let t = Math.min(1, (now - convergenceStart) / 2800);
+      t = 1 - Math.pow(1 - t, 3);
       for (let p of particles) {
-        p.x += p.vx * 1.5;
-        p.y += p.vy * 1.5;
-        // ne pas rebondir, elles sortent
+        p.x = p.x * (1 - t) + p.targetX * t;
+        p.y = p.y * (1 - t) + p.targetY * t;
         drawParticle(p);
+      }
+      if (t >= 0.99 && phase === 1) {
+        phase = 2;
+        // Disparaître canvas, apparaître texte
+        canvas.style.transition = 'opacity 0.5s ease';
+        canvas.style.opacity = '0';
+        textDiv.style.opacity = '1';
+        textDiv.style.transform = 'translate(-50%, -50%) scale(1)';
+        textDiv.style.color = '#FFF9C4';
+        textDiv.style.textShadow = '0 0 30px #E5B83C';
+        setTimeout(() => {
+          overlay.style.transition = 'opacity 0.8s ease';
+          overlay.style.opacity = '0';
+          setTimeout(() => {
+            overlay.style.display = 'none';
+            if (typeof initPremium === 'function') initPremium();
+            if (typeof initEditorialTitle === 'function') initEditorialTitle();
+          }, 800);
+        }, 1500);
       }
     }
     
     animationId = requestAnimationFrame(animate);
   }
   
-  // Initialisation
   resizeCanvas();
   initParticlesRandom();
-  animate();
+  prepareTextPoints();
   
-  // Après 1.5 secondes, début de la transition
   setTimeout(() => {
-    phase = 1; // les particules commencent à s'éloigner
-    // Faire apparaître le texte
-    textDiv.style.opacity = '1';
-    textDiv.style.transform = 'translate(-50%, -50%) scale(1)';
-    // Ajouter un effet de brillance progressive
-    let glowIntensity = 0;
-    const glowInterval = setInterval(() => {
-      glowIntensity += 0.1;
-      if (glowIntensity <= 1) {
-        textDiv.style.textShadow = `0 0 ${20 + glowIntensity * 20}px rgba(229,184,60,${0.3 + glowIntensity * 0.5})`;
-      } else {
-        clearInterval(glowInterval);
-      }
-    }, 100);
+    if (phase === 0) {
+      phase = 1;
+      convergenceStart = performance.now();
+      assignTargetsToParticles();
+    }
   }, 1500);
   
-  // Fermeture de l'overlay après que les particules soient parties
-  setTimeout(() => {
-    overlay.style.transition = 'opacity 0.8s ease';
-    overlay.style.opacity = '0';
-    setTimeout(() => {
-      overlay.style.display = 'none';
-      if (typeof initPremium === 'function') initPremium();
-      if (typeof initEditorialTitle === 'function') initEditorialTitle();
-    }, 800);
-  }, 4500); // 1.5s + 3s pour l'éloignement
+  animate();
   
-  // Skip link (optionnel)
   const skipLink = document.getElementById('skip-loading');
   if (skipLink) {
     skipLink.addEventListener('click', (e) => {
