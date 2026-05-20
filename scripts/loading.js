@@ -100,7 +100,7 @@
   // Le scan fait UN seul passage de -SPREAD à H+SPREAD
   // Chaque ligne a une "fenêtre" de visibilité = [scanY - ZONE, scanY + ZONE]
   const ZONE  = 90;   // px de part et d'autre du scan qui révèle le texte
-  const SPEED = 1.7;  // px/frame
+  const SPEED = 0.42;  // px/frame
   let scanY = -ZONE;
   let scanDone = false, appReady = false, dismissCalled = false, _cb = null;
   let canvasRaf;
@@ -159,10 +159,12 @@
     /* ── Textes — visibles UNIQUEMENT dans la fenêtre du scan ── */
     for (const line of lines) {
       const dist = Math.abs(line.y - scanY);
-      if (dist >= ZONE) continue;  // hors zone : invisible, point final
+      // avant le scan : invisible; après le scan : reste affiché pleinement
+      if (line.y > scanY + ZONE) continue;  // pas encore atteint
+      const pastScan = line.y < scanY - ZONE;
 
       // Influence : 1 au centre, 0 aux bords (courbe douce)
-      const inf = Math.pow(1 - dist / ZONE, 1.4);
+      const inf = pastScan ? 1 : Math.pow(1 - dist / ZONE, 1.4);
 
       ctx.save();
       ctx.font         = line.font;
