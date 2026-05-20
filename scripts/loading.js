@@ -1,205 +1,459 @@
-(function() {
-  const overlay = document.getElementById('loading-overlay');
-  if (!overlay) return;
+// ===== LOADING SCREEN CINÉMATIQUE — GOTY EDITION =====
+// Inspiré de Son Daven : visuel plein écran + counter minimaliste + rideau de sortie
+// Usage : <script src="scripts/loading.js"></script> tout en haut du <body>
 
-  // Créer le canvas
-  const canvas = document.createElement('canvas');
-  canvas.id = 'loading-canvas';
-  canvas.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; display:block;';
-  overlay.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
+(function () {
 
-  // Créer le texte (initialement caché)
-  const textDiv = document.createElement('div');
-  textDiv.id = 'loading-text';
-  textDiv.textContent = 'GOTY';
-  textDiv.style.cssText = `
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 12vw, 7rem);
-    font-weight: 800;
-    color: #E5B83C;
-    text-shadow: 0 0 20px rgba(229,184,60,0.5);
-    opacity: 0;
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    pointer-events: none;
-    z-index: 100;
-    white-space: nowrap;
+  /* ─── 1. HTML ─── */
+  const overlay = document.createElement('div');
+  overlay.id = 'goty-loader';
+  overlay.innerHTML = `
+
+    <!-- Fond : effet visuel canvas (scanlines animées + vignette) -->
+    <canvas id="loader-canvas"></canvas>
+
+    <!-- Vignette de bords -->
+    <div class="loader-vignette"></div>
+
+    <!-- Ligne or haut -->
+    <div class="loader-line-top"></div>
+
+    <!-- Contenu central -->
+    <div class="loader-body">
+
+      <!-- Phrase poétique (style Son Daven) -->
+      <p class="loader-poem" id="loaderPoem">
+        <span class="poem-line" id="poemLine1">Among the greatest games</span>
+        <span class="poem-line" id="poemLine2">only a few deserve the throne</span>
+      </p>
+
+      <!-- Logo -->
+      <div class="loader-logo">
+        <span class="loader-logo-text" id="loaderLogoText">GOTY</span>
+        <span class="loader-logo-dot">.</span>
+      </div>
+
+      <!-- Label -->
+      <p class="loader-label">Tier List</p>
+
+    </div>
+
+    <!-- Counter en bas à gauche — exactement comme Son Daven -->
+    <div class="loader-counter">
+      <span class="loader-pct" id="loaderPct">0</span><span class="loader-pct-sym">%</span>
+    </div>
+
+    <!-- Status en bas à droite -->
+    <div class="loader-status-wrap">
+      <span class="loader-status" id="loaderStatus">Loading the hierarchy</span>
+    </div>
+
+    <!-- Skip -->
+    <button class="loader-skip" id="loaderSkip">Skip intro ↗</button>
+
   `;
-  overlay.appendChild(textDiv);
 
-  let particles = [];
-  let phase = 0;
-  let convergenceStart = 0;
-  let textPoints = [];
-  let animationId;
-  
-  const TARGET_TEXT = "GOTY";
-  const PARTICLE_COUNT = 500;
-  
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  
-  function initParticlesRandom() {
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        size: 2 + Math.random() * 4,
-        alpha: 0.7 + Math.random() * 0.3,
-        targetX: 0,
-        targetY: 0,
-      });
+  /* ─── 2. CSS ─── */
+  const css = document.createElement('style');
+  css.textContent = `
+
+    /* Masquer le contenu pendant le chargement */
+    .app-wrapper { opacity: 0; }
+
+    #goty-loader {
+      position: fixed;
+      inset: 0;
+      background: #030303;
+      z-index: 99999;
+      overflow: hidden;
+      cursor: none;
+      font-family: 'Inter', 'DM Sans', system-ui, sans-serif;
     }
-  }
-  
-  function prepareTextPoints() {
-    const offCanvas = document.createElement('canvas');
-    const offCtx = offCanvas.getContext('2d');
-    offCanvas.width = canvas.width;
-    offCanvas.height = canvas.height;
-    let fontSize = Math.min(canvas.width / 4.5, canvas.height / 2.5, 130);
-    fontSize = Math.max(50, fontSize);
-    offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
-    offCtx.fillStyle = 'white';
-    offCtx.textAlign = 'center';
-    offCtx.textBaseline = 'middle';
-    offCtx.fillText(TARGET_TEXT, canvas.width/2, canvas.height/2);
-    
-    const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    const points = [];
-    for (let y = 0; y < canvas.height; y += 2) {
-      for (let x = 0; x < canvas.width; x += 2) {
-        const idx = (y * canvas.width + x) * 4;
-        if (data[idx] > 200) {
-          points.push({ x, y });
-        }
+
+    /* Canvas fond */
+    #loader-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.9;
+    }
+
+    /* Vignette — assombrit les coins */
+    .loader-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 75% 75% at 50% 50%,
+        transparent 40%,
+        rgba(0,0,0,0.6) 75%,
+        rgba(0,0,0,0.92) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Ligne or en haut */
+    .loader-line-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #C9A84C 25%, #E2C47A 50%, #C9A84C 75%, transparent);
+      animation: lineBreath 3s ease-in-out infinite;
+    }
+    @keyframes lineBreath {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    /* Corps central */
+    .loader-body {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Phrase poétique */
+    .loader-poem {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+      margin: 0 0 1rem;
+    }
+    .poem-line {
+      display: block;
+      font-family: 'DM Serif Display', 'Georgia', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: rgba(245,240,232,0.65);
+      letter-spacing: 0.02em;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .poem-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Logo GOTY */
+    .loader-logo {
+      display: flex;
+      align-items: flex-start;
+      line-height: 1;
+    }
+    .loader-logo-text {
+      font-family: 'Bebas Neue', 'DM Serif Display', sans-serif;
+      font-size: clamp(7rem, 20vw, 14rem);
+      color: #F5F0E8;
+      letter-spacing: -0.01em;
+      line-height: 0.85;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.1s cubic-bezier(0.23,1,0.32,1),
+                  transform 1.1s cubic-bezier(0.23,1,0.32,1);
+    }
+    .loader-logo-text.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .loader-logo-dot {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      color: #C9A84C;
+      line-height: 0.75;
+      margin-top: 0.15em;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.7s;
+      text-shadow: 0 0 30px rgba(201,168,76,0.5);
+    }
+    .loader-logo-dot.visible { opacity: 1; }
+
+    /* Label */
+    .loader-label {
+      margin: 0;
+      font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: #C9A84C;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.9s;
+    }
+    .loader-label.visible { opacity: 1; }
+
+    /* Counter — bas gauche, exactement comme Son Daven */
+    .loader-counter {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 3rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.1em;
+      opacity: 0;
+      transition: opacity 0.5s ease 1.2s;
+    }
+    .loader-counter.visible { opacity: 1; }
+    .loader-pct {
+      font-family: 'Bebas Neue', 'DM Serif Display', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      color: #F5F0E8;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .loader-pct-sym {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: #C9A84C;
+      line-height: 1;
+    }
+
+    /* Status — bas droite */
+    .loader-status-wrap {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      opacity: 0;
+      transition: opacity 0.5s ease 1.3s;
+    }
+    .loader-status-wrap.visible { opacity: 1; }
+    .loader-status {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.35);
+      font-weight: 500;
+      transition: opacity 0.4s;
+    }
+
+    /* Skip */
+    .loader-skip {
+      position: absolute;
+      top: 1.8rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: rgba(245,240,232,0.3);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      padding: 0.4rem 0.8rem;
+      transition: color 0.3s;
+      opacity: 0;
+      transition: opacity 0.5s ease 2s, color 0.3s;
+    }
+    .loader-skip.visible { opacity: 1; }
+    .loader-skip:hover { color: rgba(245,240,232,0.7); }
+
+    /* Sortie : le rideau monte */
+    #goty-loader.leaving {
+      transform: translateY(-100%);
+      transition: transform 0.85s cubic-bezier(0.77,0,0.175,1);
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .loader-counter { bottom: 1.5rem; left: 1.5rem; }
+      .loader-status-wrap { bottom: 1.5rem; right: 1.5rem; }
+      .loader-skip { top: 1rem; right: 1rem; }
+      .poem-line { font-size: clamp(0.85rem, 4vw, 1.1rem); }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .poem-line, .loader-logo-text, .loader-logo-dot,
+      .loader-label, .loader-counter, .loader-status-wrap,
+      .loader-skip { transition: none; }
+      #goty-loader.leaving { transition: none; }
+    }
+  `;
+
+  document.head.appendChild(css);
+  document.body.insertBefore(overlay, document.body.firstChild);
+
+  /* ─── 3. CANVAS : fond animé (grille + scanlines + lueur centrale) ─── */
+  (function initCanvas() {
+    const canvas = document.getElementById('loader-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, raf;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let t = 0;
+    function drawFrame() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Fond très sombre
+      ctx.fillStyle = '#030303';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grille fine
+      ctx.strokeStyle = 'rgba(201,168,76,0.04)';
+      ctx.lineWidth = 0.5;
+      const CELL = 60;
+      for (let x = 0; x < W; x += CELL) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
       }
-    }
-    if (points.length === 0) {
-      for (let i = 0; i < 400; i++) {
-        points.push({
-          x: canvas.width/2 + (Math.random() - 0.5) * canvas.width * 0.5,
-          y: canvas.height/2 + (Math.random() - 0.5) * canvas.height * 0.3
-        });
+      for (let y = 0; y < H; y += CELL) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
       }
-    }
-    if (points.length > particles.length) {
-      const step = Math.floor(points.length / particles.length);
-      textPoints = points.filter((_, i) => i % step === 0);
-    } else {
-      textPoints = points;
-    }
-  }
-  
-  function assignTargetsToParticles() {
-    for (let i = 0; i < particles.length; i++) {
-      const target = textPoints[i % textPoints.length];
-      particles[i].targetX = target ? target.x : canvas.width/2;
-      particles[i].targetY = target ? target.y : canvas.height/2;
-    }
-  }
-  
-  function drawParticle(p) {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-    gradient.addColorStop(0, '#FFF9C4');
-    gradient.addColorStop(0.6, '#E5B83C');
-    gradient.addColorStop(1, '#B88A1A');
-    ctx.fillStyle = gradient;
-    ctx.fill();
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = '#FFD700';
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
-  
-  function animate() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    if (phase === 0) {
-      for (let p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        drawParticle(p);
+
+      // Lueur centrale dorée (pulse lent)
+      const glowR = Math.min(W, H) * (0.35 + 0.05 * Math.sin(t * 0.6));
+      const grd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, glowR);
+      grd.addColorStop(0, 'rgba(201,168,76,0.07)');
+      grd.addColorStop(0.5, 'rgba(201,168,76,0.02)');
+      grd.addColorStop(1, 'transparent');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, W, H);
+
+      // Scanlines horizontales (effet CRT subtil)
+      for (let y = 0; y < H; y += 4) {
+        const alpha = 0.025 + 0.015 * Math.sin((y + t * 80) * 0.05);
+        ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        ctx.fillRect(0, y, W, 1);
       }
-    } 
-    else if (phase === 1) {
-      const now = performance.now();
-      let t = Math.min(1, (now - convergenceStart) / 2800);
-      t = 1 - Math.pow(1 - t, 3);
-      for (let p of particles) {
-        p.x = p.x * (1 - t) + p.targetX * t;
-        p.y = p.y * (1 - t) + p.targetY * t;
-        drawParticle(p);
-      }
-      if (t >= 0.99 && phase === 1) {
-        phase = 2;
-        // Disparaître canvas, apparaître texte
-        canvas.style.transition = 'opacity 0.5s ease';
-        canvas.style.opacity = '0';
-        textDiv.style.opacity = '1';
-        textDiv.style.transform = 'translate(-50%, -50%) scale(1)';
-        textDiv.style.color = '#FFF9C4';
-        textDiv.style.textShadow = '0 0 30px #E5B83C';
-        setTimeout(() => {
-          overlay.style.transition = 'opacity 0.8s ease';
-          overlay.style.opacity = '0';
-          setTimeout(() => {
-            overlay.style.display = 'none';
-            if (typeof initPremium === 'function') initPremium();
-            if (typeof initEditorialTitle === 'function') initEditorialTitle();
-          }, 800);
-        }, 1500);
-      }
+
+      // Ligne horizontale lumineuse qui traverse (comme un scanner)
+      const scanY = (H * 0.5) + Math.sin(t * 0.4) * H * 0.3;
+      const scanGrd = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
+      scanGrd.addColorStop(0, 'transparent');
+      scanGrd.addColorStop(0.5, 'rgba(201,168,76,0.04)');
+      scanGrd.addColorStop(1, 'transparent');
+      ctx.fillStyle = scanGrd;
+      ctx.fillRect(0, scanY - 40, W, 80);
+
+      t += 0.016;
+      raf = requestAnimationFrame(drawFrame);
     }
-    
-    animationId = requestAnimationFrame(animate);
+
+    drawFrame();
+    overlay._stopCanvas = () => { cancelAnimationFrame(raf); };
+  })();
+
+  /* ─── 4. ANIMATIONS D'ENTRÉE (séquencées avec setTimeout — pas de dépendance GSAP) ─── */
+  const statuses = [
+    'Loading the hierarchy',
+    'Calibrating tiers',
+    'Invoking the legends',
+    'Sorting masterpieces',
+    'Preparing the verdict',
+    'Finalizing rankings',
+  ];
+  let statusIdx = 0;
+
+  function cycleStatus() {
+    const el = document.getElementById('loaderStatus');
+    if (!el) return;
+    statusIdx = (statusIdx + 1) % statuses.length;
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = statuses[statusIdx];
+      el.style.opacity = '1';
+    }, 300);
   }
-  
-  resizeCanvas();
-  initParticlesRandom();
-  prepareTextPoints();
-  
+  el_status_interval = setInterval(cycleStatus, 2000);
+
+  // Entrée séquencée
   setTimeout(() => {
-    if (phase === 0) {
-      phase = 1;
-      convergenceStart = performance.now();
-      assignTargetsToParticles();
-    }
-  }, 1500);
-  
-  animate();
-  
-  const skipLink = document.getElementById('skip-loading');
-  if (skipLink) {
-    skipLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      overlay.style.transition = 'opacity 0.3s ease';
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.display = 'none';
-        if (typeof initPremium === 'function') initPremium();
-        if (typeof initEditorialTitle === 'function') initEditorialTitle();
-      }, 300);
-    });
+    document.getElementById('poemLine1')?.classList.add('visible');
+  }, 150);
+  setTimeout(() => {
+    document.getElementById('poemLine2')?.classList.add('visible');
+  }, 450);
+  setTimeout(() => {
+    document.getElementById('loaderLogoText')?.classList.add('visible');
+    document.querySelector('.loader-logo-dot')?.classList.add('visible');
+    document.querySelector('.loader-label')?.classList.add('visible');
+  }, 800);
+  setTimeout(() => {
+    document.querySelector('.loader-counter')?.classList.add('visible');
+    document.querySelector('.loader-status-wrap')?.classList.add('visible');
+    document.querySelector('.loader-skip')?.classList.add('visible');
+  }, 1200);
+
+  /* ─── 5. COUNTER ─── */
+  let currentPct = 0;
+  let targetPct  = 0;
+  let pctRaf;
+
+  function animatePct() {
+    if (currentPct >= targetPct) return;
+    currentPct += Math.max(0.5, (targetPct - currentPct) * 0.08);
+    if (currentPct > targetPct) currentPct = targetPct;
+    const el = document.getElementById('loaderPct');
+    if (el) el.textContent = Math.floor(currentPct);
+    pctRaf = requestAnimationFrame(animatePct);
   }
+
+  function setProgress(pct) {
+    targetPct = Math.min(100, Math.max(currentPct, pct));
+    cancelAnimationFrame(pctRaf);
+    animatePct();
+  }
+
+  // Simulation progression auto (sera complétée par l'app)
+  setTimeout(() => setProgress(20), 600);
+  setTimeout(() => setProgress(45), 1200);
+  setTimeout(() => setProgress(70), 2000);
+
+  /* ─── 6. SORTIE EN RIDEAU ─── */
+  function dismiss(callback) {
+    clearInterval(el_status_interval);
+    cancelAnimationFrame(pctRaf);
+
+    // Afficher 100% une fraction de seconde
+    const pctEl = document.getElementById('loaderPct');
+    if (pctEl) pctEl.textContent = '100';
+
+    const statusEl = document.getElementById('loaderStatus');
+    if (statusEl) {
+      statusEl.textContent = 'Ready';
+      statusEl.style.color = 'rgba(201,168,76,0.7)';
+      statusEl.style.opacity = '1';
+    }
+
+    // Courte pause pour lire "100%" puis rideau
+    setTimeout(() => {
+      if (overlay._stopCanvas) overlay._stopCanvas();
+
+      overlay.classList.add('leaving');
+
+      // Après la transition CSS, révéler le contenu
+      overlay.addEventListener('transitionend', () => {
+        overlay.style.display = 'none';
+        const app = document.querySelector('.app-wrapper');
+        if (app) {
+          app.style.transition = 'opacity 0.6s ease';
+          app.style.opacity = '1';
+        }
+        if (typeof callback === 'function') callback();
+      }, { once: true });
+
+    }, 400);
+  }
+
+  /* ─── 7. API PUBLIQUE ─── */
+  window.LoaderAPI = {
+    setProgress,
+    finish: dismiss,
+  };
+
+  /* ─── 8. SKIP ─── */
+  document.getElementById('loaderSkip')?.addEventListener('click', () => dismiss());
+
+  let el_status_interval; // déclarée avant usage dans cycleStatus
+
 })();

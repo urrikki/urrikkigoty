@@ -33,12 +33,7 @@
 </head>
 <body>
 
-    <!-- #region LOADING SCREEN -->
-    <div id="loading-overlay" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:100000; display:flex; align-items:center; justify-content:center; pointer-events:none;">
-        <canvas id="loading-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; display:block;"></canvas>
-        <a href="#" id="skip-loading" style="position:absolute; bottom:20px; right:20px; color:rgba(229,184,60,0.7); font-family:monospace; font-size:12px; text-decoration:none; background:rgba(0,0,0,0.5); padding:6px 12px; border-radius:20px; backdrop-filter:blur(4px); z-index:100001; pointer-events:auto;">Passer l'intro →</a>
-    </div>
-    <!-- #endregion -->
+    <script src="scripts/loading.js?v=8.0.0"></script>
 
     <!-- #region App Wrapper (contenu principal) -->
     <div class="app-wrapper">
@@ -247,7 +242,6 @@
     <!-- #endregion Modals -->
 
     <!-- #region Scripts (chargement avec cache-busting) -->
-    <script src="scripts/loading.js?v=8.0.0"></script>
     <script src="scripts/animations.js?v=8.0.0"></script>
     <script src="scripts/premium.js?v=8.0.0"></script>
     <script src="scripts/state.js?v=8.0.0"></script>
