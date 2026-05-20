@@ -1,4 +1,4 @@
-// ===== LOADING SCREEN (particules dorées) - VERSION DEBUG =====
+// ===== LOADING SCREEN : poussière d'étoiles puis apparition du texte GOTY =====
 (function() {
   const overlay = document.getElementById('loading-overlay');
   if (!overlay) return;
@@ -9,19 +9,38 @@
   overlay.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
+  // Créer l'élément texte qui apparaîtra
+  const textDiv = document.createElement('div');
+  textDiv.id = 'loading-text';
+  textDiv.textContent = 'GOTY';
+  textDiv.style.cssText = `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 12vw, 7rem);
+    font-weight: 800;
+    color: #E5B83C;
+    text-shadow: 0 0 20px rgba(229,184,60,0.5);
+    opacity: 0;
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+    z-index: 10;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  `;
+  overlay.appendChild(textDiv);
+
   let particles = [];
-  let phase = 0; // 0: aléatoire, 1: convergence, 2: dispersion
-  let convergenceStart = 0;
-  let textPoints = [];
+  let phase = 0; // 0: aléatoire, 1: disparition des particules + apparition texte
   let animationId;
   
-  const TARGET_TEXT = "GOTY";
-  const PARTICLE_COUNT = 500;
+  const PARTICLE_COUNT = 400;
   
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    console.log("Canvas redimensionné:", canvas.width, "x", canvas.height);
   }
   window.addEventListener('resize', resizeCanvas);
   
@@ -35,81 +54,7 @@
         vy: (Math.random() - 0.5) * 1.2,
         size: 2 + Math.random() * 4,
         alpha: 0.7 + Math.random() * 0.3,
-        targetX: 0,
-        targetY: 0,
       });
-    }
-  }
-  
-  function prepareTextPoints() {
-    const offCanvas = document.createElement('canvas');
-    const offCtx = offCanvas.getContext('2d');
-    offCanvas.width = canvas.width;
-    offCanvas.height = canvas.height;
-    
-    // Taille de police calculée dynamiquement
-    let fontSize = 140;
-    // On réduit tant que le texte dépasse 70% de la largeur ou 40% de la hauteur
-    while (fontSize > 30) {
-      offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
-      const metrics = offCtx.measureText(TARGET_TEXT);
-      const textWidth = metrics.width;
-      const textHeight = fontSize * 1.2; // approximation
-      if (textWidth < canvas.width * 0.7 && textHeight < canvas.height * 0.4) {
-        break;
-      }
-      fontSize -= 5;
-    }
-    console.log("Taille police choisie:", fontSize, "pour canvas", canvas.width, "x", canvas.height);
-    
-    offCtx.fillStyle = 'white';
-    offCtx.font = `800 ${fontSize}px 'Playfair Display', serif`;
-    offCtx.textAlign = 'center';
-    offCtx.textBaseline = 'middle';
-    offCtx.fillText(TARGET_TEXT, canvas.width / 2, canvas.height / 2);
-    
-    const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    const points = [];
-    for (let y = 0; y < canvas.height; y += 2) {
-      for (let x = 0; x < canvas.width; x += 2) {
-        const idx = (y * canvas.width + x) * 4;
-        if (data[idx] > 200) {
-          points.push({ x, y });
-        }
-      }
-    }
-    console.log("Points bruts détectés:", points.length);
-    
-    if (points.length === 0) {
-      // Fallback : générer des points autour du centre
-      for (let i = 0; i < 400; i++) {
-        points.push({
-          x: canvas.width/2 + (Math.random() - 0.5) * canvas.width * 0.5,
-          y: canvas.height/2 + (Math.random() - 0.5) * canvas.height * 0.3
-        });
-      }
-    }
-    
-    if (points.length > particles.length) {
-      const step = Math.floor(points.length / particles.length);
-      textPoints = points.filter((_, i) => i % step === 0);
-    } else {
-      textPoints = points;
-    }
-    console.log("Points cibles finaux:", textPoints.length);
-  }
-  
-  function assignTargetsToParticles() {
-    for (let i = 0; i < particles.length; i++) {
-      const target = textPoints[i % textPoints.length];
-      if (target) {
-        particles[i].targetX = target.x;
-        particles[i].targetY = target.y;
-      } else {
-        particles[i].targetX = canvas.width/2;
-        particles[i].targetY = canvas.height/2;
-      }
     }
   }
   
@@ -122,7 +67,7 @@
     gradient.addColorStop(1, '#B88A1A');
     ctx.fillStyle = gradient;
     ctx.fill();
-    ctx.shadowBlur = 8;
+    ctx.shadowBlur = 6;
     ctx.shadowColor = '#FFD700';
     ctx.fill();
     ctx.shadowBlur = 0;
@@ -135,6 +80,7 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     if (phase === 0) {
+      // Mouvement aléatoire
       for (let p of particles) {
         p.x += p.vx;
         p.y += p.vy;
@@ -146,35 +92,11 @@
       }
     } 
     else if (phase === 1) {
-      const now = performance.now();
-      let t = Math.min(1, (now - convergenceStart) / 3000);
-      t = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      // Les particules s'éloignent vers les bords
       for (let p of particles) {
-        p.x = p.x * (1 - t) + p.targetX * t;
-        p.y = p.y * (1 - t) + p.targetY * t;
-        drawParticle(p);
-      }
-      if (t >= 0.99 && phase === 1) {
-        phase = 2;
-        for (let p of particles) {
-          p.vx = (Math.random() - 0.5) * 5;
-          p.vy = (Math.random() - 0.5) * 5;
-        }
-        setTimeout(() => {
-          overlay.style.transition = 'opacity 0.8s ease';
-          overlay.style.opacity = '0';
-          setTimeout(() => {
-            overlay.style.display = 'none';
-            if (typeof initPremium === 'function') initPremium();
-            if (typeof initEditorialTitle === 'function') initEditorialTitle();
-          }, 800);
-        }, 2000);
-      }
-    }
-    else if (phase === 2) {
-      for (let p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx * 1.5;
+        p.y += p.vy * 1.5;
+        // ne pas rebondir, elles sortent
         drawParticle(p);
       }
     }
@@ -182,22 +104,41 @@
     animationId = requestAnimationFrame(animate);
   }
   
+  // Initialisation
   resizeCanvas();
   initParticlesRandom();
-  prepareTextPoints();
-  
-  // On attend 5 secondes pour debug (vous aurez le temps d'ouvrir F12)
-  setTimeout(() => {
-    if (phase === 0) {
-      phase = 1;
-      convergenceStart = performance.now();
-      assignTargetsToParticles();
-    }
-  }, 50000); // 5 secondes
-  
   animate();
   
-  // Skip link
+  // Après 1.5 secondes, début de la transition
+  setTimeout(() => {
+    phase = 1; // les particules commencent à s'éloigner
+    // Faire apparaître le texte
+    textDiv.style.opacity = '1';
+    textDiv.style.transform = 'translate(-50%, -50%) scale(1)';
+    // Ajouter un effet de brillance progressive
+    let glowIntensity = 0;
+    const glowInterval = setInterval(() => {
+      glowIntensity += 0.1;
+      if (glowIntensity <= 1) {
+        textDiv.style.textShadow = `0 0 ${20 + glowIntensity * 20}px rgba(229,184,60,${0.3 + glowIntensity * 0.5})`;
+      } else {
+        clearInterval(glowInterval);
+      }
+    }, 100);
+  }, 1500);
+  
+  // Fermeture de l'overlay après que les particules soient parties
+  setTimeout(() => {
+    overlay.style.transition = 'opacity 0.8s ease';
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      if (typeof initPremium === 'function') initPremium();
+      if (typeof initEditorialTitle === 'function') initEditorialTitle();
+    }, 800);
+  }, 4500); // 1.5s + 3s pour l'éloignement
+  
+  // Skip link (optionnel)
   const skipLink = document.getElementById('skip-loading');
   if (skipLink) {
     skipLink.addEventListener('click', (e) => {
