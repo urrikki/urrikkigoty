@@ -1,4 +1,4 @@
-// ===== LOADING SCREEN CINÉMATIQUE — GOTY EDITION v3 =====
+// ===== LOADING SCREEN CINÉMATIQUE — GOTY EDITION v4 =====
 (function () {
 
   /* ─── 1. HTML ─── */
@@ -6,35 +6,20 @@
   overlay.id = 'goty-loader';
   overlay.innerHTML = `
     <canvas id="loader-canvas"></canvas>
+
+    <!-- Tout le texte est dans ce canvas de texte — même plan que le scan -->
+    <canvas id="loader-text-canvas"></canvas>
+
     <div class="loader-vignette"></div>
     <div class="loader-line-top"></div>
 
-    <div class="loader-body">
-      <p class="loader-poem">
-        <span class="poem-line" id="poemLine1">Among the greatest games</span>
-        <span class="poem-line" id="poemLine2">only a few deserve the throne</span>
-      </p>
-
-      <div class="loader-logo">
-        <span class="loader-logo-text" id="loaderLogoText">GOTY</span>
-        <span class="loader-logo-dot">.</span>
-      </div>
-
-      <!-- Élément central : INVISIBLE par défaut, révélé UNIQUEMENT par le scan -->
-      <div class="loader-reveal-wrap" id="loaderRevealWrap">
-        <span class="reveal-tag">Édition</span>
-        <span class="reveal-year">${new Date().getFullYear()}</span>
-        <span class="reveal-sub">The definitive ranking</span>
-      </div>
-
-      <p class="loader-label">Tier List</p>
-    </div>
-
-    <div class="loader-counter">
+    <!-- Counter bas gauche — visible dès le départ -->
+    <div class="loader-counter" id="loaderCounter">
       <span class="loader-pct" id="loaderPct">0</span><span class="loader-pct-sym">%</span>
     </div>
 
-    <div class="loader-status-wrap">
+    <!-- Status bas droite — visible dès le départ -->
+    <div class="loader-status-wrap" id="loaderStatusWrap">
       <span class="loader-status" id="loaderStatus">Loading the hierarchy</span>
     </div>
 
@@ -52,22 +37,26 @@
       background: #030303;
       z-index: 99999;
       overflow: hidden;
-      cursor: none;
       font-family: 'Inter', system-ui, sans-serif;
     }
 
-    #loader-canvas {
+    /* Les deux canvas sont superposés plein écran */
+    #loader-canvas,
+    #loader-text-canvas {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
     }
+    /* Le canvas texte est au-dessus */
+    #loader-text-canvas { z-index: 2; }
 
     .loader-vignette {
       position: absolute;
       inset: 0;
+      z-index: 3;
       background: radial-gradient(ellipse 80% 80% at 50% 50%,
-        transparent 35%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.92) 100%);
+        transparent 35%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0.9) 100%);
       pointer-events: none;
     }
 
@@ -75,117 +64,13 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 1px;
+      z-index: 4;
       background: linear-gradient(90deg, transparent, #C9A84C 25%, #E2C47A 50%, #C9A84C 75%, transparent);
       animation: lineBreath 3s ease-in-out infinite;
     }
     @keyframes lineBreath { 0%,100%{opacity:.35} 50%{opacity:1} }
 
-    .loader-body {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .loader-poem {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25em;
-      margin: 0 0 0.5rem;
-    }
-    .poem-line {
-      display: block;
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-style: italic;
-      font-size: clamp(0.95rem, 2.2vw, 1.4rem);
-      color: rgba(245,240,232,0.55);
-      letter-spacing: 0.02em;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-    .poem-line.visible { opacity: 1; transform: translateY(0); }
-
-    .loader-logo {
-      display: flex;
-      align-items: flex-start;
-      line-height: 1;
-    }
-    .loader-logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(7rem, 20vw, 13rem);
-      color: #F5F0E8;
-      letter-spacing: -0.01em;
-      line-height: 0.85;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1.1s cubic-bezier(0.23,1,0.32,1),
-                  transform 1.1s cubic-bezier(0.23,1,0.32,1);
-    }
-    .loader-logo-text.visible { opacity: 1; transform: translateY(0); }
-
-    .loader-logo-dot {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 10vw, 7rem);
-      color: #C9A84C;
-      line-height: 0.75;
-      margin-top: 0.18em;
-      opacity: 0;
-      transition: opacity 0.6s ease 0.6s;
-    }
-    .loader-logo-dot.visible { opacity: 1; }
-
-    /* ── Élément reveal : INVISIBLE par défaut ── */
-    .loader-reveal-wrap {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      opacity: 0;               /* invisible de base */
-      transition: none;         /* PAS de transition CSS — géré par le canvas/JS */
-      white-space: nowrap;
-      pointer-events: none;
-      margin: -0.2rem 0 0;
-    }
-
-    .reveal-tag {
-      font-size: 0.55rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: #C9A84C;
-      font-weight: 600;
-    }
-    .reveal-year {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      color: #F5F0E8;
-      letter-spacing: 0.05em;
-      line-height: 1;
-    }
-    .reveal-sub {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 0.75rem;
-      color: rgba(245,240,232,0.45);
-      letter-spacing: 0.08em;
-    }
-
-    .loader-label {
-      margin: 0.25rem 0 0;
-      font-size: clamp(0.5rem, 1.1vw, 0.65rem);
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: #C9A84C;
-      font-weight: 500;
-      opacity: 0;
-      transition: opacity 0.7s ease 0.8s;
-    }
-    .loader-label.visible { opacity: 1; }
-
+    /* Counter — visible dès le départ, z-index au-dessus */
     .loader-counter {
       position: absolute;
       bottom: 2.5rem;
@@ -193,10 +78,9 @@
       display: flex;
       align-items: baseline;
       gap: 0.1em;
-      opacity: 0;
-      transition: opacity 0.5s ease 1.2s;
+      z-index: 5;
+      opacity: 1;
     }
-    .loader-counter.visible { opacity: 1; }
     .loader-pct {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(3.5rem, 8vw, 5.5rem);
@@ -211,43 +95,45 @@
       line-height: 1;
     }
 
+    /* Status — visible dès le départ */
     .loader-status-wrap {
       position: absolute;
       bottom: 2.5rem;
       right: 3rem;
-      opacity: 0;
-      transition: opacity 0.5s ease 1.3s;
+      z-index: 5;
+      opacity: 1;
     }
-    .loader-status-wrap.visible { opacity: 1; }
     .loader-status {
       font-size: 0.58rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(245,240,232,0.3);
+      color: rgba(245,240,232,0.35);
       font-weight: 500;
       transition: opacity 0.4s;
     }
 
+    /* Skip */
     .loader-skip {
       position: absolute;
       top: 1.8rem;
       right: 2rem;
       background: none;
       border: none;
-      color: rgba(245,240,232,0.25);
+      color: rgba(245,240,232,0.2);
       font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
       font-family: 'Inter', sans-serif;
       padding: 0.4rem 0.8rem;
+      z-index: 5;
       opacity: 0;
-      transition: opacity 0.5s ease 2.5s, color 0.3s;
+      animation: fadeInSkip 0.6s ease 3s forwards;
     }
-    .loader-skip.visible { opacity: 1; }
+    @keyframes fadeInSkip { to { opacity: 1; } }
     .loader-skip:hover { color: rgba(245,240,232,0.7); }
 
-    /* Rideau qui monte */
+    /* Rideau de sortie */
     #goty-loader.leaving {
       transform: translateY(-100%);
       transition: transform 0.85s cubic-bezier(0.77,0,0.175,1);
@@ -256,209 +142,284 @@
     @media (max-width: 600px) {
       .loader-counter { bottom: 1.5rem; left: 1.5rem; }
       .loader-status-wrap { bottom: 1.5rem; right: 1.5rem; }
-      .loader-skip { top: 1rem; right: 1rem; }
     }
   `;
 
   document.head.appendChild(css);
   document.body.insertBefore(overlay, document.body.firstChild);
 
-  /* ─── 3. CANVAS ─── */
+  /* ─── 3. CANVAS PRINCIPAL (fond + scan) ─── */
   let canvasRaf;
-  let appReady = false;      // true quand l'app a chargé ses données
-  let scanDone = false;      // true quand le scan a terminé son passage complet
+  let appReady   = false;
+  let scanDone   = false;
   let dismissCalled = false;
-
-  (function initCanvas() {
-    const canvas = document.getElementById('loader-canvas');
-    const ctx    = canvas.getContext('2d');
-    let W, H;
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const revealEl = document.getElementById('loaderRevealWrap');
-
-    // Le scan démarre depuis le haut (-60px) et va jusqu'en bas (H+60px)
-    // Une seule passe, pas de boucle
-    let scanY = -60;
-    const SCAN_SPEED = 1.8; // px par frame (~108px/s à 60fps) → ~6s pour traverser 1080px
-
-    let t = 0;
-
-    function drawFrame() {
-      ctx.clearRect(0, 0, W, H);
-
-      // Fond
-      ctx.fillStyle = '#030303';
-      ctx.fillRect(0, 0, W, H);
-
-      // Grille fine dorée
-      ctx.strokeStyle = 'rgba(201,168,76,0.035)';
-      ctx.lineWidth = 0.5;
-      const CELL = 60;
-      for (let x = 0; x < W; x += CELL) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-      }
-      for (let y = 0; y < H; y += CELL) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-      }
-
-      // Lueur centrale (pulse lent)
-      const glowR = Math.min(W, H) * (0.3 + 0.04 * Math.sin(t * 0.5));
-      const grd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, glowR);
-      grd.addColorStop(0,   'rgba(201,168,76,0.06)');
-      grd.addColorStop(0.6, 'rgba(201,168,76,0.015)');
-      grd.addColorStop(1,   'transparent');
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, W, H);
-
-      // Scanlines CRT
-      for (let y = 0; y < H; y += 4) {
-        ctx.fillStyle = `rgba(0,0,0,${0.022 + 0.012 * Math.sin((y + t * 80) * 0.05)})`;
-        ctx.fillRect(0, y, W, 1);
-      }
-
-      // ── Scan unique de haut en bas ──
-      if (scanY <= H + 60) {
-        scanY += SCAN_SPEED;
-
-        // L'élément reveal : visible UNIQUEMENT quand le scan est à sa hauteur
-        if (revealEl) {
-          const rect     = revealEl.getBoundingClientRect();
-          const centerY  = rect.top + rect.height / 2;
-          const dist     = Math.abs(scanY - centerY);
-          const REVEAL_ZONE = 90; // px de part et d'autre du centre
-
-          if (dist < REVEAL_ZONE) {
-            // Opacité proportionnelle à la proximité (0 → 1 → 0)
-            const alpha = 1 - dist / REVEAL_ZONE;
-            revealEl.style.opacity = alpha.toFixed(3);
-          } else {
-            revealEl.style.opacity = '0';
-          }
-        }
-
-        // Intensité du scan : plus fort quand il croise l'élément reveal
-        const revealCenterY = revealEl
-          ? (revealEl.getBoundingClientRect().top + revealEl.getBoundingClientRect().height / 2)
-          : H / 2;
-        const dist2 = Math.abs(scanY - revealCenterY);
-        const isNear = dist2 < 90;
-
-        const intensity = isNear ? 0.22 : 0.08;
-        const spread    = isNear ? 80   : 50;
-
-        const scanGrd = ctx.createLinearGradient(0, scanY - spread, 0, scanY + spread);
-        scanGrd.addColorStop(0,   'transparent');
-        scanGrd.addColorStop(0.4, `rgba(201,168,76,${intensity * 0.35})`);
-        scanGrd.addColorStop(0.5, `rgba(201,168,76,${intensity})`);
-        scanGrd.addColorStop(0.6, `rgba(201,168,76,${intensity * 0.35})`);
-        scanGrd.addColorStop(1,   'transparent');
-        ctx.fillStyle = scanGrd;
-        ctx.fillRect(0, scanY - spread, W, spread * 2);
-
-        // Ligne nette du scan
-        ctx.strokeStyle = `rgba(226,196,122,${isNear ? 0.6 : 0.28})`;
-        ctx.lineWidth   = isNear ? 1.5 : 1;
-        ctx.beginPath();
-        ctx.moveTo(0, scanY);
-        ctx.lineTo(W, scanY);
-        ctx.stroke();
-
-      } else {
-        // ── Le scan a terminé son passage ──
-        if (revealEl) revealEl.style.opacity = '0'; // masquer l'élément reveal
-        if (!scanDone) {
-          scanDone = true;
-          onScanComplete();
-        }
-      }
-
-      t += 0.016;
-      canvasRaf = requestAnimationFrame(drawFrame);
-    }
-
-    drawFrame();
-  })();
-
-  /* ─── 4. Quand le scan EST TERMINÉ ─── */
-  function onScanComplete() {
-    // Si l'app est déjà prête : on ferme
-    if (appReady) {
-      triggerDismiss();
-    }
-    // Sinon on attend que l'app appelle LoaderAPI.finish()
-  }
-
-  /* ─── 5. Quand L'APP EST PRÊTE ─── */
-  function onAppReady(callback) {
-    appReady = true;
-    _dismissCallback = callback;
-    // Si le scan est déjà terminé : on ferme
-    if (scanDone) {
-      triggerDismiss();
-    }
-    // Sinon on attend la fin du scan (onScanComplete s'en chargera)
-  }
-
   let _dismissCallback = null;
 
-  function triggerDismiss() {
-    if (dismissCalled) return;
-    dismissCalled = true;
-    dismiss(_dismissCallback);
+  const bgCanvas  = document.getElementById('loader-canvas');
+  const bgCtx     = bgCanvas.getContext('2d');
+  const txtCanvas = document.getElementById('loader-text-canvas');
+  const txtCtx    = txtCanvas.getContext('2d');
+
+  let W, H;
+
+  function resize() {
+    W = bgCanvas.width  = txtCanvas.width  = window.innerWidth;
+    H = bgCanvas.height = txtCanvas.height = window.innerHeight;
+    buildTextLayout();
+  }
+  window.addEventListener('resize', resize);
+
+  /* ─── 4. LAYOUT TEXTE (calculé une fois après resize) ─── */
+  // Toutes les positions sont en coordonnées canvas absolues
+  const layout = {};
+
+  function buildTextLayout() {
+    // Centre vertical
+    const cy = H * 0.5;
+
+    // Taille du logo GOTY
+    const logoSize = Math.min(W * 0.22, H * 0.28, 200);
+
+    layout.poem1  = { text: 'Among the greatest games',    x: W/2, y: cy - logoSize * 0.75 - 36, size: Math.min(W * 0.022, 22), alpha: 0 };
+    layout.poem2  = { text: 'only a few deserve the throne', x: W/2, y: cy - logoSize * 0.75 - 8,  size: Math.min(W * 0.022, 22), alpha: 0 };
+    layout.logo   = { text: 'GOTY',      x: W/2 - 10, y: cy + logoSize * 0.15, size: logoSize, alpha: 0 };
+    layout.dot    = { text: '.',         x: W/2 + (logoSize * 2.05), y: cy + logoSize * 0.05, size: logoSize * 0.55, alpha: 0 };
+    layout.year   = { text: String(new Date().getFullYear()), x: W/2, y: cy + logoSize * 0.45, size: Math.min(W * 0.045, 48), alpha: 0 };
+    layout.tag    = { text: 'ÉDITION',   x: W/2 - Math.min(W * 0.045, 48) * 1.8, y: cy + logoSize * 0.45, size: Math.min(W * 0.008, 9), alpha: 0, spacing: 4 };
+    layout.sub    = { text: 'The definitive ranking',        x: W/2 + Math.min(W * 0.045, 48) * 1.8, y: cy + logoSize * 0.45, size: Math.min(W * 0.012, 13), alpha: 0 };
+    layout.label  = { text: 'TIER LIST', x: W/2, y: cy + logoSize * 0.72, size: Math.min(W * 0.008, 9), alpha: 0, spacing: 7 };
   }
 
-  /* ─── 6. STATUS CYCLING ─── */
-  const statuses = [
-    'Loading the hierarchy',
-    'Calibrating tiers',
-    'Invoking the legends',
-    'Sorting masterpieces',
-    'Preparing the verdict',
-    'Finalizing rankings',
-  ];
+  /* ─── 5. ANIMATION D'ENTRÉE DES TEXTES ─── */
+  // Les textes "de base" (poèmes, logo, label) s'animent en entrée normalement
+  // L'élément reveal (year/tag/sub) reste à 0 — le scan les révèle
+
+  let entryStarted = false;
+  function startEntryAnimation() {
+    entryStarted = true;
+    // Poem lines
+    animateAlpha(layout.poem1, 0, 0.55, 900, 200);
+    animateAlpha(layout.poem2, 0, 0.55, 900, 450);
+    // Logo
+    animateAlpha(layout.logo,  0, 1,    1100, 800);
+    animateAlpha(layout.dot,   0, 1,    700,  1100);
+    // Label
+    animateAlpha(layout.label, 0, 0.5,  700,  1200);
+    // year/tag/sub restent à 0 — le scan s'en charge
+  }
+
+  function animateAlpha(item, from, to, duration, delay) {
+    setTimeout(() => {
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min(1, (now - start) / duration);
+        item.alpha = from + (to - from) * easeOut(p);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }, delay);
+  }
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  /* ─── 6. RENDU TEXTE SUR CANVAS (avec effet scan) ─── */
+  // Le scan est une "lampe" qui éclaire les éléments reveal quand il passe dessus
+  // Tous les textes ont la même texture : grain doré + glow
+
+  function drawTextLayer(scanY) {
+    txtCtx.clearRect(0, 0, W, H);
+
+    // Pour chaque élément textuel, calculer l'influence du scan
+    drawTextItem(txtCtx, layout.poem1,  scanY, 'serif-italic', 'rgba(245,240,232,VAR)');
+    drawTextItem(txtCtx, layout.poem2,  scanY, 'serif-italic', 'rgba(245,240,232,VAR)');
+    drawTextItem(txtCtx, layout.logo,   scanY, 'bebas',        'rgba(245,240,232,VAR)');
+    drawTextItem(txtCtx, layout.dot,    scanY, 'bebas',        'rgba(201,168,76,VAR)');
+    drawTextItem(txtCtx, layout.label,  scanY, 'spaced',       'rgba(201,168,76,VAR)');
+
+    // Éléments reveal — leur alpha de base est 0, seul le scan les révèle
+    drawRevealItem(txtCtx, layout.year,  scanY, 'bebas',        '#F5F0E8');
+    drawRevealItem(txtCtx, layout.tag,   scanY, 'spaced',       '#C9A84C');
+    drawRevealItem(txtCtx, layout.sub,   scanY, 'serif-italic', 'rgba(245,240,232,0.5)');
+  }
+
+  function getFont(style, size) {
+    if (style === 'bebas')        return `${size}px "Bebas Neue", sans-serif`;
+    if (style === 'serif-italic') return `italic ${size}px "DM Serif Display", Georgia, serif`;
+    if (style === 'spaced')       return `600 ${size}px "Inter", sans-serif`;
+    return `${size}px "Inter", sans-serif`;
+  }
+
+  // Calcule l'intensité du scan sur un élément (0 à 1)
+  function scanInfluence(itemY, scanY, spread) {
+    const dist = Math.abs(itemY - scanY);
+    return dist < spread ? Math.pow(1 - dist / spread, 1.5) : 0;
+  }
+
+  function drawTextItem(ctx, item, scanY, style, colorTemplate) {
+    if (item.alpha <= 0) return;
+
+    const inf = scanInfluence(item.y, scanY, 120);
+
+    // Couleur de base modulée par le scan (légère surbrillance)
+    const alpha = item.alpha;
+    const color = colorTemplate.replace('VAR', alpha.toFixed(3));
+
+    ctx.save();
+    ctx.font = getFont(style, item.size);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (item.spacing) ctx.letterSpacing = item.spacing + 'px';
+
+    if (inf > 0.01) {
+      // Glow doré quand le scan passe
+      ctx.shadowColor = `rgba(201,168,76,${inf * 0.9})`;
+      ctx.shadowBlur  = inf * 30;
+      // Teinter légèrement vers le doré
+      const blend = inf * 0.45;
+      const baseAlpha = alpha + (1 - alpha) * inf * 0.3;
+      // Dessiner d'abord en doré (glow)
+      ctx.fillStyle = `rgba(226,196,122,${blend * baseAlpha})`;
+      ctx.fillText(item.text, item.x, item.y);
+      ctx.shadowBlur = 0;
+    }
+
+    // Texte final
+    ctx.shadowColor = inf > 0.01 ? `rgba(201,168,76,${inf * 0.5})` : 'transparent';
+    ctx.shadowBlur  = inf > 0.01 ? inf * 15 : 0;
+    ctx.fillStyle   = color;
+    ctx.fillText(item.text, item.x, item.y);
+    ctx.restore();
+  }
+
+  function drawRevealItem(ctx, item, scanY, style, baseColor) {
+    // Alpha piloté UNIQUEMENT par le scan (0 par défaut)
+    const inf = scanInfluence(item.y, scanY, 100);
+    if (inf <= 0.001) return;
+
+    ctx.save();
+    ctx.font = getFont(style, item.size);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (item.spacing) ctx.letterSpacing = item.spacing + 'px';
+
+    // Glow intense
+    ctx.shadowColor = `rgba(201,168,76,${inf * 1.0})`;
+    ctx.shadowBlur  = inf * 40;
+    ctx.fillStyle   = `rgba(226,196,122,${inf * 0.5})`;
+    ctx.fillText(item.text, item.x, item.y);
+
+    ctx.shadowColor = `rgba(201,168,76,${inf * 0.6})`;
+    ctx.shadowBlur  = inf * 18;
+    ctx.fillStyle   = baseColor.includes('rgba')
+      ? baseColor.replace(/[\d.]+\)$/, `${inf.toFixed(3)})`)
+      : hexToRgba(baseColor, inf);
+    ctx.fillText(item.text, item.x, item.y);
+    ctx.restore();
+  }
+
+  function hexToRgba(hex, a) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a.toFixed(3)})`;
+  }
+
+  /* ─── 7. BOUCLE PRINCIPALE ─── */
+  let t      = 0;
+  let scanY  = -80;
+  const SCAN_SPEED = 1.6; // px/frame → ~6.5s sur 1080px
+
+  resize(); // init layout
+  setTimeout(startEntryAnimation, 100);
+
+  function loop() {
+    /* -- Fond -- */
+    bgCtx.clearRect(0, 0, W, H);
+    bgCtx.fillStyle = '#030303';
+    bgCtx.fillRect(0, 0, W, H);
+
+    // Grille dorée
+    bgCtx.strokeStyle = 'rgba(201,168,76,0.032)';
+    bgCtx.lineWidth   = 0.5;
+    const CELL = 60;
+    for (let x = 0; x < W; x += CELL) {
+      bgCtx.beginPath(); bgCtx.moveTo(x,0); bgCtx.lineTo(x,H); bgCtx.stroke();
+    }
+    for (let y = 0; y < H; y += CELL) {
+      bgCtx.beginPath(); bgCtx.moveTo(0,y); bgCtx.lineTo(W,y); bgCtx.stroke();
+    }
+
+    // Lueur centrale
+    const gr = Math.min(W,H) * (0.3 + 0.04*Math.sin(t*0.5));
+    const grd = bgCtx.createRadialGradient(W/2,H/2,0, W/2,H/2,gr);
+    grd.addColorStop(0, 'rgba(201,168,76,0.055)');
+    grd.addColorStop(1, 'transparent');
+    bgCtx.fillStyle = grd;
+    bgCtx.fillRect(0,0,W,H);
+
+    // Scanlines CRT
+    for (let y = 0; y < H; y += 4) {
+      bgCtx.fillStyle = `rgba(0,0,0,${0.02 + 0.01*Math.sin((y+t*80)*0.05)})`;
+      bgCtx.fillRect(0, y, W, 1);
+    }
+
+    /* -- Scan -- */
+    if (scanY <= H + 80) {
+      scanY += SCAN_SPEED;
+
+      // Bande lumineuse
+      const isNear = layout.year && Math.abs(scanY - layout.year.y) < 100;
+      const intensity = isNear ? 0.20 : 0.07;
+      const spread    = isNear ? 80   : 50;
+
+      const sg = bgCtx.createLinearGradient(0, scanY-spread, 0, scanY+spread);
+      sg.addColorStop(0,   'transparent');
+      sg.addColorStop(0.45,`rgba(201,168,76,${intensity*0.3})`);
+      sg.addColorStop(0.5, `rgba(201,168,76,${intensity})`);
+      sg.addColorStop(0.55,`rgba(201,168,76,${intensity*0.3})`);
+      sg.addColorStop(1,   'transparent');
+      bgCtx.fillStyle = sg;
+      bgCtx.fillRect(0, scanY-spread, W, spread*2);
+
+      // Ligne nette
+      bgCtx.strokeStyle = `rgba(226,196,122,${isNear ? 0.65 : 0.3})`;
+      bgCtx.lineWidth   = isNear ? 1.5 : 1;
+      bgCtx.beginPath();
+      bgCtx.moveTo(0, scanY);
+      bgCtx.lineTo(W, scanY);
+      bgCtx.stroke();
+
+    } else if (!scanDone) {
+      scanDone = true;
+      if (appReady) triggerDismiss();
+    }
+
+    /* -- Texte -- */
+    drawTextLayer(scanY);
+
+    t += 0.016;
+    canvasRaf = requestAnimationFrame(loop);
+  }
+
+  loop();
+
+  /* ─── 8. STATUS CYCLING ─── */
+  const statuses = ['Loading the hierarchy','Calibrating tiers','Invoking the legends','Sorting masterpieces','Preparing the verdict','Finalizing rankings'];
   let statusIdx = 0;
   const statusInterval = setInterval(() => {
     const el = document.getElementById('loaderStatus');
     if (!el) return;
     statusIdx = (statusIdx + 1) % statuses.length;
     el.style.opacity = '0';
-    setTimeout(() => {
-      el.textContent = statuses[statusIdx];
-      el.style.opacity = '1';
-    }, 300);
-  }, 2000);
+    setTimeout(() => { el.textContent = statuses[statusIdx]; el.style.opacity = '1'; }, 300);
+  }, 2200);
 
-  /* ─── 7. ENTRÉE SÉQUENCÉE ─── */
-  setTimeout(() => document.getElementById('poemLine1')?.classList.add('visible'), 150);
-  setTimeout(() => document.getElementById('poemLine2')?.classList.add('visible'), 420);
-  setTimeout(() => {
-    document.getElementById('loaderLogoText')?.classList.add('visible');
-    document.querySelector('.loader-logo-dot')?.classList.add('visible');
-    document.querySelector('.loader-label')?.classList.add('visible');
-  }, 780);
-  setTimeout(() => {
-    document.querySelector('.loader-counter')?.classList.add('visible');
-    document.querySelector('.loader-status-wrap')?.classList.add('visible');
-  }, 1200);
-  setTimeout(() => {
-    document.querySelector('.loader-skip')?.classList.add('visible');
-  }, 2500);
-
-  /* ─── 8. COUNTER ─── */
-  let currentPct = 0;
-  let targetPct  = 0;
-  let pctRaf;
+  /* ─── 9. COUNTER ─── */
+  let currentPct = 0, targetPct = 0, pctRaf;
 
   function animatePct() {
     if (currentPct >= targetPct) return;
-    currentPct = Math.min(targetPct, currentPct + Math.max(0.4, (targetPct - currentPct) * 0.07));
+    currentPct = Math.min(targetPct, currentPct + Math.max(0.35, (targetPct-currentPct)*0.065));
     const el = document.getElementById('loaderPct');
     if (el) el.textContent = Math.floor(currentPct);
     pctRaf = requestAnimationFrame(animatePct);
@@ -470,25 +431,27 @@
     animatePct();
   }
 
-  // Simulation auto
-  setTimeout(() => setProgress(25),  500);
-  setTimeout(() => setProgress(50),  1300);
-  setTimeout(() => setProgress(75),  2200);
-  setTimeout(() => setProgress(90),  3200);
+  // Auto-simulation
+  setTimeout(() => setProgress(20),  400);
+  setTimeout(() => setProgress(45),  1200);
+  setTimeout(() => setProgress(72),  2200);
+  setTimeout(() => setProgress(90),  3500);
 
-  /* ─── 9. SORTIE EN RIDEAU ─── */
+  /* ─── 10. DISMISS ─── */
+  function triggerDismiss() {
+    if (dismissCalled) return;
+    dismissCalled = true;
+    dismiss(_dismissCallback);
+  }
+
   function dismiss(callback) {
     clearInterval(statusInterval);
     cancelAnimationFrame(pctRaf);
 
     const pctEl = document.getElementById('loaderPct');
     if (pctEl) pctEl.textContent = '100';
-    const statusEl = document.getElementById('loaderStatus');
-    if (statusEl) {
-      statusEl.textContent = 'Ready';
-      statusEl.style.color  = 'rgba(201,168,76,0.8)';
-      statusEl.style.opacity = '1';
-    }
+    const stEl = document.getElementById('loaderStatus');
+    if (stEl) { stEl.textContent = 'Ready'; stEl.style.color = 'rgba(201,168,76,0.8)'; }
 
     setTimeout(() => {
       cancelAnimationFrame(canvasRaf);
@@ -496,35 +459,28 @@
       overlay.addEventListener('transitionend', () => {
         overlay.style.display = 'none';
         const app = document.querySelector('.app-wrapper');
-        if (app) {
-          app.style.transition = 'opacity 0.6s ease';
-          app.style.opacity    = '1';
-        }
+        if (app) { app.style.transition = 'opacity 0.6s ease'; app.style.opacity = '1'; }
         if (typeof callback === 'function') callback();
       }, { once: true });
     }, 400);
   }
 
-  /* ─── 10. FALLBACK SÉCURITÉ (12s max) ─── */
-  setTimeout(() => triggerDismiss(), 12000);
-
-  /* ─── 11. API PUBLIQUE ─── */
+  /* ─── 11. API ─── */
   window.LoaderAPI = {
     setProgress,
-    // L'app appelle finish() quand les données sont prêtes
-    // Le loader attendra la fin du scan PUIS fermera
-    finish: function(callback) {
+    finish(callback) {
       setProgress(100);
-      onAppReady(callback);
+      appReady = true;
+      _dismissCallback = callback;
+      if (scanDone) triggerDismiss();
     }
   };
 
-  /* ─── 12. SKIP ─── */
-  document.getElementById('loaderSkip')
-    ?.addEventListener('click', () => {
-      scanDone = true;   // forcer la fin du scan
-      appReady = true;
-      triggerDismiss();
-    });
+  /* ─── 12. FALLBACK + SKIP ─── */
+  setTimeout(() => { appReady = true; if (scanDone) triggerDismiss(); }, 10000);
+
+  document.getElementById('loaderSkip')?.addEventListener('click', () => {
+    appReady = true; scanDone = true; triggerDismiss();
+  });
 
 })();
