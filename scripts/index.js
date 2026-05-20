@@ -13,19 +13,49 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initializeApp() {
     try {
         showSkeletonLoader();
+
+        // ── Signaler la progression au loader ──
+        if (window.LoaderAPI) window.LoaderAPI.setProgress(30);
+
         await loadGames();
-        console.log('Jeux chargés :', AppState.games.length);
+
+        if (window.LoaderAPI) window.LoaderAPI.setProgress(80);
+
         if (AppState.games.length === 0) {
             showNotification('Aucun jeu chargé – vérifiez la console', 'error');
         }
+
         AppState.filteredGames = [...AppState.games];
         renderCurrentView();
         updateStats();
         populateYearFilter();
         updateGameCount();
-        showNotification('Tier List chargée', 'success');
+
+        if (window.LoaderAPI) window.LoaderAPI.setProgress(100);
+
+        // ── Fermer le loader proprement, puis lancer les animations d'entrée ──
+        if (window.LoaderAPI) {
+            window.LoaderAPI.finish(() => {
+                // Callback après disparition du rideau
+                showNotification('Tier List chargée', 'success');
+                if (typeof initEditorialTitle === 'function') initEditorialTitle();
+            });
+        } else {
+            // Fallback si le loader n'est pas présent
+            document.querySelector('.app-wrapper').style.opacity = '1';
+            showNotification('Tier List chargée', 'success');
+            if (typeof initEditorialTitle === 'function') initEditorialTitle();
+        }
+
     } catch (err) {
         console.error(err);
+        // En cas d'erreur, on ferme quand même le loader
+        if (window.LoaderAPI) {
+            window.LoaderAPI.finish();
+        } else {
+            const app = document.querySelector('.app-wrapper');
+            if (app) app.style.opacity = '1';
+        }
         showNotification('Erreur de chargement', 'error');
     }
 }
@@ -99,7 +129,7 @@ function setupEventListeners() {
         reader.readAsDataURL(file);
     });
 
-    // Fermer les modales au clic sur le fond
+    // Fermer modales au clic fond
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal.id); });
     });

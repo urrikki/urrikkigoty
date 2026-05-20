@@ -1,63 +1,51 @@
-// ===== LOADING SCREEN CINÉMATIQUE — GOTY EDITION =====
-// Inspiré de Son Daven : visuel plein écran + counter minimaliste + rideau de sortie
-// Usage : <script src="scripts/loading.js"></script> tout en haut du <body>
-
+// ===== LOADING SCREEN CINÉMATIQUE — GOTY EDITION v2 =====
 (function () {
 
   /* ─── 1. HTML ─── */
   const overlay = document.createElement('div');
   overlay.id = 'goty-loader';
   overlay.innerHTML = `
-
-    <!-- Fond : effet visuel canvas (scanlines animées + vignette) -->
     <canvas id="loader-canvas"></canvas>
-
-    <!-- Vignette de bords -->
     <div class="loader-vignette"></div>
-
-    <!-- Ligne or haut -->
     <div class="loader-line-top"></div>
 
-    <!-- Contenu central -->
     <div class="loader-body">
-
-      <!-- Phrase poétique (style Son Daven) -->
-      <p class="loader-poem" id="loaderPoem">
+      <p class="loader-poem">
         <span class="poem-line" id="poemLine1">Among the greatest games</span>
         <span class="poem-line" id="poemLine2">only a few deserve the throne</span>
       </p>
 
-      <!-- Logo -->
       <div class="loader-logo">
         <span class="loader-logo-text" id="loaderLogoText">GOTY</span>
         <span class="loader-logo-dot">.</span>
       </div>
 
-      <!-- Label -->
-      <p class="loader-label">Tier List</p>
+      <!-- Élément central : révélé par le scan -->
+      <div class="loader-reveal-wrap" id="loaderRevealWrap">
+        <div class="loader-reveal-inner">
+          <span class="reveal-tag">Édition</span>
+          <span class="reveal-year">${new Date().getFullYear()}</span>
+          <span class="reveal-sub">The definitive ranking</span>
+        </div>
+      </div>
 
+      <p class="loader-label">Tier List</p>
     </div>
 
-    <!-- Counter en bas à gauche — exactement comme Son Daven -->
     <div class="loader-counter">
       <span class="loader-pct" id="loaderPct">0</span><span class="loader-pct-sym">%</span>
     </div>
 
-    <!-- Status en bas à droite -->
     <div class="loader-status-wrap">
       <span class="loader-status" id="loaderStatus">Loading the hierarchy</span>
     </div>
 
-    <!-- Skip -->
     <button class="loader-skip" id="loaderSkip">Skip intro ↗</button>
-
   `;
 
   /* ─── 2. CSS ─── */
   const css = document.createElement('style');
   css.textContent = `
-
-    /* Masquer le contenu pendant le chargement */
     .app-wrapper { opacity: 0; }
 
     #goty-loader {
@@ -67,31 +55,24 @@
       z-index: 99999;
       overflow: hidden;
       cursor: none;
-      font-family: 'Inter', 'DM Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
 
-    /* Canvas fond */
     #loader-canvas {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.9;
     }
 
-    /* Vignette — assombrit les coins */
     .loader-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 75% 75% at 50% 50%,
-        transparent 40%,
-        rgba(0,0,0,0.6) 75%,
-        rgba(0,0,0,0.92) 100%
-      );
+      background: radial-gradient(ellipse 80% 80% at 50% 50%,
+        transparent 35%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.92) 100%);
       pointer-events: none;
     }
 
-    /* Ligne or en haut */
     .loader-line-top {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -99,12 +80,8 @@
       background: linear-gradient(90deg, transparent, #C9A84C 25%, #E2C47A 50%, #C9A84C 75%, transparent);
       animation: lineBreath 3s ease-in-out infinite;
     }
-    @keyframes lineBreath {
-      0%, 100% { opacity: 0.4; }
-      50%       { opacity: 1; }
-    }
+    @keyframes lineBreath { 0%,100%{opacity:.35} 50%{opacity:1} }
 
-    /* Corps central */
     .loader-body {
       position: absolute;
       inset: 0;
@@ -112,44 +89,38 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1rem;
       padding: 2rem;
       text-align: center;
     }
 
-    /* Phrase poétique */
     .loader-poem {
       display: flex;
       flex-direction: column;
-      gap: 0.3em;
-      margin: 0 0 1rem;
+      gap: 0.25em;
+      margin: 0 0 0.5rem;
     }
     .poem-line {
       display: block;
-      font-family: 'DM Serif Display', 'Georgia', serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-style: italic;
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
-      color: rgba(245,240,232,0.65);
+      font-size: clamp(0.95rem, 2.2vw, 1.4rem);
+      color: rgba(245,240,232,0.55);
       letter-spacing: 0.02em;
-      font-weight: 400;
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.9s ease, transform 0.9s ease;
     }
-    .poem-line.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .poem-line.visible { opacity: 1; transform: translateY(0); }
 
-    /* Logo GOTY */
     .loader-logo {
       display: flex;
       align-items: flex-start;
       line-height: 1;
     }
     .loader-logo-text {
-      font-family: 'Bebas Neue', 'DM Serif Display', sans-serif;
-      font-size: clamp(7rem, 20vw, 14rem);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(7rem, 20vw, 13rem);
       color: #F5F0E8;
       letter-spacing: -0.01em;
       line-height: 0.85;
@@ -158,36 +129,86 @@
       transition: opacity 1.1s cubic-bezier(0.23,1,0.32,1),
                   transform 1.1s cubic-bezier(0.23,1,0.32,1);
     }
-    .loader-logo-text.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .loader-logo-text.visible { opacity: 1; transform: translateY(0); }
+
     .loader-logo-dot {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 10vw, 8rem);
+      font-size: clamp(4rem, 10vw, 7rem);
       color: #C9A84C;
       line-height: 0.75;
-      margin-top: 0.15em;
+      margin-top: 0.18em;
       opacity: 0;
-      transition: opacity 0.6s ease 0.7s;
-      text-shadow: 0 0 30px rgba(201,168,76,0.5);
+      transition: opacity 0.6s ease 0.6s;
     }
     .loader-logo-dot.visible { opacity: 1; }
 
-    /* Label */
+    /* ── Élément central révélé par le scan ── */
+    .loader-reveal-wrap {
+      position: relative;
+      height: 3.5rem;
+      overflow: hidden;
+      margin: -0.2rem 0 0;
+      pointer-events: none;
+    }
+    .loader-reveal-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      white-space: nowrap;
+    }
+    .loader-reveal-wrap.lit .loader-reveal-inner {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Masque de clip : ne s'affiche que dans la zone du scan */
+    .loader-reveal-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(201,168,76,0.06) 50%,
+        transparent 100%);
+      pointer-events: none;
+    }
+
+    .reveal-tag {
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #C9A84C;
+      font-weight: 600;
+    }
+    .reveal-year {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: #F5F0E8;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+    .reveal-sub {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: rgba(245,240,232,0.4);
+      letter-spacing: 0.08em;
+    }
+
     .loader-label {
-      margin: 0;
-      font-size: clamp(0.55rem, 1.2vw, 0.7rem);
+      margin: 0.25rem 0 0;
+      font-size: clamp(0.5rem, 1.1vw, 0.65rem);
       letter-spacing: 0.45em;
       text-transform: uppercase;
       color: #C9A84C;
       font-weight: 500;
       opacity: 0;
-      transition: opacity 0.7s ease 0.9s;
+      transition: opacity 0.7s ease 0.8s;
     }
     .loader-label.visible { opacity: 1; }
 
-    /* Counter — bas gauche, exactement comme Son Daven */
     .loader-counter {
       position: absolute;
       bottom: 2.5rem;
@@ -200,20 +221,19 @@
     }
     .loader-counter.visible { opacity: 1; }
     .loader-pct {
-      font-family: 'Bebas Neue', 'DM Serif Display', sans-serif;
-      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 5.5rem);
       color: #F5F0E8;
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .loader-pct-sym {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-size: clamp(1.5rem, 3vw, 2rem);
       color: #C9A84C;
       line-height: 1;
     }
 
-    /* Status — bas droite */
     .loader-status-wrap {
       position: absolute;
       bottom: 2.5rem;
@@ -223,66 +243,54 @@
     }
     .loader-status-wrap.visible { opacity: 1; }
     .loader-status {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(245,240,232,0.35);
+      color: rgba(245,240,232,0.3);
       font-weight: 500;
       transition: opacity 0.4s;
     }
 
-    /* Skip */
     .loader-skip {
       position: absolute;
       top: 1.8rem;
       right: 2rem;
       background: none;
       border: none;
-      color: rgba(245,240,232,0.3);
-      font-size: 0.6rem;
+      color: rgba(245,240,232,0.25);
+      font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
       font-family: 'Inter', sans-serif;
       padding: 0.4rem 0.8rem;
-      transition: color 0.3s;
       opacity: 0;
-      transition: opacity 0.5s ease 2s, color 0.3s;
+      transition: opacity 0.5s ease 2.5s, color 0.3s;
     }
     .loader-skip.visible { opacity: 1; }
     .loader-skip:hover { color: rgba(245,240,232,0.7); }
 
-    /* Sortie : le rideau monte */
     #goty-loader.leaving {
       transform: translateY(-100%);
       transition: transform 0.85s cubic-bezier(0.77,0,0.175,1);
     }
 
-    /* Mobile */
     @media (max-width: 600px) {
       .loader-counter { bottom: 1.5rem; left: 1.5rem; }
       .loader-status-wrap { bottom: 1.5rem; right: 1.5rem; }
       .loader-skip { top: 1rem; right: 1rem; }
-      .poem-line { font-size: clamp(0.85rem, 4vw, 1.1rem); }
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .poem-line, .loader-logo-text, .loader-logo-dot,
-      .loader-label, .loader-counter, .loader-status-wrap,
-      .loader-skip { transition: none; }
-      #goty-loader.leaving { transition: none; }
     }
   `;
 
   document.head.appendChild(css);
   document.body.insertBefore(overlay, document.body.firstChild);
 
-  /* ─── 3. CANVAS : fond animé (grille + scanlines + lueur centrale) ─── */
+  /* ─── 3. CANVAS — grille + scan lumineux ─── */
+  let canvasRaf;
   (function initCanvas() {
     const canvas = document.getElementById('loader-canvas');
     const ctx = canvas.getContext('2d');
-    let W, H, raf;
+    let W, H;
 
     function resize() {
       W = canvas.width  = window.innerWidth;
@@ -292,15 +300,24 @@
     resize();
 
     let t = 0;
+    const revealWrap = document.getElementById('loaderRevealWrap');
+
+    // Centre vertical approximatif de l'élément reveal (relatif à la fenêtre)
+    function getRevealCenterY() {
+      if (!revealWrap) return H * 0.5;
+      const rect = revealWrap.getBoundingClientRect();
+      return rect.top + rect.height / 2;
+    }
+
     function drawFrame() {
       ctx.clearRect(0, 0, W, H);
 
-      // Fond très sombre
+      // Fond
       ctx.fillStyle = '#030303';
       ctx.fillRect(0, 0, W, H);
 
-      // Grille fine
-      ctx.strokeStyle = 'rgba(201,168,76,0.04)';
+      // Grille fine dorée
+      ctx.strokeStyle = 'rgba(201,168,76,0.035)';
       ctx.lineWidth = 0.5;
       const CELL = 60;
       for (let x = 0; x < W; x += CELL) {
@@ -310,40 +327,66 @@
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
       }
 
-      // Lueur centrale dorée (pulse lent)
-      const glowR = Math.min(W, H) * (0.35 + 0.05 * Math.sin(t * 0.6));
+      // Lueur centrale (pulse lent)
+      const glowR = Math.min(W, H) * (0.3 + 0.04 * Math.sin(t * 0.5));
       const grd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, glowR);
-      grd.addColorStop(0, 'rgba(201,168,76,0.07)');
-      grd.addColorStop(0.5, 'rgba(201,168,76,0.02)');
+      grd.addColorStop(0, 'rgba(201,168,76,0.06)');
+      grd.addColorStop(0.6, 'rgba(201,168,76,0.015)');
       grd.addColorStop(1, 'transparent');
       ctx.fillStyle = grd;
       ctx.fillRect(0, 0, W, H);
 
-      // Scanlines horizontales (effet CRT subtil)
+      // Scanlines CRT
       for (let y = 0; y < H; y += 4) {
-        const alpha = 0.025 + 0.015 * Math.sin((y + t * 80) * 0.05);
-        ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        ctx.fillStyle = `rgba(0,0,0,${0.022 + 0.012 * Math.sin((y + t * 80) * 0.05)})`;
         ctx.fillRect(0, y, W, 1);
       }
 
-      // Ligne horizontale lumineuse qui traverse (comme un scanner)
-      const scanY = (H * 0.5) + Math.sin(t * 0.4) * H * 0.3;
-      const scanGrd = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
-      scanGrd.addColorStop(0, 'transparent');
-      scanGrd.addColorStop(0.5, 'rgba(201,168,76,0.04)');
-      scanGrd.addColorStop(1, 'transparent');
+      // ── Scan lumineux qui traverse de haut en bas en boucle ──
+      // Amplitude couvre toute la hauteur sur ~6 secondes
+      const period = 6; // secondes par passage
+      const scanRatio = (t % period) / period;       // 0→1
+      const scanY = scanRatio * (H + 120) - 60;      // -60 → H+60
+
+      // Intensité maximale quand le scan est au centre (zone reveal)
+      const revealCY = getRevealCenterY();
+      const dist = Math.abs(scanY - revealCY);
+      const isNearReveal = dist < 80;
+      if (isNearReveal && revealWrap) {
+        revealWrap.classList.add('lit');
+      } else if (!isNearReveal && revealWrap) {
+        revealWrap.classList.remove('lit');
+      }
+
+      // Bande lumineuse du scan — plus brillante près de l'élément reveal
+      const scanIntensity = isNearReveal ? 0.18 : 0.07;
+      const scanSpread    = isNearReveal ? 70    : 50;
+
+      const scanGrd = ctx.createLinearGradient(0, scanY - scanSpread, 0, scanY + scanSpread);
+      scanGrd.addColorStop(0,   'transparent');
+      scanGrd.addColorStop(0.4, `rgba(201,168,76,${scanIntensity * 0.3})`);
+      scanGrd.addColorStop(0.5, `rgba(201,168,76,${scanIntensity})`);
+      scanGrd.addColorStop(0.6, `rgba(201,168,76,${scanIntensity * 0.3})`);
+      scanGrd.addColorStop(1,   'transparent');
       ctx.fillStyle = scanGrd;
-      ctx.fillRect(0, scanY - 40, W, 80);
+      ctx.fillRect(0, scanY - scanSpread, W, scanSpread * 2);
+
+      // Ligne fine nette au centre du scan
+      ctx.strokeStyle = `rgba(226,196,122,${isNearReveal ? 0.55 : 0.25})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, scanY);
+      ctx.lineTo(W, scanY);
+      ctx.stroke();
 
       t += 0.016;
-      raf = requestAnimationFrame(drawFrame);
+      canvasRaf = requestAnimationFrame(drawFrame);
     }
 
     drawFrame();
-    overlay._stopCanvas = () => { cancelAnimationFrame(raf); };
   })();
 
-  /* ─── 4. ANIMATIONS D'ENTRÉE (séquencées avec setTimeout — pas de dépendance GSAP) ─── */
+  /* ─── 4. STATUS CYCLING ─── */
   const statuses = [
     'Loading the hierarchy',
     'Calibrating tiers',
@@ -353,8 +396,7 @@
     'Finalizing rankings',
   ];
   let statusIdx = 0;
-
-  function cycleStatus() {
+  const statusInterval = setInterval(() => {
     const el = document.getElementById('loaderStatus');
     if (!el) return;
     statusIdx = (statusIdx + 1) % statuses.length;
@@ -363,36 +405,32 @@
       el.textContent = statuses[statusIdx];
       el.style.opacity = '1';
     }, 300);
-  }
-  el_status_interval = setInterval(cycleStatus, 2000);
+  }, 2000);
 
-  // Entrée séquencée
-  setTimeout(() => {
-    document.getElementById('poemLine1')?.classList.add('visible');
-  }, 150);
-  setTimeout(() => {
-    document.getElementById('poemLine2')?.classList.add('visible');
-  }, 450);
+  /* ─── 5. ENTRÉE SÉQUENCÉE ─── */
+  setTimeout(() => document.getElementById('poemLine1')?.classList.add('visible'), 150);
+  setTimeout(() => document.getElementById('poemLine2')?.classList.add('visible'), 420);
   setTimeout(() => {
     document.getElementById('loaderLogoText')?.classList.add('visible');
     document.querySelector('.loader-logo-dot')?.classList.add('visible');
     document.querySelector('.loader-label')?.classList.add('visible');
-  }, 800);
+  }, 780);
   setTimeout(() => {
     document.querySelector('.loader-counter')?.classList.add('visible');
     document.querySelector('.loader-status-wrap')?.classList.add('visible');
-    document.querySelector('.loader-skip')?.classList.add('visible');
   }, 1200);
+  setTimeout(() => {
+    document.querySelector('.loader-skip')?.classList.add('visible');
+  }, 2500);
 
-  /* ─── 5. COUNTER ─── */
+  /* ─── 6. COUNTER ─── */
   let currentPct = 0;
   let targetPct  = 0;
   let pctRaf;
 
   function animatePct() {
     if (currentPct >= targetPct) return;
-    currentPct += Math.max(0.5, (targetPct - currentPct) * 0.08);
-    if (currentPct > targetPct) currentPct = targetPct;
+    currentPct = Math.min(targetPct, currentPct + Math.max(0.4, (targetPct - currentPct) * 0.07));
     const el = document.getElementById('loaderPct');
     if (el) el.textContent = Math.floor(currentPct);
     pctRaf = requestAnimationFrame(animatePct);
@@ -404,34 +442,37 @@
     animatePct();
   }
 
-  // Simulation progression auto (sera complétée par l'app)
-  setTimeout(() => setProgress(20), 600);
-  setTimeout(() => setProgress(45), 1200);
-  setTimeout(() => setProgress(70), 2000);
+  // Simulation auto-progression (l'app appellera LoaderAPI.finish() pour terminer)
+  setTimeout(() => setProgress(25),  500);
+  setTimeout(() => setProgress(50),  1300);
+  setTimeout(() => setProgress(75),  2200);
+  setTimeout(() => setProgress(90),  3200);
 
-  /* ─── 6. SORTIE EN RIDEAU ─── */
+  /* ─── 7. SORTIE EN RIDEAU ─── */
+  let dismissed = false;
+
   function dismiss(callback) {
-    clearInterval(el_status_interval);
+    if (dismissed) return;
+    dismissed = true;
+
+    clearInterval(statusInterval);
     cancelAnimationFrame(pctRaf);
 
-    // Afficher 100% une fraction de seconde
+    // Affiche 100%
     const pctEl = document.getElementById('loaderPct');
     if (pctEl) pctEl.textContent = '100';
-
     const statusEl = document.getElementById('loaderStatus');
     if (statusEl) {
       statusEl.textContent = 'Ready';
-      statusEl.style.color = 'rgba(201,168,76,0.7)';
+      statusEl.style.color = 'rgba(201,168,76,0.8)';
       statusEl.style.opacity = '1';
     }
 
-    // Courte pause pour lire "100%" puis rideau
+    // Courte pause puis rideau
     setTimeout(() => {
-      if (overlay._stopCanvas) overlay._stopCanvas();
-
+      cancelAnimationFrame(canvasRaf);
       overlay.classList.add('leaving');
 
-      // Après la transition CSS, révéler le contenu
       overlay.addEventListener('transitionend', () => {
         overlay.style.display = 'none';
         const app = document.querySelector('.app-wrapper');
@@ -442,18 +483,17 @@
         if (typeof callback === 'function') callback();
       }, { once: true });
 
-    }, 400);
+    }, 450);
   }
 
-  /* ─── 7. API PUBLIQUE ─── */
-  window.LoaderAPI = {
-    setProgress,
-    finish: dismiss,
-  };
+  /* ─── 8. FALLBACK : si l'app met trop de temps, on ferme quand même ─── */
+  setTimeout(() => dismiss(), 8000);
 
-  /* ─── 8. SKIP ─── */
-  document.getElementById('loaderSkip')?.addEventListener('click', () => dismiss());
+  /* ─── 9. API ─── */
+  window.LoaderAPI = { setProgress, finish: dismiss };
 
-  let el_status_interval; // déclarée avant usage dans cycleStatus
+  /* ─── 10. SKIP ─── */
+  document.getElementById('loaderSkip')
+    ?.addEventListener('click', () => dismiss());
 
 })();
