@@ -456,6 +456,13 @@
       "picture": "uncharted3.jpg",
       "review": "Pas réussi à avoir une rom qui fonctionne",
       "position": 4
+    },
+    {
+      "name": "Dishonored",
+      "year": 2012,
+      "rank": "A",
+      "picture": "dishonored.jpg",
+      "review": "Dishonored est un jeu de systèmes. Chaque niveau est construit autour d'une logique de multiplicité : plusieurs chemins, plusieurs hauteurs, plusieurs façons d'atteindre le même objectif, sans qu'aucune ne soit encouragée explicitement. On entre dans une zone et on lit l'espace, on cherche, on expérimente. La verticalité est omniprésente et Blink la transforme en outil de traversée aussi naturel qu'efficace. Le level design est l'argument le plus solide du jeu, et il tient sur toute la durée.\n\nLe système de chaos prolonge cette logique vers la narration. Chaque mort, chaque action violente modifie progressivement l'état du monde : densité ennemie, comportement des PNJ, fins disponibles. C'est une façon élégante de faire peser les choix sans jamais les verbaliser. Aucun style de jeu n'est récompensé ou pénalisé, tout est viable si on comprend les systèmes. Dunwall enveloppe tout ça dans une direction artistique cohérente, mélange victorien et industriel qui a durablement marqué l'esthétique du jeu vidéo de cette période.\n\nLe problème, c'est que cette rejouabilité affichée comme argument central n'est pas vraiment soutenue par la conception du jeu. Dishonored encourage à recommencer, à explorer d'autres approches, mais il ne donne pas les outils pour le faire confortablement. Pas de New Game Plus, pas de possibilité de redistribuer ses pouvoirs en début de mission avant de relancer un niveau. Pire : le jeu conserve les pouvoirs de la première run et ne laisse pas la liberté de les réorganiser pour tester une approche différente. Pour un jeu qui vend la liberté d'expérimentation comme valeur première, c'est une contradiction difficile à ignorer. On veut recommencer, mais les conditions pour le faire pleinement ne sont jamais réunies.\n\nCorvo muet pose un problème similaire dans sa logique. Le personnage existe déjà dans l'histoire, il a un passé, une relation établie avec l'impératrice, une place dans le récit. Ce n'est pas un avatar vierge sur lequel le joueur projette ce qu'il veut, c'est un personnage défini. Le rendre muet dans ce contexte crée un vide : on ne le crée pas, on ne l'entend pas, on le subit sans jamais le sentir vraiment présent. Si l'intention était de laisser le joueur s'approprier le personnage, il aurait fallu aller jusqu'au bout et proposer une création de personnage. Si l'intention était de raconter Corvo, il fallait lui donner une voix. Entre les deux, le jeu ne choisit pas, et c'est ce qui rend ce choix aussi frustrant."
     }
   ]
 }
