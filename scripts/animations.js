@@ -23,6 +23,7 @@ function animateViewToggle() {
     });
 }
 
+
 // Parallax sur header
 function initHeaderParallax() {
     const header = document.querySelector('.main-header');
