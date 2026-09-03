@@ -99,13 +99,21 @@
       "position": 6
     },
     {
+      "name": "The Last of Us",
+      "year": 2013,
+      "rank": "A",
+      "picture": "thelastofus.jpg",
+      "review": "The Last of Us est un jeu difficile à critiquer parce qu'il est difficile à prendre en défaut. La mise en scène est superbe, le ton ne vacille jamais entre cinématiques et gameplay, l'écriture est solide, la relation entre Joel et Ellie se construit progressivement et honnêtement par ce que le joueur fait plutôt que par ce qu'on lui montre. La narration environnementale est d'une cohérence rare : chaque espace raconte quelque chose sans jamais le verbaliser, les décors sont des documents qu'on lit en avançant. Les Clickers imposent une approche sonore du stealth qui change la façon dont on occupe l'espace. Le craft en temps réel maintient une tension constante sur les ressources. L'atmosphère post-apocalyptique est crédible, jamais surjouée. La fin est marquante.\n\nTout ça est vrai. Et c'est précisément là que se situe le problème, ou plutôt l'absence de problème, ce qui revient au même.\n\nThe Last of Us est un jeu qui fait tout bien sans jamais provoquer ce sentiment particulier qu'un jeu vraiment exceptionnel finit par produire. Ce n'est pas de la froideur, ce n'est pas de l'ennui, c'est plus subtil que ça : une admiration sincère pour le travail accompli qui ne se transforme jamais en quelque chose de plus personnel. On reconnaît la qualité, on la respecte, et on n'en ressort pas habité. Pourquoi exactement, c'est difficile à formuler. Peut-être que la maîtrise formelle du jeu est si totale qu'elle laisse peu de prise, peu d'aspérités auxquelles s'accrocher. Peut-être que l'excellence technique et narrative crée paradoxalement une distance. Certains jeux marquent par leurs défauts autant que par leurs qualités. The Last of Us n'en a presque pas, et c'est une façon étrange mais honnête de dire qu'il manque de quelque chose.",
+      "position": 7
+    },
+    {
       "name": "Assassin's Creed II",
       "year": 2009,
       "rank": "A",
       "postion": "",
       "picture": "ac2.png",
       "review": "Assassin’s Creed II séduit avant tout par la qualité de ses personnages, nettement plus marquants que son intrigue principale, laquelle demeure relativement convenue. L’univers, en revanche, force le respect : la reconstitution de l’Italie de la Renaissance est soignée, crédible, et particulièrement vivante. Certaines séquences, notamment en ville lors des festivals, renforcent efficacement le sentiment d’immersion. Le jeu brille également dans sa philosophie de l’assassinat. La préparation, l’observation et la patience sont encouragées, ce qui donne du poids à chaque cible et valorise une approche méthodique. Le parcours urbain, fluide et agréable, participe pleinement à cette sensation de maîtrise et reste l’un des grands plaisirs de l’expérience. En revanche, les combats à l’épée souffrent d’un manque de dynamisme et deviennent rapidement répétitifs. Le défaut le plus pénalisant reste toutefois la caméra, fréquemment instable et imprécise, au point de nuire au confort de jeu et à la lisibilité de l’action.",
-      "position": 7
+      "position": 8
     },
     {
       "name": "Dishonored",
@@ -113,7 +121,7 @@
       "rank": "A",
       "picture": "dishonored.jpg",
       "review": "Dishonored est un jeu de systèmes. Chaque niveau est construit autour d'une logique de multiplicité : plusieurs chemins, plusieurs hauteurs, plusieurs façons d'atteindre le même objectif, sans qu'aucune ne soit encouragée explicitement. On entre dans une zone et on lit l'espace, on cherche, on expérimente. La verticalité est omniprésente et Blink la transforme en outil de traversée aussi naturel qu'efficace. Le level design est l'argument le plus solide du jeu, et il tient sur toute la durée.\n\nLe système de chaos prolonge cette logique vers la narration. Chaque mort, chaque action violente modifie progressivement l'état du monde : densité ennemie, comportement des PNJ, fins disponibles. C'est une façon élégante de faire peser les choix sans jamais les verbaliser. Aucun style de jeu n'est récompensé ou pénalisé, tout est viable si on comprend les systèmes. Dunwall enveloppe tout ça dans une direction artistique cohérente, mélange victorien et industriel qui a durablement marqué l'esthétique du jeu vidéo de cette période.\n\nLe problème, c'est que cette rejouabilité affichée comme argument central n'est pas vraiment soutenue par la conception du jeu. Dishonored encourage à recommencer, à explorer d'autres approches, mais il ne donne pas les outils pour le faire confortablement. Pas de New Game Plus, pas de possibilité de redistribuer ses pouvoirs en début de mission avant de relancer un niveau. Pire : le jeu conserve les pouvoirs de la première run et ne laisse pas la liberté de les réorganiser pour tester une approche différente. Pour un jeu qui vend la liberté d'expérimentation comme valeur première, c'est une contradiction difficile à ignorer. On veut recommencer, mais les conditions pour le faire pleinement ne sont jamais réunies.\n\nCorvo muet pose un problème similaire dans sa logique. Le personnage existe déjà dans l'histoire, il a un passé, une relation établie avec l'impératrice, une place dans le récit. Ce n'est pas un avatar vierge sur lequel le joueur projette ce qu'il veut, c'est un personnage défini. Le rendre muet dans ce contexte crée un vide : on ne le crée pas, on ne l'entend pas, on le subit sans jamais le sentir vraiment présent. Si l'intention était de laisser le joueur s'approprier le personnage, il aurait fallu aller jusqu'au bout et proposer une création de personnage. Si l'intention était de raconter Corvo, il fallait lui donner une voix. Entre les deux, le jeu ne choisit pas, et c'est ce qui rend ce choix aussi frustrant.",
-      "position": 8
+      "position": 9
     },
     {
       "name": "Burnout 3: Takedown",
@@ -122,7 +130,7 @@
       "postion": "",
       "picture": "burnout3.jpg",
       "review": "Un jeu de course nerveux et spectaculaire, sublimé par son système de takedown jouissif, sa bande-son entraînante et son dynamisme. Malgré un manque de variété dans les véhicules et l’absence de multijoueur dans mon cas, il reste un incontournable du genre.",
-      "position": 9
+      "position": 10
     },
     {
       "name": "Unchated 2 : Among Thieves",
@@ -131,7 +139,7 @@
       "postion": "",
       "picture": "uncharted2.jpg",
       "review": "Uncharted 2 impressionne avant tout par sa réalisation. À sa sortie, le jeu affiche des graphismes marquants et propose des décors particulièrement soignés. Les environnements, variés et souvent spectaculaires, participent fortement au sentiment d’aventure. Cette qualité visuelle s’accompagne d’une mise en scène extrêmement maîtrisée, qui enchaîne les séquences avec une efficacité constante.\n\nL’escalade constitue l’un des plaisirs principaux du jeu. Les phases de progression verticale sont fluides, lisibles et agréables à parcourir. Elles contribuent à un rythme équilibré entre exploration, plateformes et moments plus spectaculaires. Cette alternance permet au jeu de maintenir une certaine variété de gameplay tout au long de l’aventure.\n\nLes personnages participent également à la réussite de l’ensemble. Nathan Drake reste un protagoniste attachant, entouré de figures secondaires globalement plaisantes à suivre. Le doublage, en particulier dans sa version originale, se distingue par sa qualité et donne beaucoup de naturel aux échanges entre les personnages.\n\nSur le plan narratif, l’histoire demeure cependant assez basique. L’intrigue suit une structure d’aventure classique et repose sur des ressorts déjà bien connus du genre. Les personnages, malgré leur sympathie, restent souvent construits sur des archétypes assez évidents.\n\nLes gunfights constituent la faiblesse la plus nette du jeu. Les phases de tir sont longues et parfois désagréables, ce qui peut nuire au rythme général de l’expérience. Leur répétition finit par créer une certaine lassitude, en particulier lorsque l’on préférerait voir l’aventure privilégier l’exploration ou les séquences scénarisées.\n\nEnfin, un détail technique peut agacer certains joueurs : l’impossibilité de désactiver les vibrations de la manette, ce qui peut devenir inconfortable lors de longues sessions de jeu.\n\nAu final, Uncharted 2 séduit surtout par sa mise en scène, sa réalisation technique et le dynamisme de son aventure. L’expérience reste marquante par son sens du spectacle, même si certaines limites apparaissent du côté des combats et de la profondeur narrative.",
-      "position": 10
+      "position": 11
     },
     {
       "name": "Gears of war 2",
@@ -140,7 +148,7 @@
       "postion": "",
       "picture": "gearsofwar2.jpg",
       "review": "L’introduction est particulièrement intelligente, puisqu’elle permet d’apprendre à jouer en entraînant un jeune soldat sans jamais entrer en contradiction avec l’histoire. Les missions, variées et bien rythmées, s’enchaînent avec plaisir. Le mode Horde, nouveauté marquante, est une réussite qui est devenu depuis un classique du genre. Le jeu parvient à se renouveler avec de nouvelles armes et de nouveaux ennemis, et conserve cette mise en scène cinématographique que j’apprécie tant. Techniquement, il est superbe. Cependant, malgré une tentative de donner plus de relief à Dom, les personnages restent assez fades, tout comme l’intrigue. L’IA, qu’il s’agisse des alliés ou des ennemis, manque toujours de finesse, ce qui est regrettable.",
-      "position": 11
+      "position": 12
     },
     {
       "name": "GTA: San Andreas",
@@ -161,12 +169,11 @@
       "position": 1
     },
     {
-      "name": "GTA IV",
-      "year": 2008,
+      "name": "The Walking Dead",
+      "year": 2012,
       "rank": "B",
-      "postion": "",
-      "picture": "gta4.jpg",
-      "review": "GTA IV impressionne d’abord par sa cohérence. Liberty City n’est pas seulement vaste, elle est crédible, vivante, presque respirante. Les détails abondent, la buée dans le froid, les reflets nocturnes, les passants animés tout semble pensé pour renforcer cette illusion urbaine. Même la musique des cinématiques, diffusée ensuite dans la radio des voitures, participe à cette immersion subtile et magistrale. Et qu'elle musique d'ailleurs, incroyable. Le corps à corps est super satisfaisant, une belle surprise dans un jeu souvent réduit à ses fusillades. L’intégration du téléphone et du métro, eux, contribue à ancrer le joueur dans le quotidien du personnage : on vit dans Liberty City, on n’y navigue pas seulement. Malheureusement, l’expérience n’est pas sans heurts. L’aide à la visée est un blocage déconcertant, alors que je suis à la souris, les caméras se perdent en pleine cinématique, et les forces de l’ordre manquent d’intelligence : même pour un criminel notoire, on ne se sent jamais véritablement traqué. Pire les pnj se bloquait inlassablement dans des murs ce qui m'empêchait de jouer plein de mission ou me faisait perdre de nombreuses minutes. Plus ennuyeux encore, les personnages secondaires, pourtant nombreux, peinent à susciter le moindre attachement, un problème pour une série ou le personnage et l'histoire est central.",
+      "picture": "thewalkingdead.jpg",
+      "review": "The Walking Dead ne ressemble à rien de ce que le jeu vidéo proposait à l'époque. Pas de combat central, pas de monde ouvert, pas de progression mécanique traditionnelle. Ce que Telltale met sur la table, c'est une fiction interactive qui assume pleinement ce qu'elle est : un récit que l'on oriente, pas un jeu que l'on maîtrise. Et la démonstration est suffisamment convaincante pour avoir atteint un public large et une légitimité critique que peu auraient anticipés pour ce format.\nCe qui rend l'expérience aussi efficace, c'est la relation entre Lee et Clementine. L'attachement ne passe pas par la mise en scène ou les dialogues seuls, il se construit par ce que le joueur fait, par les décisions qu'il prend pour protéger cette enfant, par la façon dont il choisit de se comporter face à elle. C'est de la construction émotionnelle par le gameplay, et c'est l'une des choses les plus réussies que le médium ait produites. L'écriture tient la route sur toute la durée, le rythme narratif est maîtrisé, et la direction artistique en cel-shading comics s'impose comme un choix cohérent qui vieillit bien.\nLes choix eux-mêmes méritent d'être mentionnés séparément. La minuterie visible qui accompagne chaque décision morale installe une pression réelle, inconfortable, qui oblige à trancher sans avoir le temps de tout peser. Certains de ces moments comptent parmi les plus difficiles qu'un jeu ait posés devant le joueur.\nLe problème, c'est que cette tension est en partie construite sur une illusion. Plusieurs décisions présentées comme déterminantes convergent vers les mêmes issues. On choisit, on ressent le poids du choix, et on réalise un peu plus tard que la destination était la même de toute façon. Ça ne détruit pas l'expérience, parce que l'impact émotionnel du moment reste intact, mais ça en révèle les limites structurelles. La qualité inégale entre les épisodes renforce cette impression : certains fonctionnent comme de pures transitions sans enjeu, et le creux se ressent d'autant plus dans un format épisodique où chaque épisode doit justifier l'attente.\nCe que The Walking Dead prouve surtout, c'est qu'un jeu peut émouvoir profondément avec des moyens techniques modestes et des mécaniques réduites à leur expression la plus simple. C'est à la fois son argument le plus fort et la limite qu'il ne franchit jamais vraiment.",
       "position": 2
     },
     {
@@ -179,13 +186,22 @@
       "position": 3
     },
     {
+      "name": "GTA IV",
+      "year": 2008,
+      "rank": "B",
+      "postion": "",
+      "picture": "gta4.jpg",
+      "review": "GTA IV impressionne d’abord par sa cohérence. Liberty City n’est pas seulement vaste, elle est crédible, vivante, presque respirante. Les détails abondent, la buée dans le froid, les reflets nocturnes, les passants animés tout semble pensé pour renforcer cette illusion urbaine. Même la musique des cinématiques, diffusée ensuite dans la radio des voitures, participe à cette immersion subtile et magistrale. Et qu'elle musique d'ailleurs, incroyable. Le corps à corps est super satisfaisant, une belle surprise dans un jeu souvent réduit à ses fusillades. L’intégration du téléphone et du métro, eux, contribue à ancrer le joueur dans le quotidien du personnage : on vit dans Liberty City, on n’y navigue pas seulement. Malheureusement, l’expérience n’est pas sans heurts. L’aide à la visée est un blocage déconcertant, alors que je suis à la souris, les caméras se perdent en pleine cinématique, et les forces de l’ordre manquent d’intelligence : même pour un criminel notoire, on ne se sent jamais véritablement traqué. Pire les pnj se bloquait inlassablement dans des murs ce qui m'empêchait de jouer plein de mission ou me faisait perdre de nombreuses minutes. Plus ennuyeux encore, les personnages secondaires, pourtant nombreux, peinent à susciter le moindre attachement, un problème pour une série ou le personnage et l'histoire est central.",
+      "position": 4
+    },
+    {
       "name": "Tony Hawk's Underground",
       "year": 2003,
       "rank": "B",
       "postion": "",
       "picture": "thug.jpg",
       "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "F.E.A.R",
@@ -194,7 +210,7 @@
       "postion": "",
       "picture": "fear.jpg",
       "review": "F.E.A.R débute avec une promesse excitante : un mariage rare entre horreur psychologique et FPS nerveux. Les premières heures captivent, alternant frissons, apparitions dérangeantes et fusillades brillamment mises en scène. Mais cette alchimie se dilue rapidement, l’action prenant nettement le pas sur l’horreur. Le plus frustrant est que le jeu insiste à maintenir cette atmosphère horrifique tout en surchargeant de combats. Le résultat devient gênant : plongé dans le noir, on peine à distinguer les silhouettes ennemies, ce qui gêne plus le gameplay qu’il ne le sublime. En revanche, l’intelligence artificielle impressionne. Les ennemis tentent constamment de surprendre, se repositionnent, prennent des poses variées pour attaquer. Pour l’époque, c’était remarquablement dynamique et donne encore aujourd’hui une intensité particulière aux affrontements. Au final, F.E.A.R amuse, surprend et parvient à marquer, mais il reste l’ombre de ce qu’il aurait pu être : un vrai chef-d’œuvre d’horreur vidéoludique.",
-      "position": 5
+      "position": 6
     },
     {
       "name": "Okami",
@@ -203,7 +219,7 @@
       "postion": "",
       "picture": "okami.jpg",
       "review": "Une direction artistique splendide, portée par une mécanique du pinceau céleste à la fois originale et plaisante. Malheureusement, l’expérience souffre de quelques problèmes techniques, comme des bugs où le personnage se retrouve bloqué. La difficulté trop faible enlève une grande part de tension, et la seconde partie rallonge artificiellement l’aventure sans apporter grand-chose de neuf, reprenant trop souvent les mêmes éléments déjà vus.",
-      "position": 6
+      "position": 7
     },
     {
       "name": "God od War",
@@ -212,7 +228,7 @@
       "postion": "",
       "picture": "godofwar.jpg",
       "review": "Une histoire originale et marquante, servie par une immersion remarquable. Le jeu est dynamique, jouissif, et l’on prend un vrai plaisir à suivre Kratos, devenu depuis une icône historique du jeu vidéo. Toutefois, le level design laissait à désirer, et surtout la caméra fut un véritable fardeau : aucun contrôle dessus, des changements d’angle incessants, et une gêne constante qui a maintes fois gâché mon aventure. Enfin, malgré l’intensité du gameplay, les combats finissent par souffrir d’une certaine redondance sur la durée.",
-      "position": 7
+      "position": 8
     },
     {
       "name": "Metal Gear Solid 4: Guns of the Patriots",
@@ -224,13 +240,21 @@
       "position": 0
     },
     {
+      "name": "Tomb Raider",
+      "year": 2013,
+      "rank": "C",
+      "picture": "tombraider.jpg",
+      "review": "Tomb Raider 2013 est un jeu beau, vraiment beau, et terriblement cinématique. La mise en scène emprunte ouvertement à Uncharted, dans le rythme, dans la composition des plans, dans cette façon de faire alterner exploration et set-pieces spectaculaires. La référence est assumée et ça fonctionne, l'île a une vraie identité visuelle et la direction artistique tient sur toute la durée. TressFX y contribue directement, la simulation de cheveux est suffisamment aboutie pour qu'on ne la remarque presque plus, ce qui est probablement le meilleur compliment qu'on puisse lui faire.\nLa refonte de Lara fonctionne dans son principe. La vulnérabilité initiale du personnage installe un vrai investissement émotionnel au démarrage, et le gunplay couplé à la progression des compétences est solide, gratifiant, sans fioriture inutile. Les tombeaux optionnels rappellent intelligemment ce que la série a toujours été avant de devenir un jeu d'action, même si leur nombre et leur durée restent en deçà de ce que le concept pouvait offrir.\nLe vrai problème du jeu se situe ailleurs, dans la construction de ses personnages secondaires. L'équipage qui entoure Lara est composé de figures qui ont, sur le papier, tout pour être intéressantes : des profils atypiques, des histoires qui auraient pu nourrir la trajectoire de l'héroïne. Sauf que le jeu ne leur accorde jamais le temps nécessaire pour exister vraiment. Deux ou trois flashbacks filmés à la va-vite, quelques échanges radio, et c'est tout ce qu'on obtient pour s'attacher à des gens censés compter dans la construction émotionnelle de Lara. Quand un moment dramatique survient, il ne porte rien, parce qu'il n'y a pas eu assez de matière en amont pour qu'on ressente quoi que ce soit. Et ce vide est encore renforcé par Lara elle-même, qui passe à autre chose presque instantanément après chaque drame, sans que le jeu ne s'attarde sur l'impact réel de ce qui vient de se passer.\nC'est ce manque de temps accordé aux relations qui explique en grande partie la dissonance ludo-narrative pointée à la sortie. Lara bascule de victime traumatisée à tueuse efficace en quelques heures, sans transition crédible, et cette absence de transition n'est pas qu'un problème de ton entre gameplay et cinématiques, c'est aussi un problème d'écriture qui n'a jamais pris le temps de poser les fondations émotionnelles nécessaires pour justifier ce basculement. La structure narrative reste convenue malgré le soin apporté à la mise en scène, et l'ensemble donne l'impression d'un jeu qui maîtrise sa forme bien mieux que son fond.",
+      "position": 1
+    },
+    {
       "name": "Call od duty: Modern Warfare 2",
       "year": 2009,
       "rank": "C",
       "postion": "",
       "picture": "mw2.jpg",
       "review": "La campagne solo de Modern Warfare 2 se distingue par une mise en scène extrêmement cinématographique et un enchaînement de missions devenues cultes. Toutefois, cette efficacité visuelle masque une faiblesse structurelle évidente : l’histoire, d’une durée d’environ trois heures, reste superficielle et peu engageante sur le fond. Le scénario ne marque pas par la qualité de son écriture, mais par l’accumulation de moments chocs. Ces séquences, conçues pour provoquer une réaction immédiate, prennent le pas sur toute tentative de construction narrative solide. L’intrigue avance vite, trop vite, et sacrifie la cohérence ainsi que la profondeur émotionnelle. Le choix de multiplier les personnages jouables est intéressant sur le principe, mais se révèle contre-productif dans un format aussi court. Faute de temps, aucune relation ne se développe réellement. Les personnages qui accompagnent le joueur manquent de présence, de personnalité et d’impact, au point de devenir largement oubliables. Cette absence de lien affaiblit l’attachement et nuit directement à l’investissement narratif. Il serait toutefois injuste de juger Modern Warfare 2 uniquement à travers sa campagne. Le cœur du jeu résidait clairement dans son multijoueur, véritable pilier de l’expérience. À l’époque, son rythme rapide, sa lisibilité immédiate et sa progression gratifiante en faisaient un terrain de jeu redoutablement efficace. Chaque partie s’enchaînait avec une fluidité exemplaire, maintenant une tension constante et un sentiment de maîtrise très valorisant pour le joueur. Le multijoueur de Modern Warfare 2 a posé des bases solides devenues des standards du FPS moderne : progression persistante, déblocages réguliers, sensations de tir directes et structure pensée pour retenir durablement l’attention. C’est en cela qu’il demeure l’élément le plus abouti du jeu, et la principale raison pour laquelle il a marqué toute une génération de joueurs.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "GTA: Vice City",
@@ -239,7 +263,7 @@
       "postion": "",
       "picture": "vicecity.jpg",
       "review": "Plongée dans une ville saturée d’action et de néons 80’s, avec une bande-son mythique. Quelques missions agaçantes et un rythme précipité ternissent l’ensemble. Un classique imparfait mais marquant.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Gears of war",
@@ -248,7 +272,7 @@
       "postion": "",
       "picture": "gearofwar.jpg",
       "review": "Une véritable démonstration technique et cinématographique : chaque mise en scène donnait l’impression de plonger dans un film d’action. Ses mécaniques de TPS, désormais reconnues comme novatrices, et ses graphismes largement en avance sur leur temps en font un jalon incontournable. Pourtant, la campagne m’a paru terriblement courte, probablement la plus brève que j’aie jamais terminée. Le manque de diversité des armes et une galerie de personnages trop stéréotypés, prisonniers de clichés militaires, ternissent un peu l’ensemble.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Mass Effect 2",
@@ -257,7 +281,7 @@
       "postion": "",
       "picture": "masseffect2.jpg",
       "review": "Le second épisode opère un virage sensible dans sa philosophie de jeu, avec des choix de conception qui ne sont pas sans conséquences. D’un point de vue purement ergonomique, certaines limitations surprennent : l’impossibilité de personnaliser finement la sensibilité ou encore l’obligation de jouer en QWERTY constituent des contraintes difficiles à justifier, d’autant plus dans un titre de cette envergure.\n\nSur le plan du gameplay, l’abandon du véhicule du premier épisode au profit d’un système de scan planétaire marque une évolution notable. Plus accessible et moins laborieux, ce procédé encourage clairement le complétionnisme. Toutefois, sa répétitivité finit par en révéler les limites, tant les séquences de scan s’accumulent sans réel renouvellement.\n\nLes combats, désormais plus dynamiques et orientés action, gagnent en nervosité et en lisibilité. Une évolution efficace en soi, mais qui s’accompagne d'une perte d'identité. Plusieurs mécaniques issues du premier volet disparaissent, au prix d’un appauvrissement ressenti de la dimension RPG, ce qui peut créer un décalage avec les attentes initiales.\n\nL’univers demeure en revanche l’un des piliers de l’expérience. La cohérence de l’ensemble et le soin apporté à l’immersion contribuent à maintenir l’implication du joueur sur la durée. L’écriture principale, sans être défaillante, reste relativement classique dans sa structure, là où certains arcs secondaires parviennent davantage à capter l’intérêt.\n\nLe traitement des personnages s’inscrit dans cette même dynamique contrastée. Si certains compagnons se révèlent convaincants, d’autres souffrent d’une caractérisation plus superficielle, proche du stéréotype, ce qui crée une impression d’inégalité dans l’ensemble du casting.\n\nSur un plan plus technique, le manque de variété dans les modèles de PNJ nuit ponctuellement à la crédibilité du récit. Voir des visages identiques réapparaître dans des contextes différents, y compris pour des figures supposément importantes, fragilise l’illusion narrative.\n\nEnfin, la durée de vie s’impose comme un point fort indéniable. Le contenu proposé, dense et étendu, permet une implication prolongée, renforçant la sensation d’un univers riche à explorer malgré ses limites structurelles.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "The Orange Box",
@@ -266,7 +290,7 @@
       "postion": "",
       "picture": "orangebox.jpg",
       "review": "L’idée d’une compilation vidéoludique était séduisante pour l’époque : cinq expériences dans un seul coffret. Mais là où le bât blesse, c’est dans la prétention de voir The Orange Box nommé au titre de jeu de l’année. Ce n’est pas une œuvre unifiée, mais un assemblage disparate. À mes yeux, seule une création singulière devrait être jugée digne d’une telle reconnaissance. Au cœur du coffret se trouve Half-Life 2: Episode Two, censé être la pièce de résistance. Pourtant, son contenu trop court laisse un goût amer. Après l’équilibre quasi parfait du rythme et du gameplay de Half-Life 2, cette suite mise presque exclusivement sur la narration et sur l’attachement à Alyx. Le problème est qu’en fermant son récit sur un cliffhanger resté sans suite, Valve transforme une expérience correcte en frustration durable. On ne retient plus l’épisode pour ses qualités ludiques, mais pour le vide laissé par l’absence d’un Episode Three. Portal, quant à lui, s’impose comme une agréable curiosité. Oui, le concept est génial et GLaDOS donne une identité mémorable à l’expérience. Mais soyons honnêtes : il ne s’agit pas d’un “grand jeu” mais d’un projet secondaire, un “mode bonus” comme on aurait pu en trouver dans Half-Life. Trop court, trop facile, il amuse une heure, surprend par son idée, puis s’éteint presque aussitôt. En définitive, The Orange Box est une excellente affaire pour le joueur de l’époque, mais certainement pas une œuvre capable de rivaliser avec les véritables prétendants au trône. Une boîte pleine de promesses, certes, mais sans monument capable d’en faire un Game of the Year.",
-      "position": 5
+      "position": 6
     },
     {
       "name": "Mass effect 3",
@@ -274,7 +298,7 @@
       "rank": "C",
       "picture": "masseffect3.jpg",
       "review": "Mass Effect 3 est un jeu de guerre. Quand Shepard arrive quelque part, c'est pour se battre ou tomber dans une embuscade. Ceux qui espéraient un rééquilibrage après l'orientation très combat de ME2 en seront pour leurs frais, et c'est le premier reproche qu'on peut lui adresser.\nLes combats sont techniquement les plus aboutis de la trilogie. La fluidité est là, la lisibilité aussi. Le système de pouvoirs offre une vraie dimension tactique : casser un bouclier, saboter un synthétique, ralentir un assaillant, équilibrer son équipe en fonction des faiblesses du moment. Sur le papier c'est solide. En pratique, la majorité des ennemis ne demandent pas vraiment de réflexion. Un bouclier à casser, une vague à absorber, et l'affaire est réglée. La profondeur promise par la diversité des pouvoirs se heurte à une conception ennemie trop paresseuse pour l'exploiter vraiment. Et en termes de sensations pures, on voit à l'œil nu que Gears of War a servi de référence, sans que ME3 n'en atteigne le niveau. La monotonie finit par s'installer quand les niveaux confinés s'enchaînent et que les vagues peinent à renouveler l'intérêt.\nCe qui sauve l'expérience, c'est l'univers et ce qu'il transporte. Mass Effect 3 n'a pas une histoire originale : rassembler des ressources et des alliés pour former la plus grande armée possible, c'est assez simpliste dans sa structure. Mais ce cadre sert de prétexte à quelque chose de plus intéressant : faire peser les choix. Allez-vous commettre un génocide pour récupérer une force de frappe décisive ? Laisser mourir un ancien allié qui se met en travers de votre route ? Ces décisions ont du poids, et pour la première fois dans la trilogie, on a vraiment l'impression que les choix accumulés façonnent le monde autour de soi. Les compagnons connus reviennent, leurs arcs se referment, et la résolution de ces histoires individuelles est souvent bien menée. L'ambiance de fin du monde est cohérente, la direction artistique tient la route, et le sound design des Reapers est franchement remarquable.\nSauf que cette promesse de continuité narrative se retourne contre elle-même. Wrex, qui était vivant dans mes parties précédentes, meurt ici. La Reine Rachni que j'avais sauvée, je la tue dans cet épisode. Les Geth que j'avais soignés ne le sont plus. Il faut préciser que mes sauvegardes des anciens épisodes n'ont pas pu être récupérées, ce qui explique probablement une partie de ces incohérences. Mais même en tenant compte de ça, le sentiment de jouer dans un univers parallèle est difficile à ignorer, comme si les décisions passées n'avaient finalement eu aucune prise réelle sur ce monde.\nLa fin concentre tout ce qui dysfonctionne. Trois choix arbitraires, posés là sans tenir compte de ce qui précède, dans une mise en scène qui transforme Shepard en figure divine. C'est précisément le contresens du personnage : une soldate qui passait son temps à rejeter le statut de héros qu'on lui collait dessus, et qu'on propulse soudainement au rang de déesse cosmique. Le multijoueur qui conditionne l'accès à la meilleure fin est une autre décision difficilement défendable, un prérequis artificiel qui pénalise ceux qui n'ont pas envie de jouer en ligne.\nDernier point, moins spectaculaire mais symptomatique : en 2012, assigner la course, l'interaction et plusieurs actions contextuelles à la même touche est une faute de conception élémentaire. Ce genre de détail ne ruine pas un jeu, mais il dit quelque chose sur le niveau de finition global.",
-      "position": 6
+      "position": 7
     },
     {
       "name": "Freedom Fighters",
@@ -283,7 +307,7 @@
       "postion": "",
       "picture": "freedomfighters.jpg",
       "review": "Un jeu d’action à la troisième personne au rythme soutenu, avec une mécanique de commandement d’escouade simple, mais efficace. J’y ai trouvé un plaisir immédiat, sans bugs gênants, ce qui est rare pour l’époque. Bien que le scénario ne brille pas par sa profondeur, il bénéficie d’une ambiance alternative captivante où les Soviétiques envahissent New York.",
-      "position": 7
+      "position": 8
     },
     {
       "name": "journey",
@@ -291,7 +315,7 @@
       "rank": "C",
       "picture": "journey.jpg",
       "review": "Journey est court. Et c'est tant mieux, parce que son gameplay atteint ses limites bien avant que la fin n'arrive. Se déplacer, sauter, émettre un signal sonore : le dispositif est volontairement minimal, et cette minimalité se retourne contre lui sur la durée. Quelques zones de plus et l'ennui aurait fini par l'emporter franchement. En l'état, la brièveté de l'expérience est moins un choix artistique qu'une nécessité mécanique.\n\nCe qui fonctionne, en revanche, fonctionne vraiment. La direction artistique est d'une cohérence rare : le sable, les tissus, la lumière, tout participe à construire un langage visuel immédiatement lisible et visuellement remarquable. Journey démontre qu'un jeu peut produire une expérience émotionnelle forte sans dialogue, sans narration explicite, uniquement par l'environnement et ce qu'il raconte visuellement. C'est son argument le plus solide, et il tient.\n\nLe multijoueur anonyme prolonge cette logique. Croiser un autre joueur sans savoir qui il est, communiquer uniquement par un signal sonore, partager un bout de chemin sans le choisir vraiment : l'idée est simple et elle produit des moments difficiles à reproduire ailleurs.\n\nMais cette promesse contemplative a ses limites. Plusieurs zones envahies par le brouillard ferment le cadre sans rien proposer en échange. Ce n'est pas le cloisonnement en lui-même qui pose problème, un espace délimité peut très bien générer une ambiance forte. C'est le vide derrière. Quand le brouillard cache quelque chose, il crée de la tension. Quand il ne cache rien et prive simplement le joueur de ce pour quoi il est là, il devient une frustration. Journey construit son identité sur le plaisir de regarder, et ces moments où l'on ne voit plus rien ni partiellement travaillent contre lui.",
-      "position": 8
+      "position": 9
     },
     {
       "name": "Portal 2",
@@ -300,7 +324,7 @@
       "postion": "",
       "picture": "portal2.jpg",
       "review": "Portal 2 s'impose d'emblée sur ce qu'il maîtrise le mieux : la conception des puzzles. La progression est propre, organique, chaque mécanique introduite puis complexifiée sans jamais avoir besoin d'expliquer quoi que ce soit explicitement. Le gel de propulsion, le gel de rebond, les tunnels de lumière, tout s'enchaîne avec une logique pédagogique rare. Le mode coopératif pousse cette idée encore plus loin en imposant une vraie coordination entre les deux joueurs. Pour un jeu de réflexion, c'est une réussite peu commune. L'écriture tient également la route, GLaDOS et Wheatley sont des personnages bien construits, drôles sans être envahissants, et la narration environnementale fait le reste, l'histoire se lit dans les décors, dans les salles abandonnées, dans les détails en marge des zones de test.\nLe problème, c'est précisément là : les zones de test. Portal 1 tirait une grande partie de son charme du moment où le joueur sortait du cadre, où les murs propres et blancs laissaient place aux coulisses d'Aperture. Ce sentiment d'échapper au protocole, de voir quelque chose qu'on n'était pas censé voir, était au cœur de l'expérience. Portal 2 ne retrouve jamais vraiment cette sensation. À la place, le jeu enchaîne les chapitres de manière mécanique : les salles de Wheatley, puis celles de GLaDOS, puis l'ancien monde, puis encore Wheatley. Ça n'en finit pas. Ce qui devait être une montée en puissance narrative devient une accumulation qui s'étire, et le rythme finit par s'effondrer sous son propre poids.\nLa difficulté suit la même tendance. Pour quiconque a terminé le premier opus, Portal 2 ne résiste jamais vraiment. Les puzzles sont bien construits mais rarement exigeants, et cette accessibilité, si elle élargit le public, prive le jeu d'une vraie tension intellectuelle.\nIl y a enfin un problème technique difficilement justifiable : les écrans de chargement. Le jeu dispose pourtant de zones de transition entre les salles, des corridors, des ascenseurs, des espaces intermédiaires, exactement le genre d'espaces conçus pour masquer un chargement. Les utiliser pour faire patienter le joueur de façon invisible aurait été la solution évidente. À la place, Portal 2 coupe l'expérience avec des écrans noirs qui cassent l'immersion de façon aussi inutile que répétée. Pour un jeu qui soigne autant sa mise en scène par ailleurs, c'est une contradiction difficile à ignorer.",
-      "position": 9
+      "position": 10
     },
     {
       "name": "Fallout 3",
@@ -375,13 +399,21 @@
       "position": 0
     },
     {
+      "name": "Super Mario 3D World",
+      "year": 2013,
+      "rank": "E",
+      "picture": "sm3Dworld.jpg",
+      "review": "Le début est timide. Trop timide. Les niveaux sont courts, construits autour d'idées uniques que le jeu introduit puis abandonne, et la promesse de densité que cette structure est censée tenir ne se ressent pas vraiment. Peut-être qu'arriver à ce jeu après avoir traversé une grande partie de ce que le médium a produit émousse la perception de ce qui était inventif à sa sortie. Peut-être que le jeu prend simplement trop de temps à démarrer. Probablement les deux.\n\nLa tenue du chat illustre bien la contradiction centrale du jeu. Elle est conçue pour encourager la verticalité, l'exploration, la recherche de passages alternatifs. Sauf qu'en coopération, la caméra doit rester suffisamment large pour contenir tous les joueurs à l'écran, ce qui impose à tout le monde de rester groupé. L'exploration individuelle devient impossible : si tu t'écartes, tu freines les autres ou tu te fais ramener dans le cadre. Le jeu vend une liberté de traversée que son propre mode coopératif empêche d'exercer.\n\nLes différences entre les personnages existent sur le papier. Peach plane, Toad est rapide, Luigi saute haut. En pratique, l'impact sur l'approche des niveaux est suffisamment marginal pour que parler de stratégie soit excessif. On choisit son personnage par habitude ou par préférence, pas par nécessité.\n\nLe système de couronne apporte un peu de vie à l'expérience en coopération. La guerre pour le premier rang crée de petits moments de compétition qui cassent la monotonie. Mais la distribution des points semble arbitraire, la couronne revenant régulièrement au joueur 1 sans raison lisible, ce qui finit par vider le système de son intérêt compétitif.\n\nReste le problème classique de la série : la difficulté de base est trop faible, et ce qui est censé la remplacer ce sont les étoiles vertes et autres collectibles secondaires qui rendent les niveaux artificiellement exigeants sans les rendre plus intéressants. Un Mario n'a pas besoin d'être difficile, mais s'il ne l'est pas, il doit au moins être agréable à traverser.",
+      "position": 1
+    },
+    {
       "name": "Halo 2",
       "year": 2004,
       "rank": "E",
       "postion": "",
       "picture": "halo2.png",
       "review": "N’ayant pas profité de son mode en ligne, je n’ai subi que la campagne, que j’ai trouvée particulièrement lente, courte et désagréable. Le rythme est poussif, les contrôles frustrants, avec une sensibilité impossible à régler correctement. L’aim assist, beaucoup trop prononcé, donne constamment l’impression d’être pris par la main, ce qui nuit à tout sentiment de maîtrise. Seule la bande-son, magistrale, parvient réellement à sauver l’expérience.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "SSX 3",
@@ -390,7 +422,7 @@
       "postion": "",
       "picture": "ssx3.jpg",
       "review": "Jeu de snowboard arcade au style flashy et à la bande-son dynamique. Pourtant, le fun immédiat attendu n’a pas opéré, me rappelant un Mario Kart en moins engageant. Les critiques l’adoraient, mais pour moi, la descente fut courte.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Left 4 Dead 2",
@@ -399,7 +431,7 @@
       "postion": "",
       "picture": "left4dead2.jpg",
       "review": "Rejoué plus de seize ans après sa sortie, Left 4 Dead 2 peine à convaincre. Sans sa communauté d’origine, le jeu perd l’essence de ce qui faisait son intérêt : la coopération en ligne. Aujourd’hui, l’expérience paraît creuse et datée. L’histoire, déjà secondaire à l’époque, ne retient guère l’attention. Quelques armes et ennemis variés maintiennent un semblant de rythme, mais la mécanique a mal vieilli : la formule est rigide, répétitive, et n’offre plus la tension d’autrefois. Left 4 Dead 2 reste un souvenir respectable du jeu coopératif, mais n’a plus grand-chose à offrir à ceux qui le découvrent ou le rejouent aujourd’hui.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Madden NFL 2004",
@@ -408,7 +440,7 @@
       "postion": "",
       "picture": "madden2004.jpg",
       "review": "Simulation sportive de référence pour les amateurs de football américain, mais hermétique pour un novice. Mon expérience a été courte, freinée par un manque de compréhension des règles, bien que la technique et la profondeur stratégique soient indéniables.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "Tom Clancy’s Ghost Recon Advanced Warfighter",
@@ -472,20 +504,6 @@
       "picture": "uncharted3.jpg",
       "review": "Pas réussi à avoir une rom qui fonctionne",
       "position": 4
-    },
-    {
-      "name": "The Walking Dead",
-      "year": 2012,
-      "rank": "B",
-      "picture": "thewalkingdead.jpg",
-      "review": "The Walking Dead ne ressemble à rien de ce que le jeu vidéo proposait à l'époque. Pas de combat central, pas de monde ouvert, pas de progression mécanique traditionnelle. Ce que Telltale met sur la table, c'est une fiction interactive qui assume pleinement ce qu'elle est : un récit que l'on oriente, pas un jeu que l'on maîtrise. Et la démonstration est suffisamment convaincante pour avoir atteint un public large et une légitimité critique que peu auraient anticipés pour ce format.\nCe qui rend l'expérience aussi efficace, c'est la relation entre Lee et Clementine. L'attachement ne passe pas par la mise en scène ou les dialogues seuls, il se construit par ce que le joueur fait, par les décisions qu'il prend pour protéger cette enfant, par la façon dont il choisit de se comporter face à elle. C'est de la construction émotionnelle par le gameplay, et c'est l'une des choses les plus réussies que le médium ait produites. L'écriture tient la route sur toute la durée, le rythme narratif est maîtrisé, et la direction artistique en cel-shading comics s'impose comme un choix cohérent qui vieillit bien.\nLes choix eux-mêmes méritent d'être mentionnés séparément. La minuterie visible qui accompagne chaque décision morale installe une pression réelle, inconfortable, qui oblige à trancher sans avoir le temps de tout peser. Certains de ces moments comptent parmi les plus difficiles qu'un jeu ait posés devant le joueur.\nLe problème, c'est que cette tension est en partie construite sur une illusion. Plusieurs décisions présentées comme déterminantes convergent vers les mêmes issues. On choisit, on ressent le poids du choix, et on réalise un peu plus tard que la destination était la même de toute façon. Ça ne détruit pas l'expérience, parce que l'impact émotionnel du moment reste intact, mais ça en révèle les limites structurelles. La qualité inégale entre les épisodes renforce cette impression : certains fonctionnent comme de pures transitions sans enjeu, et le creux se ressent d'autant plus dans un format épisodique où chaque épisode doit justifier l'attente.\nCe que The Walking Dead prouve surtout, c'est qu'un jeu peut émouvoir profondément avec des moyens techniques modestes et des mécaniques réduites à leur expression la plus simple. C'est à la fois son argument le plus fort et la limite qu'il ne franchit jamais vraiment."
-    },
-    {
-      "name": "Tomb Raider",
-      "year": 2013,
-      "rank": "C",
-      "picture": "tombraider.jpg",
-      "review": "Tomb Raider 2013 est un jeu beau, vraiment beau, et terriblement cinématique. La mise en scène emprunte ouvertement à Uncharted, dans le rythme, dans la composition des plans, dans cette façon de faire alterner exploration et set-pieces spectaculaires. La référence est assumée et ça fonctionne, l'île a une vraie identité visuelle et la direction artistique tient sur toute la durée. TressFX y contribue directement, la simulation de cheveux est suffisamment aboutie pour qu'on ne la remarque presque plus, ce qui est probablement le meilleur compliment qu'on puisse lui faire.\nLa refonte de Lara fonctionne dans son principe. La vulnérabilité initiale du personnage installe un vrai investissement émotionnel au démarrage, et le gunplay couplé à la progression des compétences est solide, gratifiant, sans fioriture inutile. Les tombeaux optionnels rappellent intelligemment ce que la série a toujours été avant de devenir un jeu d'action, même si leur nombre et leur durée restent en deçà de ce que le concept pouvait offrir.\nLe vrai problème du jeu se situe ailleurs, dans la construction de ses personnages secondaires. L'équipage qui entoure Lara est composé de figures qui ont, sur le papier, tout pour être intéressantes : des profils atypiques, des histoires qui auraient pu nourrir la trajectoire de l'héroïne. Sauf que le jeu ne leur accorde jamais le temps nécessaire pour exister vraiment. Deux ou trois flashbacks filmés à la va-vite, quelques échanges radio, et c'est tout ce qu'on obtient pour s'attacher à des gens censés compter dans la construction émotionnelle de Lara. Quand un moment dramatique survient, il ne porte rien, parce qu'il n'y a pas eu assez de matière en amont pour qu'on ressente quoi que ce soit. Et ce vide est encore renforcé par Lara elle-même, qui passe à autre chose presque instantanément après chaque drame, sans que le jeu ne s'attarde sur l'impact réel de ce qui vient de se passer.\nC'est ce manque de temps accordé aux relations qui explique en grande partie la dissonance ludo-narrative pointée à la sortie. Lara bascule de victime traumatisée à tueuse efficace en quelques heures, sans transition crédible, et cette absence de transition n'est pas qu'un problème de ton entre gameplay et cinématiques, c'est aussi un problème d'écriture qui n'a jamais pris le temps de poser les fondations émotionnelles nécessaires pour justifier ce basculement. La structure narrative reste convenue malgré le soin apporté à la mise en scène, et l'ensemble donne l'impression d'un jeu qui maîtrise sa forme bien mieux que son fond."
     }
   ]
 }
