@@ -255,20 +255,20 @@
       "position": 2
     },
     {
-      "name": "Metal Gear Solid 3: Snake Eater",
-      "year": 2004,
-      "rank": "C",
-      "picture": "mgs3.jpg",
-      "review": "Porté par une histoire et des cinématiques remarquables, mais le gameplay s’efface face aux longues cutscenes et contrôles peu fluides. Un scénario d’exception enfermé dans une expérience ludique déséquilibrée.",
-      "position": 3
-    },
-    {
       "name": "Metal Gear Solid 4: Guns of the Patriots",
       "year": 2008,
       "rank": "C",
       "postion": "",
       "picture": "mgs4.jpg",
       "review": "Agréablement surpris après le troisième opus, j’ai trouvé cet épisode bien plus plaisant à jouer. Pour une fois, on a réellement l’impression de participer, et non de simplement observer des cinématiques interminables. Les contrôles ont enfin été modernisés, offrant une maniabilité fluide et intuitive. J’ai particulièrement apprécié la diversité des missions alternant entre action nerveuse, filature et infiltration pure qui maintiennent un rythme soutenu et varié. Le système de camouflage adaptatif, qui ajuste automatiquement la tenue à l’environnement, est une idée brillante : il supprime les interruptions incessantes du passé et fluidifie l’expérience. En revanche, le jeu regorge de références et de rappels à d’anciens personnages, ce qui, pour ma part, m’a parfois sorti de l’immersion. Je comprends la volonté de conclure la saga, mais cette nostalgie forcée alourdit le propos. Enfin, l’histoire, bien que cohérente et ambitieuse, m’a semblé moins captivante et émotionnelle que celle du troisième volet.",
+      "position": 3
+    },
+    {
+      "name": "Metal Gear Solid 3: Snake Eater",
+      "year": 2004,
+      "rank": "C",
+      "picture": "mgs3.jpg",
+      "review": "Porté par une histoire et des cinématiques remarquables, mais le gameplay s’efface face aux longues cutscenes et contrôles peu fluides. Un scénario d’exception enfermé dans une expérience ludique déséquilibrée.",
       "position": 4
     },
     {
