@@ -195,21 +195,21 @@
       "position": 4
     },
     {
-      "name": "Tony Hawk's Underground",
-      "year": 2003,
-      "rank": "B",
-      "postion": "",
-      "picture": "thug.jpg",
-      "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate.",
-      "position": 5
-    },
-    {
       "name": "Okami",
       "year": 2006,
       "rank": "B",
       "postion": "",
       "picture": "okami.jpg",
       "review": "Une direction artistique splendide, portée par une mécanique du pinceau céleste à la fois originale et plaisante. Malheureusement, l’expérience souffre de quelques problèmes techniques, comme des bugs où le personnage se retrouve bloqué. La difficulté trop faible enlève une grande part de tension, et la seconde partie rallonge artificiellement l’aventure sans apporter grand-chose de neuf, reprenant trop souvent les mêmes éléments déjà vus.",
+      "position": 5
+    },
+    {
+      "name": "Tony Hawk's Underground",
+      "year": 2003,
+      "rank": "B",
+      "postion": "",
+      "picture": "thug.jpg",
+      "review": "Un des épisodes les plus appréciés de la saga, mêlant gameplay fluide, personnalisation et scénario léger mais attachant. Seule une mission finale buguée a terni mon expérience. Une bande-son culte et une liberté de tricks qui en font un monument du skate.",
       "position": 6
     },
     {
