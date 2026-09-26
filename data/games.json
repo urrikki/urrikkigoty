@@ -499,13 +499,21 @@
       "position": 1
     },
     {
+      "name": "Hearthstone",
+      "year": 2014,
+      "rank": "NP",
+      "picture": "hearthstone.jpg",
+      "review": "Hearthstone mérite d'être reconnu pour ce qu'il a fait à l'industrie avant d'être jugé comme jeu. Il n'a pas inventé le CCG numérique, mais il l'a rendu accessible à une échelle que personne n'avait atteinte avant lui. La simplification du ruleset, le modèle économique free-to-play avec packs et craft, la lisibilité immédiate des règles sans bagage préalable : tout ça a posé un standard que les concurrents ont suivi quasi universellement ensuite. L'impact est réel et difficile à contester.\n\nLe jeu lui-même est propre. La prise en main est immédiate, la profondeur stratégique existe malgré des règles apparemment simples, et la variété des decks offre une vraie rejouabilité. Le RNG reste le problème central : une part trop importante du résultat échappe aux décisions du joueur, et ça finit par rogner sur la satisfaction que la dimension stratégique est censée produire.\n\nMais au fond, Hearthstone n'est simplement pas le genre de jeu fait pour tout le monde. On y prend du plaisir le temps de découvrir les mécaniques, et on s'en lasse une fois que la boucle a montré ses limites. Ce n'est pas un défaut du jeu en particulier, c'est une question d'affinité avec le format.\n\nJ'y ai joué que 2h donc je préfère le mettre en 'not played'.",
+      "position": 0
+    },
+    {
       "name": "Star Wars Galaxies",
       "year": 2003,
       "rank": "NP",
       "postion": "",
       "picture": "swgalaxy.jpg",
       "review": "MMORPG ambitieux situé dans l’univers Star Wars, salué à l’époque pour sa liberté et son immersion. Malheureusement, n’ayant pas pu l’essayer, je ne peux que constater qu’il a marqué de nombreux joueurs par son système de professions varié et son approche sandbox, même si beaucoup se souviennent aussi de mises à jour controversées. Son aura reste forte auprès des nostalgiques du MMO d’antan.",
-      "position": 0
+      "position": 1
     },
     {
       "name": "World of warcraft",
@@ -514,7 +522,7 @@
       "postion": "",
       "picture": "wow.jpg",
       "review": "Mon absence sur ce monument du jeu vidéo ne vient pas d’un manque d’intérêt, mais d’un choix pratique : son modèle par abonnement. Je respecte profondément l’impact qu’il a eu sur l’industrie, sa capacité à fédérer des millions de joueurs et à définir les codes du MMO moderne. Toutefois, son format économique a constitué pour moi une barrière infranchissable. Je n’y ai donc jamais joué, mais je reconnais pleinement son importance historique.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "Guitar Hero 2",
@@ -523,7 +531,7 @@
       "postion": "",
       "picture": "guitarhero2.jpg",
       "review": "Je n’ai pas rejoué à Guitar Hero II pour une raison simple : sans la guitare, l’expérience n’a aucun sens. J’y avais touché enfant, et c’était amusant, mais aujourd’hui, cela ne tient plus que du souvenir. Le plaisir venait de l’accessoire, de la gestuelle et du ressenti. Sans cela, il ne reste qu’un jeu de rythme amputé de sa magie, et je refuse d’y retourner dans ces conditions. Pour moi, Guitar Hero II restera davantage un objet de nostalgie qu’une œuvre que je souhaite revisiter.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "The Legend of Zleda: Skyward sword",
@@ -532,7 +540,7 @@
       "postion": "",
       "picture": "zeldaskywardsword.jpg",
       "review": "C'est un jeu pensé spécialement pour la wii et la wiimote c'était injouable à la manette sur emu",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Uncharted 3: Drake's Deception",
@@ -541,14 +549,7 @@
       "postion": "",
       "picture": "uncharted3.jpg",
       "review": "Pas réussi à avoir une rom qui fonctionne",
-      "position": 4
-    },
-    {
-      "name": "Hearthstone",
-      "year": 2014,
-      "rank": "NP",
-      "picture": "hearthstone.jpg",
-      "review": "Hearthstone mérite d'être reconnu pour ce qu'il a fait à l'industrie avant d'être jugé comme jeu. Il n'a pas inventé le CCG numérique, mais il l'a rendu accessible à une échelle que personne n'avait atteinte avant lui. La simplification du ruleset, le modèle économique free-to-play avec packs et craft, la lisibilité immédiate des règles sans bagage préalable : tout ça a posé un standard que les concurrents ont suivi quasi universellement ensuite. L'impact est réel et difficile à contester.\n\nLe jeu lui-même est propre. La prise en main est immédiate, la profondeur stratégique existe malgré des règles apparemment simples, et la variété des decks offre une vraie rejouabilité. Le RNG reste le problème central : une part trop importante du résultat échappe aux décisions du joueur, et ça finit par rogner sur la satisfaction que la dimension stratégique est censée produire.\n\nMais au fond, Hearthstone n'est simplement pas le genre de jeu fait pour tout le monde. On y prend du plaisir le temps de découvrir les mécaniques, et on s'en lasse une fois que la boucle a montré ses limites. Ce n'est pas un défaut du jeu en particulier, c'est une question d'affinité avec le format.\n\nJ'y ai joué que 2h donc je préfère le mettre en 'not played'."
+      "position": 5
     }
   ]
 }
