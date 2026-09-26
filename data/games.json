@@ -542,6 +542,13 @@
       "picture": "uncharted3.jpg",
       "review": "Pas réussi à avoir une rom qui fonctionne",
       "position": 4
+    },
+    {
+      "name": "Hearthstone",
+      "year": 2014,
+      "rank": "NP",
+      "picture": "hearthstone.jpg",
+      "review": "Hearthstone mérite d'être reconnu pour ce qu'il a fait à l'industrie avant d'être jugé comme jeu. Il n'a pas inventé le CCG numérique, mais il l'a rendu accessible à une échelle que personne n'avait atteinte avant lui. La simplification du ruleset, le modèle économique free-to-play avec packs et craft, la lisibilité immédiate des règles sans bagage préalable : tout ça a posé un standard que les concurrents ont suivi quasi universellement ensuite. L'impact est réel et difficile à contester.\n\nLe jeu lui-même est propre. La prise en main est immédiate, la profondeur stratégique existe malgré des règles apparemment simples, et la variété des decks offre une vraie rejouabilité. Le RNG reste le problème central : une part trop importante du résultat échappe aux décisions du joueur, et ça finit par rogner sur la satisfaction que la dimension stratégique est censée produire.\n\nMais au fond, Hearthstone n'est simplement pas le genre de jeu fait pour tout le monde. On y prend du plaisir le temps de découvrir les mécaniques, et on s'en lasse une fois que la boucle a montré ses limites. Ce n'est pas un défaut du jeu en particulier, c'est une question d'affinité avec le format.\n\nJ'y ai joué que 2h donc je préfère le mettre en 'not played'."
     }
   ]
 }
