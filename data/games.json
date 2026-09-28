@@ -445,13 +445,21 @@
       "position": 1
     },
     {
+      "name": "Dragon Age: Inquisition",
+      "year": 2014,
+      "rank": "E",
+      "picture": "dragonageinquisition.jpg",
+      "review": "Dix heures. Coincé sur la première zone à enchaîner des missions secondaires redondantes, sans qu'aucune histoire ne se dessine vraiment, sans que rien ne donne envie d'aller plus loin. Ce n'est pas un verdict définitif sur ce que le jeu peut offrir à ceux qui accrochent, mais c'est un signal clair sur ce qu'il demande avant d'y arriver.\n\nLes zones sont grandes, visiblement conçues pour impressionner par leur échelle. Mais cette échelle est artificielle, remplie sans être habitée. Les paysages ne dégagent rien, les espaces entre les points d'intérêt sont vides de sens, et les missions secondaires qui meublent tout ça sont d'une répétitivité difficile à défendre. Le tout ressemble davantage à un MMO solo qu'à un RPG narratif, sans que le côté MMO n'apporte la structure sociale qui justifie habituellement ce type de design.\n\nLes combats n'arrangent rien. L'approche héritée des RPG tactiques de BioWare, quelque part entre Baldur's Gate et KOTOR, ne produit ici aucune satisfaction. KOTOR avait au moins le mérite de rendre ses combats engageants dans leur contexte. Inquisition les rend simplement ennuyeux.\n\nLes compagnons aggravent encore le tableau. Leur IA est dysfonctionnelle au quotidien : ils bloquent les passages devant les portes, poussent le joueur en plein combat sans raison, semblent incapables de décider quoi faire dans l'espace qui les entoure. Dans un jeu qui place précisément les relations avec ces compagnons comme argument central, avoir une IA aussi incompétente est une contradiction difficile à avaler. On est censé s'attacher à des personnages qui passent leur temps à nous rentrer dedans.\n\nCe qui est frustrant, c'est de percevoir clairement ce que le jeu essaie d'être : un monde vaste avec une écriture des compagnons soignée, une durée de vie considérable, un univers dense. Tout ça existe probablement quelque part dans les heures qui suivent. Mais si dix heures ne suffisent pas à donner une seule raison d'y rester, le jeu a un problème d'accroche que sa profondeur supposée ne règle pas. Tout le contenu du monde ne sert à rien si le jeu ne donne jamais envie de l'atteindre.",
+      "position": 2
+    },
+    {
       "name": "Halo 2",
       "year": 2004,
       "rank": "E",
       "postion": "",
       "picture": "halo2.png",
       "review": "N’ayant pas profité de son mode en ligne, je n’ai subi que la campagne, que j’ai trouvée particulièrement lente, courte et désagréable. Le rythme est poussif, les contrôles frustrants, avec une sensibilité impossible à régler correctement. L’aim assist, beaucoup trop prononcé, donne constamment l’impression d’être pris par la main, ce qui nuit à tout sentiment de maîtrise. Seule la bande-son, magistrale, parvient réellement à sauver l’expérience.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "SSX 3",
@@ -460,7 +468,7 @@
       "postion": "",
       "picture": "ssx3.jpg",
       "review": "Jeu de snowboard arcade au style flashy et à la bande-son dynamique. Pourtant, le fun immédiat attendu n’a pas opéré, me rappelant un Mario Kart en moins engageant. Les critiques l’adoraient, mais pour moi, la descente fut courte.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Left 4 Dead 2",
@@ -469,7 +477,7 @@
       "postion": "",
       "picture": "left4dead2.jpg",
       "review": "Rejoué plus de seize ans après sa sortie, Left 4 Dead 2 peine à convaincre. Sans sa communauté d’origine, le jeu perd l’essence de ce qui faisait son intérêt : la coopération en ligne. Aujourd’hui, l’expérience paraît creuse et datée. L’histoire, déjà secondaire à l’époque, ne retient guère l’attention. Quelques armes et ennemis variés maintiennent un semblant de rythme, mais la mécanique a mal vieilli : la formule est rigide, répétitive, et n’offre plus la tension d’autrefois. Left 4 Dead 2 reste un souvenir respectable du jeu coopératif, mais n’a plus grand-chose à offrir à ceux qui le découvrent ou le rejouent aujourd’hui.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "Madden NFL 2004",
@@ -478,7 +486,7 @@
       "postion": "",
       "picture": "madden2004.jpg",
       "review": "Simulation sportive de référence pour les amateurs de football américain, mais hermétique pour un novice. Mon expérience a été courte, freinée par un manque de compréhension des règles, bien que la technique et la profondeur stratégique soient indéniables.",
-      "position": 5
+      "position": 6
     },
     {
       "name": "Tom Clancy’s Ghost Recon Advanced Warfighter",
@@ -550,13 +558,6 @@
       "picture": "hearthstone.jpg",
       "review": "Hearthstone mérite d'être reconnu pour ce qu'il a fait à l'industrie avant d'être jugé comme jeu. Il n'a pas inventé le CCG numérique, mais il l'a rendu accessible à une échelle que personne n'avait atteinte avant lui. La simplification du ruleset, le modèle économique free-to-play avec packs et craft, la lisibilité immédiate des règles sans bagage préalable : tout ça a posé un standard que les concurrents ont suivi quasi universellement ensuite. L'impact est réel et difficile à contester.\n\nLe jeu lui-même est propre. La prise en main est immédiate, la profondeur stratégique existe malgré des règles apparemment simples, et la variété des decks offre une vraie rejouabilité. Le RNG reste le problème central : une part trop importante du résultat échappe aux décisions du joueur, et ça finit par rogner sur la satisfaction que la dimension stratégique est censée produire.\n\nMais au fond, Hearthstone n'est simplement pas le genre de jeu fait pour tout le monde. On y prend du plaisir le temps de découvrir les mécaniques, et on s'en lasse une fois que la boucle a montré ses limites. Ce n'est pas un défaut du jeu en particulier, c'est une question d'affinité avec le format.\n\nJ'y ai joué que 2h donc je préfère le mettre en 'not played'.",
       "position": 5
-    },
-    {
-      "name": "Dragon Age: Inquisition",
-      "year": 2014,
-      "rank": "E",
-      "picture": "dragonageinquisition.jpg",
-      "review": "Dix heures. Coincé sur la première zone à enchaîner des missions secondaires redondantes, sans qu'aucune histoire ne se dessine vraiment, sans que rien ne donne envie d'aller plus loin. Ce n'est pas un verdict définitif sur ce que le jeu peut offrir à ceux qui accrochent, mais c'est un signal clair sur ce qu'il demande avant d'y arriver.\n\nLes zones sont grandes, visiblement conçues pour impressionner par leur échelle. Mais cette échelle est artificielle, remplie sans être habitée. Les paysages ne dégagent rien, les espaces entre les points d'intérêt sont vides de sens, et les missions secondaires qui meublent tout ça sont d'une répétitivité difficile à défendre. Le tout ressemble davantage à un MMO solo qu'à un RPG narratif, sans que le côté MMO n'apporte la structure sociale qui justifie habituellement ce type de design.\n\nLes combats n'arrangent rien. L'approche héritée des RPG tactiques de BioWare, quelque part entre Baldur's Gate et KOTOR, ne produit ici aucune satisfaction. KOTOR avait au moins le mérite de rendre ses combats engageants dans leur contexte. Inquisition les rend simplement ennuyeux.\n\nLes compagnons aggravent encore le tableau. Leur IA est dysfonctionnelle au quotidien : ils bloquent les passages devant les portes, poussent le joueur en plein combat sans raison, semblent incapables de décider quoi faire dans l'espace qui les entoure. Dans un jeu qui place précisément les relations avec ces compagnons comme argument central, avoir une IA aussi incompétente est une contradiction difficile à avaler. On est censé s'attacher à des personnages qui passent leur temps à nous rentrer dedans.\n\nCe qui est frustrant, c'est de percevoir clairement ce que le jeu essaie d'être : un monde vaste avec une écriture des compagnons soignée, une durée de vie considérable, un univers dense. Tout ça existe probablement quelque part dans les heures qui suivent. Mais si dix heures ne suffisent pas à donner une seule raison d'y rester, le jeu a un problème d'accroche que sa profondeur supposée ne règle pas. Tout le contenu du monde ne sert à rien si le jeu ne donne jamais envie de l'atteindre."
     }
   ]
 }
