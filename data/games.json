@@ -383,13 +383,21 @@
       "position": 0
     },
     {
+      "name": "Fallout 4",
+      "year": 2015,
+      "rank": "D",
+      "picture": "fallout4.jpg",
+      "review": "Fallout 4 commence par ses bonnes idées. La Power Armor repositionnée comme équipement lourd à ressources limitées change fondamentalement la relation qu'on entretient avec elle : ce n'est plus une armure parmi d'autres, c'est un outil qu'on sort à bon escient. Le crafting modulaire d'armes et d'armures pousse la granularité à un niveau que la série n'avait jamais atteint. Le système de dialogue simplifié à quatre options rend les échanges plus directs et moins laborieux. Le V.A.T.S. et le S.P.E.C.I.A.L. sont affinés. Boston est dense, agréable à parcourir, et les petits événements aléatoires qui ponctuent l'exploration ajoutent une vie bienvenue à un monde post-apocalyptique dont l'ambiance reste cohérente avec l'identité de la série.\n\nLe problème c'est ce que le jeu fait de tout ça. L'aire de jeu est bien construite mais mal exploitée par son contenu. Le scénario reste trop classique pour une licence qui a montré par le passé qu'elle pouvait faire mieux. Les donjons sont linéaires au point de ne jamais laisser d'espace pour l'exploration ou l'improvisation. L'IA et le pathfinding sont toujours aussi défaillants, et dans un jeu centré sur les interactions avec l'environnement et les PNJ, c'est un problème qui se rappelle constamment à vous.\n\nReste le lot habituel Bethesda, aggravé : chargements longs et trop fréquents qui cassent le rythme en permanence, drops de framerate, crashs, freezes, quêtes cassées. On y est habitué avec le studio, mais l'accumulation finit par peser sur une expérience qui n'a pas assez de points forts pour absorber tout ça sans dommage.",
+      "position": 1
+    },
+    {
       "name": "Tom Clancy's Splinter Cell",
       "year": 2003,
       "rank": "D",
       "postion": "",
       "picture": "splintercell.jpg",
       "review": "Splinter Cell propose une infiltration réaliste et exigeante. L’utilisation de l’ombre pour se dissimuler et des différents modes de vision nocturne, thermique et infrarouge est une idée brillante qui ajoute une profondeur stratégique rare pour l’époque. L’ambiance est saisissante : la tension permanente, les décors sombres et les séquences cinématographiques contribuent à un véritable sentiment d’immersion dans le rôle d’un espion moderne. Pourtant, malgré ces innovations, je n’ai pas réussi à accrocher pleinement au jeu. La lenteur du rythme et la linéarité des missions limitent la liberté et la variété des approches, rendant chaque niveau parfois frustrant. De plus, j’ai été confronté à une avalanche de bugs qui ont gâché plusieurs tentatives, avec des problèmes de collisions ou de comportements ennemis qui brisaient la furtivité et l’immersion. Ces défauts techniques m’ont empêché de profiter pleinement des mécaniques ingénieuses, et m’ont fait ressentir une certaine frustration, même si l’originalité du concept reste indéniable.",
-      "position": 1
+      "position": 2
     },
     {
       "name": "LittleBigPlanet",
@@ -398,7 +406,7 @@
       "postion": "",
       "picture": "littlebigplanet.jpg",
       "review": "L’originalité du titre réside dans la création de niveaux, un concept qui, avec le recul, aura été poussé à son paroxysme. L’univers possède un charme indéniable, presque enfantin, renforcé par une bande-son enchanteresse qui contribue à cette atmosphère chaleureuse. Certains niveaux officiels se distinguent par leur construction ingénieuse et leur plaisir immédiat. Toutefois, l’histoire se révèle bien trop courte, et les contrôles manquent parfois de précision, ce qui gâche la fluidité des séquences de plate-forme.",
-      "position": 2
+      "position": 3
     },
     {
       "name": "Call of Duty: Black Ops",
@@ -407,7 +415,7 @@
       "postion": "",
       "picture": "codbo.jpg",
       "review": "Le mode Zombies constitue le principal point fort du jeu. Le mode propose une expérience coopérative efficace et devient rapidement l’élément le plus marquant du titre. Les cartes, la progression par manches et les nombreux secrets encouragent la rejouabilité. Pour beaucoup de joueurs, ce mode représente la raison principale de revenir au jeu.\n\nLe multijoueur reste solide mais n’apporte pas de véritable évolution à la formule. Les bases de la série sont conservées sans transformation notable. Le gunplay fonctionne correctement, mais il ne se distingue pas particulièrement face aux autres épisodes de la franchise.\n\nLa campagne solo souffre surtout de sa brièveté. L’aventure se termine rapidement et donne parfois l’impression de suivre une formule déjà établie par les épisodes développés par Infinity Ward. L’influence est perceptible, mais le jeu n’atteint pas le même niveau de maîtrise.\n\nLe jeu tente toutefois une approche narrative différente en racontant l’histoire à travers les souvenirs du protagoniste, interrogé et torturé. L’idée apporte une certaine singularité au récit, mais l’écriture reste trop légère pour réellement approfondir cette structure.\n\nEnfin, le rythme de la campagne ne convainc pas toujours. Certaines missions manquent d’intensité et l’ensemble peut donner une impression de répétition, ce qui conduit à plusieurs moments d’ennui au cours de l’aventure.\n\nAu final, Black Ops laisse une impression contrastée. Le mode Zombies marque durablement le jeu, tandis que la campagne et le multijoueur apparaissent plus classiques et peinent à se distinguer dans une série déjà bien installée.",
-      "position": 3
+      "position": 4
     },
     {
       "name": "Mass Effect",
@@ -416,7 +424,7 @@
       "postion": "",
       "picture": "masseffect.jpg",
       "review": "Mass Effect m’a laissé un sentiment de faux-semblant. Le jeu cherche à donner l’illusion d’un univers galactique infini, constellé de planètes à explorer, mais en dehors des missions principales, ces mondes n’offrent que peu de véritable contenu. De la même manière, il se veut maître du choix moral, mais comme dans KOTOR (qui le faisait d’ailleurs avec plus de finesse), peu importe la voie empruntée, l’histoire suit son rail. L’exemple le plus flagrant fut mon affrontement avec un de mes compagnons où, malgré mon accord avec lui, le jeu ne me laissa pas lui exprimer, ce qui le condamna inutilement. J’ai également croisé quelques soucis d’IA, autant du côté allié qu’ennemi, qui ont terni légèrement le dynamisme des combats. Cependant, là où le jeu a réellement su m’accrocher, c’est dans la création physique de mon Shepard. Pour la première fois, j’ai eu l’impression de façonner un protagoniste qui m’appartenait, différent de celui de tout autre joueur. Cet attachement personnel donne au jeu une profondeur unique, même si ses mécaniques ne sont pas toujours à la hauteur de ses ambitions. Pour être honnête, je n’ai pas encore trouvé ce qui fait de Mass Effect un monument du jeu vidéo. Peut-être cela se révélera-t-il dans ses suites, puisque beaucoup parlent de son évolution spectaculaire. Pour l’heure, ce premier opus reste un bon jeu, solide, mais qui n’excelle dans aucun domaine précis. Il pose des fondations prometteuses, sans pour autant se hisser plus haut que cela.",
-      "position": 4
+      "position": 5
     },
     {
       "name": "Call of duty 2",
@@ -425,7 +433,7 @@
       "postion": "",
       "picture": "callofduty2.jpg",
       "review": "Un jeu doté de graphismes saisissants pour l’époque et d’une immersion certaine. Toutefois, la formule peine à se renouveler : missions redondantes, arsenal trop limité, et un gameplay qui finit par s’essouffler. Sympathique sur le court terme, mais vite lassant",
-      "position": 5
+      "position": 6
     },
     {
       "name": "Halo Reach",
@@ -558,13 +566,6 @@
       "picture": "hearthstone.jpg",
       "review": "Hearthstone mérite d'être reconnu pour ce qu'il a fait à l'industrie avant d'être jugé comme jeu. Il n'a pas inventé le CCG numérique, mais il l'a rendu accessible à une échelle que personne n'avait atteinte avant lui. La simplification du ruleset, le modèle économique free-to-play avec packs et craft, la lisibilité immédiate des règles sans bagage préalable : tout ça a posé un standard que les concurrents ont suivi quasi universellement ensuite. L'impact est réel et difficile à contester.\n\nLe jeu lui-même est propre. La prise en main est immédiate, la profondeur stratégique existe malgré des règles apparemment simples, et la variété des decks offre une vraie rejouabilité. Le RNG reste le problème central : une part trop importante du résultat échappe aux décisions du joueur, et ça finit par rogner sur la satisfaction que la dimension stratégique est censée produire.\n\nMais au fond, Hearthstone n'est simplement pas le genre de jeu fait pour tout le monde. On y prend du plaisir le temps de découvrir les mécaniques, et on s'en lasse une fois que la boucle a montré ses limites. Ce n'est pas un défaut du jeu en particulier, c'est une question d'affinité avec le format.\n\nJ'y ai joué que 2h donc je préfère le mettre en 'not played'.",
       "position": 5
-    },
-    {
-      "name": "Fallout 4",
-      "year": 2015,
-      "rank": "E",
-      "picture": "fallout4.jpg",
-      "review": "Fallout 4 commence par ses bonnes idées. La Power Armor repositionnée comme équipement lourd à ressources limitées change fondamentalement la relation qu'on entretient avec elle : ce n'est plus une armure parmi d'autres, c'est un outil qu'on sort à bon escient. Le crafting modulaire d'armes et d'armures pousse la granularité à un niveau que la série n'avait jamais atteint. Le système de dialogue simplifié à quatre options rend les échanges plus directs et moins laborieux. Le V.A.T.S. et le S.P.E.C.I.A.L. sont affinés. Boston est dense, agréable à parcourir, et les petits événements aléatoires qui ponctuent l'exploration ajoutent une vie bienvenue à un monde post-apocalyptique dont l'ambiance reste cohérente avec l'identité de la série.\n\nLe problème c'est ce que le jeu fait de tout ça. L'aire de jeu est bien construite mais mal exploitée par son contenu. Le scénario reste trop classique pour une licence qui a montré par le passé qu'elle pouvait faire mieux. Les donjons sont linéaires au point de ne jamais laisser d'espace pour l'exploration ou l'improvisation. L'IA et le pathfinding sont toujours aussi défaillants, et dans un jeu centré sur les interactions avec l'environnement et les PNJ, c'est un problème qui se rappelle constamment à vous.\n\nReste le lot habituel Bethesda, aggravé : chargements longs et trop fréquents qui cassent le rythme en permanence, drops de framerate, crashs, freezes, quêtes cassées. On y est habitué avec le studio, mais l'accumulation finit par peser sur une expérience qui n'a pas assez de points forts pour absorber tout ça sans dommage."
     }
   ]
 }
