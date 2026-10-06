@@ -374,20 +374,20 @@
       "position": 13
     },
     {
+      "name": "Fallout 4",
+      "year": 2015,
+      "rank": "D",
+      "picture": "fallout4.jpg",
+      "review": "Fallout 4 commence par ses bonnes idées. La Power Armor repositionnée comme équipement lourd à ressources limitées change fondamentalement la relation qu'on entretient avec elle : ce n'est plus une armure parmi d'autres, c'est un outil qu'on sort à bon escient. Le crafting modulaire d'armes et d'armures pousse la granularité à un niveau que la série n'avait jamais atteint. Le système de dialogue simplifié à quatre options rend les échanges plus directs et moins laborieux. Le V.A.T.S. et le S.P.E.C.I.A.L. sont affinés. Boston est dense, agréable à parcourir, et les petits événements aléatoires qui ponctuent l'exploration ajoutent une vie bienvenue à un monde post-apocalyptique dont l'ambiance reste cohérente avec l'identité de la série.\n\nLe problème c'est ce que le jeu fait de tout ça. L'aire de jeu est bien construite mais mal exploitée par son contenu. Le scénario reste trop classique pour une licence qui a montré par le passé qu'elle pouvait faire mieux. Les donjons sont linéaires au point de ne jamais laisser d'espace pour l'exploration ou l'improvisation. L'IA et le pathfinding sont toujours aussi défaillants, et dans un jeu centré sur les interactions avec l'environnement et les PNJ, c'est un problème qui se rappelle constamment à vous.\n\nReste le lot habituel Bethesda, aggravé : chargements longs et trop fréquents qui cassent le rythme en permanence, drops de framerate, crashs, freezes, quêtes cassées. On y est habitué avec le studio, mais l'accumulation finit par peser sur une expérience qui n'a pas assez de points forts pour absorber tout ça sans dommage.",
+      "position": 0
+    },
+    {
       "name": "Fallout 3",
       "year": 2008,
       "rank": "D",
       "postion": "",
       "picture": "fallout3.png",
       "review": "Le prologue dans l’Abri 101 est une excellente idée : il introduit naturellement l’univers, le gameplay et l’identité de notre personnage, rendant les premières heures particulièrement agréables et immersives. L’immensité de la carte impressionne d’emblée, mais c’est aussi son défaut : à force de vouloir montrer un monde gigantesque, le jeu finit par donner le sentiment d’être étiré, et l’exploration peut paraître fastidieuse. L’ambiance post-apocalyptique fonctionne à merveille, soutenue par une direction artistique marquante et surtout par le S.V.A.V., un système de visée révolutionnaire qui ralentit le temps et permet de cibler précisément les ennemis. Ce mode de combat, unique en son genre, apporte une dimension tactique bienvenue et participe énormément au charme du jeu. Cependant, l’histoire principale est décevante : peu captivante, elle manque de profondeur et n’atteint jamais le niveau des choix moraux ou des récits environnementaux qui font la force de l’univers. Pire encore, les bugs techniques récurrents viennent régulièrement gâcher l’expérience. Fichiers de sauvegarde qui ce supprime, crash, alt tab qui shut down le jeu. Je sais pas si c'est parce que j'ai pas accroché à l'histoire ou parce que les défauts sont trop voyant mais j'ai pas plus aimé que ça.",
-      "position": 0
-    },
-    {
-      "name": "Fallout 4",
-      "year": 2015,
-      "rank": "D",
-      "picture": "fallout4.jpg",
-      "review": "Fallout 4 commence par ses bonnes idées. La Power Armor repositionnée comme équipement lourd à ressources limitées change fondamentalement la relation qu'on entretient avec elle : ce n'est plus une armure parmi d'autres, c'est un outil qu'on sort à bon escient. Le crafting modulaire d'armes et d'armures pousse la granularité à un niveau que la série n'avait jamais atteint. Le système de dialogue simplifié à quatre options rend les échanges plus directs et moins laborieux. Le V.A.T.S. et le S.P.E.C.I.A.L. sont affinés. Boston est dense, agréable à parcourir, et les petits événements aléatoires qui ponctuent l'exploration ajoutent une vie bienvenue à un monde post-apocalyptique dont l'ambiance reste cohérente avec l'identité de la série.\n\nLe problème c'est ce que le jeu fait de tout ça. L'aire de jeu est bien construite mais mal exploitée par son contenu. Le scénario reste trop classique pour une licence qui a montré par le passé qu'elle pouvait faire mieux. Les donjons sont linéaires au point de ne jamais laisser d'espace pour l'exploration ou l'improvisation. L'IA et le pathfinding sont toujours aussi défaillants, et dans un jeu centré sur les interactions avec l'environnement et les PNJ, c'est un problème qui se rappelle constamment à vous.\n\nReste le lot habituel Bethesda, aggravé : chargements longs et trop fréquents qui cassent le rythme en permanence, drops de framerate, crashs, freezes, quêtes cassées. On y est habitué avec le studio, mais l'accumulation finit par peser sur une expérience qui n'a pas assez de points forts pour absorber tout ça sans dommage.",
       "position": 1
     },
     {
