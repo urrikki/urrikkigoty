@@ -33,7 +33,7 @@ function enableDragDrop() {
                 document.body.classList.remove('is-dragging');
                 window.__lenis?.start();
                 gsap.fromTo(evt.item,
-                    { scale: 1.02, borderColor: '#C9A84C', boxShadow: '0 0 0 2px gold' },
+                    { scale: 1.02, borderColor: '#A8833F', boxShadow: '0 0 0 2px gold' },
                     { scale: 1, borderColor: 'var(--border)', boxShadow: 'none', duration: 0.25, ease: 'back.out(1.2)', clearProps: 'transform,boxShadow' }
                 );
                 const parent = evt.item.parentNode;
@@ -170,9 +170,9 @@ function showSaveIndicator(state) {
     }
 
     const states = {
-        saving: { icon: 'fa-spinner fa-spin', text: 'Sauvegarde...', color: '#f59e0b' },
-        saved:  { icon: 'fa-check-circle',    text: 'Sauvegardé',   color: '#10b981' },
-        error:  { icon: 'fa-times-circle',    text: 'Erreur',       color: '#ef4444' }
+        saving: { icon: 'fa-spinner fa-spin', text: 'Sauvegarde...', color: '#D4A955' },
+        saved:  { icon: 'fa-check-circle',    text: 'Sauvegardé',   color: '#9DAA7A' },
+        error:  { icon: 'fa-times-circle',    text: 'Erreur',       color: '#E0715B' }
     };
 
     const s = states[state];
