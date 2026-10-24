@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Ma tier list personnelle des meilleurs jeux de l'année – classements, critiques et comparaisons.">
-    <meta name="theme-color" content="#1A1814" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#F4F1EC" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1E2A24" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#E4EDE3" media="(prefers-color-scheme: light)">
     <meta property="og:title" content="GOTY Tier List">
     <meta property="og:description" content="Classement personnel des meilleurs jeux – tier list, critiques et statistiques.">
     <meta property="og:type" content="website">
@@ -15,25 +15,24 @@
     <link rel="icon" type="image/png" href="pictures/gotytrophy.png">
     <link rel="apple-touch-icon" href="pictures/gotytrophy.png">
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Fonts (une seule feuille, seules les graisses utilisées) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/splitting/1.0.6/splitting.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/splitting/1.0.6/splitting.min.js"></script>
 
     <!-- Main Styles -->
     <link rel="stylesheet" href="styles.css" id="styleSheet">
 </head>
 <body>
 
-    <script src="scripts/loading.js?v=8.0.0"></script>
+    <script src="scripts/loading.js?v=10.0.0"></script>
 
     <!-- #region App Wrapper (contenu principal) -->
     <div class="app-wrapper">
@@ -52,6 +51,15 @@
                     <button class="icon-btn" id="themeToggle" title="Thème"><i class="fas fa-moon"></i></button>
                     <button class="icon-btn" id="favoritesBtn" title="Favoris"><i class="far fa-heart"></i></button>
                 </div>
+            </div>
+            <div class="vine" aria-hidden="true">
+                <svg viewBox="0 0 1200 70" preserveAspectRatio="xMidYMid meet">
+                    <path class="stem" pathLength="1" d="M0 36 C 180 8, 360 60, 560 34 S 920 8, 1200 36"/>
+                    <g transform="translate(162 28)"><path class="leaf" style="animation-delay:1.2s" d="M0 0 C 8 -14 24 -16 32 -10 C 24 -2 8 2 0 0 Z"/></g>
+                    <g transform="translate(328 38) scale(1 -1)"><path class="leaf warm" style="animation-delay:1.4s" d="M0 0 C 8 -14 24 -16 32 -10 C 24 -2 8 2 0 0 Z"/></g>
+                    <g transform="translate(850 15)"><path class="leaf warm" style="animation-delay:1.6s" d="M0 0 C 8 -14 24 -16 32 -10 C 24 -2 8 2 0 0 Z"/></g>
+                    <g transform="translate(1045 22) scale(1 -1)"><path class="leaf" style="animation-delay:1.8s" d="M0 0 C 8 -14 24 -16 32 -10 C 24 -2 8 2 0 0 Z"/></g>
+                </svg>
             </div>
             <div class="admin-badge" id="adminBadge" style="display: none;">
                 <i class="fas fa-tools"></i> Mode Admin actif
@@ -100,7 +108,7 @@
                         <label><i class="fas fa-sort"></i> Trier par</label>
                         <select id="sortBy">
                             <option value="default">Par défaut</option>
-                            <option value="name">Nom A→Z</option>
+                            <option value="name">Nom (A à Z)</option>
                             <option value="year">Année récente</option>
                         </select>
                     </div>
@@ -156,7 +164,7 @@
 
     <!-- Game Modal -->
     <div class="modal" id="gameModal">
-        <div class="modal-content">
+        <div data-lenis-prevent class="modal-content">
             <button class="modal-close" id="closeGameModal"><i class="fas fa-times"></i></button>
             <div class="modal-body">
                 <img class="modal-image" id="modalImage" src="" alt="">
@@ -178,7 +186,7 @@
 
     <!-- Comparison Modal -->
     <div class="modal" id="comparisonModal">
-        <div class="modal-content comparison-modal">
+        <div data-lenis-prevent class="modal-content comparison-modal">
             <button class="modal-close" id="closeComparison"><i class="fas fa-times"></i></button>
             <h2 class="modal-title"><i class="fas fa-balance-scale"></i> Comparaison directe</h2>
             <div class="comparison-container" id="comparisonContainer"></div>
@@ -187,7 +195,7 @@
 
     <!-- Add/Edit Game Modal -->
     <div class="modal" id="addGameModal">
-        <div class="modal-content add-game-modal">
+        <div data-lenis-prevent class="modal-content add-game-modal">
             <button class="modal-close" id="closeAddModal"><i class="fas fa-times"></i></button>
             <h2 class="modal-title" id="addGameModalTitle"><i class="fas fa-plus-circle"></i> Ajouter un jeu</h2>
             <form id="addGameForm" class="add-game-form">
@@ -223,7 +231,7 @@
 
     <!-- Login Modal -->
     <div class="modal" id="loginModal">
-        <div class="modal-content login-modal">
+        <div data-lenis-prevent class="modal-content login-modal">
             <button class="modal-close" id="closeLogin"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-lock"></i> Accès administrateur</h2>
             <form id="loginForm">
@@ -242,20 +250,20 @@
     <!-- #endregion Modals -->
 
     <!-- #region Scripts (chargement avec cache-busting) -->
-    <script src="scripts/animations.js?v=8.0.0"></script>
-    <script src="scripts/premium.js?v=8.0.0"></script>
-    <script src="scripts/state.js?v=8.0.0"></script>
-    <script src="scripts/ui.js?v=8.0.0"></script>
-    <script src="scripts/storage.js?v=8.0.0"></script>
-    <script src="scripts/auth.js?v=8.0.0"></script>
-    <script src="scripts/favorites.js?v=8.0.0"></script>
-    <script src="scripts/filters.js?v=8.0.0"></script>
-    <script src="scripts/stats.js?v=8.0.0"></script>
-    <script src="scripts/modal.js?v=8.0.0"></script>
-    <script src="scripts/views.js?v=8.0.0"></script>
-    <script src="scripts/dragdrop.js?v=8.0.0"></script>
-    <script src="scripts/gameForm.js?v=8.0.0"></script>
-    <script src="scripts/index.js?v=8.0.0"></script>
+    <script src="scripts/animations.js?v=10.0.0"></script>
+    <script src="scripts/premium.js?v=10.0.0"></script>
+    <script src="scripts/state.js?v=10.0.0"></script>
+    <script src="scripts/ui.js?v=10.0.0"></script>
+    <script src="scripts/storage.js?v=10.0.0"></script>
+    <script src="scripts/auth.js?v=10.0.0"></script>
+    <script src="scripts/favorites.js?v=10.0.0"></script>
+    <script src="scripts/filters.js?v=10.0.0"></script>
+    <script src="scripts/stats.js?v=10.0.0"></script>
+    <script src="scripts/modal.js?v=10.0.0"></script>
+    <script src="scripts/views.js?v=10.0.0"></script>
+    <script src="scripts/dragdrop.js?v=10.0.0"></script>
+    <script src="scripts/gameForm.js?v=10.0.0"></script>
+    <script src="scripts/index.js?v=10.0.0"></script>
     <!-- #endregion -->
 
 </body>

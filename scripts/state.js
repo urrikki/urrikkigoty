@@ -21,7 +21,7 @@ const DATA_PATH = 'data/games.json';
 
 const TIERS = ['S', 'A', 'B', 'C', 'D', 'E', 'F', 'NP'];
 const TIER_COLORS = {
-    S: '#d97706', A: '#ef4444', B: '#10b981',
-    C: '#3b82f6', D: '#8b5cf6', E: '#ec4899',
-    F: '#6b7280', NP: '#94a3b8'
+    S: 'var(--tier-s)', A: 'var(--tier-a)', B: 'var(--tier-b)',
+    C: 'var(--tier-c)', D: 'var(--tier-d)', E: 'var(--tier-e)',
+    F: 'var(--tier-f)', NP: 'var(--tier-np)'
 };

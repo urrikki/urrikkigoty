@@ -14,7 +14,7 @@ function createFPSMeter() {
         bottom: 10px;
         left: 10px;
         background: rgba(0,0,0,0.7);
-        color: #0f0;
+        color: #8DB58A;
         font-family: monospace;
         font-size: 12px;
         padding: 4px 8px;
@@ -35,7 +35,7 @@ function createFPSMeter() {
         if (now - lastTime >= 1000) {
             fps = frames;
             fpsDiv.textContent = `FPS: ${fps}`;
-            fpsDiv.style.color = fps >= 55 ? '#0f0' : (fps >= 30 ? '#ff0' : '#f00');
+            fpsDiv.style.color = fps >= 55 ? '#8DB58A' : (fps >= 30 ? '#E0A458' : '#E8836E');
             frames = 0;
             lastTime = now;
         }
